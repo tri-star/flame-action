@@ -13,6 +13,7 @@ import 'domain/world.dart';
 /// GameModelの内容をレンダリングする
 class Application extends Game with HorizontalDragDetector, TapDetector {
 
+  bool _initialized = false;
   World _world;
 
   // TODO: 後で適切な場所に移動
@@ -29,18 +30,27 @@ class Application extends Game with HorizontalDragDetector, TapDetector {
     // Size dimension = await Flame.util.initialDimensions();
 
     _world = World();
-    _world.addEntity(new Player());
+    _world.addEntity(Player());
     _spriteSheet = SpriteSheet(imageName: 'enemy01_state_normal.png', textureWidth: 80, textureHeight: 100, columns: 2, rows: 1);
-    _animation = _spriteSheet.createAnimation(0, stepTime: 0.1);
+    _animation = _spriteSheet.createAnimation(0, stepTime: 0.2);
+    _initialized = true;
   }
 
   @override
   void update(double dt) {
+    if(!_initialized) {
+      return;
+    }
     _world.entity.update(dt);
+    _animation.update(dt);
   }
 
   @override
   void render(Canvas canvas) {
+    if(!_initialized) {
+      return;
+    }
+
     Entity entity = _world.entity;
     _animation.getSprite().renderPosition(canvas, Position(entity.x, entity.y));
   }

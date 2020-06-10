@@ -3,17 +3,17 @@
 abstract class Entity {
   
   /// エンティティを一意に特定するID
-  String _id;
+  String _id = '';
 
-  double _x;
-  double _y;
+  double _x = 0;
+  double _y = 0;
 
-  double _vx;
-  double _vy;
+  double _vx = 0;
+  double _vy = 0;
 
-  String _state;
+  String _state = 'neutral';
 
-  List<String> _tags;
+  List<String> _tags = List<String>();
 
   String get id => _id;
   double get x => _x;
