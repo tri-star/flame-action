@@ -11,7 +11,7 @@ class Player extends Entity {
   Animation _animation;
 
   Player() {
-    _spriteSheet = SpriteSheet(imageName: 'enemy01_state_normal.png', textureWidth: 80, textureHeight: 100, columns: 2, rows: 1);
+    _spriteSheet = SpriteSheet(imageName: 'player_normal.png', textureWidth: 60, textureHeight: 100, columns: 1, rows: 1);
     _animation = _spriteSheet.createAnimation(0, stepTime: 0.2);
   }
 
