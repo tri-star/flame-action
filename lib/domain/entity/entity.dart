@@ -1,3 +1,5 @@
+import 'package:flame/sprite.dart';
+
 /// キャラクターやパーティクル、障害物、アイテムなど
 /// ゲーム中に登場するオブジェクトのベースになるクラス
 abstract class Entity {
@@ -24,4 +26,7 @@ abstract class Entity {
   void update(double dt) {
     throw new UnimplementedError();
   }
+
+  //TODO: Flameに依存しないようにする
+  Sprite get sprite => null;
 }
