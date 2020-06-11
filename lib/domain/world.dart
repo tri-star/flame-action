@@ -7,18 +7,25 @@ import 'entity/entity.dart';
 class World {
 
   Entity _entity;
+  List<Entity> _entities;
 
   int _randomSeed;  
 
-  World({randomSeed: 0}): _randomSeed = randomSeed;
+  World({randomSeed: 0}): 
+    _randomSeed = randomSeed,
+    _entities = List<Entity>();
 
   void update(double dt) {
-    _entity.update(dt);
+    _entities.forEach((entity) {
+      entity.update(dt);
+    });
   }
 
   void addEntity(Entity entity) {
     _entity = entity;
+    _entities.add(entity);
   }
 
   Entity get entity => _entity;
+  List<Entity> get entities => _entities;
 }
