@@ -1,6 +1,11 @@
 
-import 'package:flame/sprite.dart';
+import 'package:flame_action/domain/animation/sprite.dart';
 import 'package:flutter/foundation.dart';
+
+enum Dimension {
+  LEFT,
+  RIGHT
+}
 
 /// キャラクターやパーティクル、障害物、アイテムなど
 /// ゲーム中に登場するオブジェクトのベースになるクラス
@@ -21,6 +26,9 @@ class Entity {
   double vy = 0;
 
   @protected
+  Dimension dimension = Dimension.RIGHT;
+
+  @protected
   String state = 'neutral';
 
   @protected
@@ -30,9 +38,11 @@ class Entity {
     throw new UnimplementedError();
   }
 
-  //TODO: Flameに依存しないようにする
-  Sprite get sprite => null;
-
   double getX() => x;
   double getY() => y;
+  Dimension getDimension() => dimension;
+
+  List<Sprite> getSprites() {
+    return null;    
+  }
 }

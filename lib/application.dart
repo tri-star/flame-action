@@ -1,10 +1,10 @@
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
-import 'package:flame/position.dart';
+import 'package:flame_action/presentation/animation/enemy_sprite_resolver.dart';
+import 'package:flame_action/presentation/animation/player_sprite_resolver.dart';
 import 'package:flutter/widgets.dart';
 import 'domain/entity/enemy.dart';
-import 'domain/entity/entity.dart';
 import 'domain/entity/player.dart';
 import 'domain/world.dart';
 
@@ -25,8 +25,8 @@ class Application extends Game with HorizontalDragDetector, TapDetector {
     // Size dimension = await Flame.util.initialDimensions();
 
     _world = World();
-    _world.addEntity(Player(x: 10, y: 200));
-    _world.addEntity(Enemy(x: 200, y: 200));
+    _world.addEntity(Player(PlayerSpriteResolver(),  x: 10, y: 200));
+    _world.addEntity(Enemy(EnemySpriteResolver(), x: 200, y: 200));
     _initialized = true;
   }
 
@@ -45,7 +45,9 @@ class Application extends Game with HorizontalDragDetector, TapDetector {
     }
 
     _world.entities.forEach((entity) {
-      entity.sprite.renderPosition(canvas, Position(entity.getX(), entity.getY()));
+      entity.getSprites().forEach((sprite) {
+        sprite.render(canvas);
+      });
     });
   }
   

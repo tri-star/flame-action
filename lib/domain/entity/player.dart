@@ -1,26 +1,28 @@
-import 'package:flame/animation.dart';
-import 'package:flame/sprite.dart';
-import 'package:flame/spritesheet.dart';
+import 'package:flame_action/domain/animation/sprite.dart';
+import 'package:flame_action/domain/animation/sprite_resolver.dart';
 
 import 'entity.dart';
 
 class Player extends Entity {
   
-  // TODO: 後で適切な場所に移動
-  SpriteSheet _spriteSheet;
-  Animation _animation;
+  SpriteResolver _spriteResolver;
 
-  Player({double x, double y}) {
+  Player(SpriteResolver spriteResolver, {double x, double y}) {
     this.x = x;
     this.y = y;
-    _spriteSheet = SpriteSheet(imageName: 'player_normal.png', textureWidth: 60, textureHeight: 100, columns: 1, rows: 1);
-    _animation = _spriteSheet.createAnimation(0, stepTime: 0.2);
+    this._spriteResolver = spriteResolver;
   }
 
   void update(double dt) {
-    _animation.update(dt);
+    _spriteResolver.update();
   }
 
-  //TODO: Flameに依存しないようにする
-  Sprite get sprite => _animation.getSprite();
+  List<Sprite> getSprites() {
+    return List<Sprite>.from([
+      _spriteResolver.resolve(null)
+        ..x = x
+        ..y = y
+        ..dimension = dimension
+    ]);
+  }
 }
