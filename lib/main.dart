@@ -7,5 +7,5 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Application application = Application();
 
-  runApp(application.widget);
+  runApp(application.getWidget());
 }
