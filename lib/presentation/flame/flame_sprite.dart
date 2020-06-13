@@ -18,17 +18,18 @@ class FlameSprite extends Sprite {
     this.dimension = dimension;
   }
 
-  double get w => _flameSprite.size.x;
-  double get h => _flameSprite.size.y;
+  double get w => _flameSprite.loaded() ? _flameSprite.size?.x : 0;
+  double get h => _flameSprite.loaded() ? _flameSprite.size?.y : 0;
 
   void render(Canvas canvas) {
 
     Paint paint = Paint();
-    double localX = x;
-    double localY = y;
+    Position anchorOffset = getOffset();
+    double localX = x + anchorOffset.x;
+    double localY = y + anchorOffset.y;
     if(dimension == Dimension.LEFT) {
       Matrix4 cc = Matrix4.identity()
-        ..translate(x, y)
+        ..translate(x + anchorOffset.x, y + anchorOffset.y)
         ..translate(w, 0)
         ..rotateY(180.0 * 3.14 / 180);
 

@@ -7,6 +7,7 @@ class SpriteContext {
   String state;
   Dimension dimension;
 
+  SpriteContext({this.state, this.dimension});
 }
 
 /// アニメーションに必要な情報を受け取り、

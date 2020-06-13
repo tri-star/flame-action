@@ -16,7 +16,7 @@ class EnemySpriteResolver extends SpriteResolver {
 
   @override
   Sprite resolve(SpriteContext context) {
-    return FlameSprite(_animation.getSprite());
+    return FlameSprite(_animation.getSprite())..anchor = AnchorPoint.BOTTOM_LEFT;;
   }
 
   @override
