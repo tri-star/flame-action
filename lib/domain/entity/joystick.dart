@@ -1,9 +1,10 @@
 import 'package:flame_action/engine/animation/sprite.dart';
 import 'package:flame_action/engine/animation/sprite_resolver.dart';
+import 'package:flame_action/engine/joystick.dart';
 
 import 'entity.dart';
 
-class JoyStick extends Entity {
+class JoyStick extends Entity implements JoystickListener {
 
   SpriteResolver _spriteResolver;
   Sprite _baseSprite;
@@ -15,13 +16,14 @@ class JoyStick extends Entity {
     this._spriteResolver = spriteResolver;
     this._baseSprite = _spriteResolver.resolve(SpriteContext(state: 'base'));
     this._knobSprite = _spriteResolver.resolve(SpriteContext(state: 'knob'));
-  }
-
-  void update(double dt) {
     _baseSprite.x = x;
     _baseSprite.y = y;
     _knobSprite.x = x;
     _knobSprite.y = y;
+  }
+
+  void update(double dt) {
+
   }
 
   List<Sprite> getSprites() {
@@ -29,6 +31,16 @@ class JoyStick extends Entity {
       _baseSprite,
       _knobSprite
     ]);
+  }
+
+  @override
+  onJoystickMove(JoystickMoveEvent event) {
+    switch(event.direction) {
+      case JoystickDirection.LEFT:    _knobSprite.x = _baseSprite.x - 30; break;
+      case JoystickDirection.RIGHT:   _knobSprite.x = _baseSprite.x + 30; break;
+      case JoystickDirection.NEUTRAL: _knobSprite.x = _baseSprite.x; break;
+      default:
+    }
   }
 
 }

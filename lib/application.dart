@@ -8,6 +8,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 import 'domain/entity/enemy.dart';
 import 'domain/entity/player.dart';
+import 'engine/joystick.dart';
 import 'engine/world.dart';
 import 'presentation/animation/joystick_sprite_resolver.dart';
 
@@ -17,6 +18,7 @@ class Application extends Game with TapDetector {
 
   bool _initialized = false;
   World _world;
+  JoystickEventHandler _joystickEventHandler;
 
   Application() {
     _initialize();
@@ -26,11 +28,13 @@ class Application extends Game with TapDetector {
     await Flame.util.setLandscape();
     await Flame.util.fullScreen();
     // Size dimension = await Flame.util.initialDimensions();
+    _joystickEventHandler = JoystickEventHandler(Rect.fromLTWH(60-40.0, 280-40.0, 80, 80));
 
     _world = World();
     _world.addEntity(Player(PlayerSpriteResolver(),  x: 10, y: 200));
     _world.addEntity(Enemy(EnemySpriteResolver(), x: 200, y: 200));
     _world.addEntity(JoyStick(JoyStickSpriteResolver(), x: 60, y: 280));
+    _world.addJoystickEventHandler(_joystickEventHandler);
     _initialized = true;
   }
 
@@ -65,21 +69,18 @@ class Application extends Game with TapDetector {
   }
 
   void onPointerMove(PointerMoveEvent event) {
-    print('--- Move ----------------------------------------');
-    print('delta: ${event.delta}');
-    print('position: ${event.position.dx}');
+    final joystickEvent = JoystickInputEvent(JoystickInputEventType.UPDATE, event.position.dx, event.delta.dy);
+    _joystickEventHandler.handle(joystickEvent);
   }
 
   void onPointerDown(PointerDownEvent event) {
-    print('--- Down ----------------------------------------');
-    print('event: ${event.toString()}');
-    
+    final joystickEvent = JoystickInputEvent(JoystickInputEventType.START, event.position.dx, event.position.dy);
+    _joystickEventHandler.handle(joystickEvent);
   }
 
   void onPointerUp(PointerUpEvent event) {
-    print('--- Up ----------------------------------------');
-    print('event: ${event.toString()}');
-    
+    final joystickEvent = JoystickInputEvent(JoystickInputEventType.END, event.position.dx, event.position.dy);
+    _joystickEventHandler.handle(joystickEvent);
   }
 
 }

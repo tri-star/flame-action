@@ -11,6 +11,8 @@ class JoystickInputEvent {
   JoystickInputEventType type;
   double x;
   double y;
+
+  JoystickInputEvent(this.type, this.x, this.y);
 }
 
 enum JoystickDirection {
@@ -29,7 +31,15 @@ enum JoystickDirection {
 class JoystickMoveEvent {
   JoystickDirection direction;
   double distance;
+
+  JoystickMoveEvent({this.direction, this.distance});
 }
+
+/// Joystickのイベントを受け取るオブジェクト用のインターフェース
+abstract class JoystickListener {
+  onJoystickMove(JoystickMoveEvent event);
+}
+
 
 /// UIからの入力イベントを判定し、
 /// ゲーム向けのイベントに変換して通知する
@@ -40,9 +50,15 @@ class JoystickEventHandler {
   bool _isStarted = false;
 
   Rect _joystickPosition;
+  Map<String, JoystickListener> _listeners;
 
   JoystickEventHandler(Rect position):
-    _joystickPosition = position;
+    _joystickPosition = position,
+    _listeners = Map<String, JoystickListener>();
+
+  addListener(String key, JoystickListener listener) {
+    _listeners[key] = listener;
+  }
 
   void handle(JoystickInputEvent event) {
 
@@ -56,24 +72,35 @@ class JoystickEventHandler {
         break;
       case JoystickInputEventType.END:
         _isStarted = false;
+        JoystickMoveEvent gameEvent = JoystickMoveEvent(direction: JoystickDirection.NEUTRAL);
+        _notifyListeners(gameEvent);
         break;
       
       case JoystickInputEventType.UPDATE:
         if(_isStarted) {
-
+          JoystickMoveEvent gameEvent = JoystickMoveEvent(direction: _getDimension(event.x, event.y));
+          _notifyListeners(gameEvent);
         }
         break;
     }
   }
 
+  void _notifyListeners(JoystickMoveEvent event) {
+    _listeners.forEach((key, listener) {
+      listener.onJoystickMove(event);
+    });
+  }
+
   bool _isContained(double x, double y) {
     return _joystickPosition.contains(Offset(x, y));
   }
-}
 
-
-/// Joystickのイベントを受け取るオブジェクトが使用するmixin
-mixin JoystickListener {
-  onJoystickMove(JoystickMoveEvent event) {
+  JoystickDirection _getDimension(double x, double y) {
+    if(_joystickPosition.center.dx - x > 15) {
+      return JoystickDirection.LEFT;
+    } else if (_joystickPosition.center.dx - x < -15) {
+      return JoystickDirection.RIGHT;
+    }
+    return JoystickDirection.NEUTRAL;
   }
 }
