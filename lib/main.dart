@@ -1,11 +1,11 @@
 
 import 'package:flutter/widgets.dart';
 
-import 'application.dart';
+import 'engine/game_widget.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  Application application = Application();
+  GameWidget gameWidget = GameWidget();
 
-  runApp(application.getWidget());
+  runApp(gameWidget.getWidget());
 }

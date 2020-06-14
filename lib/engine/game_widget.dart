@@ -1,20 +1,20 @@
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
-import 'package:flame_action/domain/entity/joystick.dart';
-import 'package:flame_action/presentation/animation/enemy_sprite_resolver.dart';
-import 'package:flame_action/presentation/animation/player_sprite_resolver.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
-import 'domain/entity/enemy.dart';
-import 'domain/entity/player.dart';
-import 'engine/joystick.dart';
-import 'engine/world.dart';
-import 'presentation/animation/joystick_sprite_resolver.dart';
+import 'joystick.dart';
+import 'world.dart';
+import '../domain/entity/enemy.dart';
+import '../domain/entity/joystick.dart';
+import '../domain/entity/player.dart';
+import '../presentation/animation/joystick_sprite_resolver.dart';
+import '../presentation/animation/enemy_sprite_resolver.dart';
+import '../presentation/animation/player_sprite_resolver.dart';
 
 /// ユーザーからの入力を受け付け、GameModelに伝える
 /// GameModelの内容をレンダリングする
-class Application extends Game with TapDetector {
+class GameWidget extends Game with TapDetector {
 
   bool _initialized = false;
   World _world;
