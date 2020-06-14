@@ -21,26 +21,33 @@ class Player extends Entity implements JoystickListener {
   }
 
   List<Sprite> getSprites() {
-    return List<Sprite>.from([
-      _spriteResolver.resolve(null)
-        ..x = x
-        ..y = y
-        ..dimension = dimension
-    ]);
+    Sprite sprite = _spriteResolver.resolve(SpriteContext(state: state, dimension: dimension));
+    if(sprite == null) {
+      return [];
+    }
+    sprite
+      ..x = x
+      ..y = y;
+
+    return List<Sprite>.from([sprite]);
   }
 
   @override
   onJoystickMove(JoystickMoveEvent event) {
     if(event.direction == JoystickDirection.LEFT) {
-      vx = -1;
+      vx = -2;
       dimension = Dimension.LEFT;
+      // TODO: 状態遷移不可能なケースもあるので状態マシンで管理が必要
+      state = 'walk';
     }
     if(event.direction == JoystickDirection.RIGHT) {
-      vx = 1;
+      vx = 2;
       dimension = Dimension.RIGHT;
+      state = 'walk';
     }
     if(event.direction == JoystickDirection.NEUTRAL) {
       vx = 0;
+      state = 'neutral';
     }
   }
 }

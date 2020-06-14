@@ -6,21 +6,39 @@ import 'package:flame_action/presentation/flame/flame_sprite.dart';
 
 class PlayerSpriteResolver extends SpriteResolver {
 
-  SpriteSheet _spriteSheet;
-  Animation _animation;
+  Map<String, SpriteSheet> _spriteSheets;
+  String _currentState;
+  Animation _currentAnimation;
 
   PlayerSpriteResolver() {
-    _spriteSheet = SpriteSheet(imageName: 'player_normal.png', textureWidth: 60, textureHeight: 100, columns: 1, rows: 1);
-    _animation = _spriteSheet.createAnimation(0, stepTime: 0.2);
+    _spriteSheets = Map<String, SpriteSheet>();
+    _spriteSheets['neutral'] = SpriteSheet(imageName: 'player_normal.png', textureWidth: 60, textureHeight: 100, columns: 1, rows: 1);
+    _spriteSheets['walk'] = SpriteSheet(imageName: 'player_walk.png', textureWidth: 60, textureHeight: 100, columns: 4, rows: 1);
+    _currentState = '';
   }
 
   @override
   Sprite resolve(SpriteContext context) {
-    return FlameSprite(_animation.getSprite())..anchor = AnchorPoint.BOTTOM_LEFT;
+
+    if(context.state != _currentState) {
+      _currentState = context.state;
+      //TODO: アニメーションの管理も状態が関係する
+      _currentAnimation = _spriteSheets[_currentState].createAnimation(0, stepTime: 0.2);
+    }
+    if(!_currentAnimation.loaded()) {
+      return null;
+    }
+
+    return FlameSprite(_currentAnimation.getSprite())
+      ..anchor = AnchorPoint.BOTTOM_LEFT
+      ..dimension = context.dimension;
   }
 
   @override
   void update() {
-    _animation.update(0.016);
+    if(_currentAnimation == null || !_currentAnimation.loaded()) {
+      return;
+    }
+    _currentAnimation?.update(0.016);
   }
 }
