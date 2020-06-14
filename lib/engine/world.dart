@@ -1,4 +1,5 @@
-import 'entity/entity.dart';
+
+import 'package:flame_action/domain/entity/entity.dart';
 
 /// ゲームの本体。
 /// ユーザーの入力などをデバイスに依存しない形で受け付ける

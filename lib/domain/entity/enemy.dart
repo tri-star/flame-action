@@ -1,6 +1,6 @@
 
-import 'package:flame_action/domain/animation/sprite.dart';
-import 'package:flame_action/domain/animation/sprite_resolver.dart';
+import 'package:flame_action/engine/animation/sprite.dart';
+import 'package:flame_action/engine/animation/sprite_resolver.dart';
 
 import 'entity.dart';
 
