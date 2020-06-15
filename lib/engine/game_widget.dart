@@ -18,7 +18,7 @@ class GameWidget extends Game with TapDetector {
 
   bool _initialized = false;
   World _world;
-  JoystickEventHandler _joystickEventHandler;
+  PointerEventHandler _joystickEventHandler;
 
   Application() {
     _initialize();
@@ -29,7 +29,7 @@ class GameWidget extends Game with TapDetector {
     await Flame.util.fullScreen();
     await Flame.util.initialDimensions();
     // Size dimension = await Flame.util.initialDimensions();
-    _joystickEventHandler = JoystickEventHandler(Rect.fromLTWH(60-40.0, 280-40.0, 80, 80));
+    _joystickEventHandler = PointerEventHandler(Rect.fromLTWH(60-40.0, 280-40.0, 80, 80));
 
     _world = World();
     _world.addEntity(Player(PlayerSpriteResolver(),  x: 10, y: 200));
@@ -70,17 +70,17 @@ class GameWidget extends Game with TapDetector {
   }
 
   void onPointerMove(PointerMoveEvent event) {
-    final joystickEvent = JoystickInputEvent(JoystickInputEventType.UPDATE, event.position.dx, event.delta.dy);
+    final joystickEvent = UiPointerEvent(PointerEventType.UPDATE, event.position.dx, event.delta.dy);
     _joystickEventHandler.handle(joystickEvent);
   }
 
   void onPointerDown(PointerDownEvent event) {
-    final joystickEvent = JoystickInputEvent(JoystickInputEventType.START, event.position.dx, event.position.dy);
+    final joystickEvent = UiPointerEvent(PointerEventType.START, event.position.dx, event.position.dy);
     _joystickEventHandler.handle(joystickEvent);
   }
 
   void onPointerUp(PointerUpEvent event) {
-    final joystickEvent = JoystickInputEvent(JoystickInputEventType.END, event.position.dx, event.position.dy);
+    final joystickEvent = UiPointerEvent(PointerEventType.END, event.position.dx, event.position.dy);
     _joystickEventHandler.handle(joystickEvent);
   }
 

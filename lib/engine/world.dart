@@ -11,7 +11,7 @@ class World implements JoystickListener {
 
   Entity _entity;
   List<Entity> _entities;
-  JoystickEventHandler _joystickEventHandler;
+  PointerEventHandler _joystickEventHandler;
 
   int _randomSeed;  
 
@@ -30,7 +30,7 @@ class World implements JoystickListener {
     _entities.add(entity);
   }
 
-  void addJoystickEventHandler(JoystickEventHandler handler) {
+  void addJoystickEventHandler(PointerEventHandler handler) {
     _joystickEventHandler = handler;
     handler.addListener('world', this);
   }
