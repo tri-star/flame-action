@@ -27,6 +27,7 @@ class GameWidget extends Game with TapDetector {
   _initialize() async {
     await Flame.util.setLandscape();
     await Flame.util.fullScreen();
+    await Flame.util.initialDimensions();
     // Size dimension = await Flame.util.initialDimensions();
     _joystickEventHandler = JoystickEventHandler(Rect.fromLTWH(60-40.0, 280-40.0, 80, 80));
 
