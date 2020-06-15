@@ -20,7 +20,7 @@ class GameWidget extends Game with TapDetector {
   World _world;
   PointerEventHandler _joystickEventHandler;
 
-  Application() {
+  GameWidget() {
     _initialize();
   }
 
