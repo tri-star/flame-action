@@ -4,6 +4,7 @@ import 'package:flame_action/domain/entity/joystick.dart';
 import 'package:flame_action/presentation/animation/joystick_sprite_resolver.dart';
 import 'package:flutter/painting.dart';
 
+import 'animation/sprite.dart';
 import 'joystick.dart';
 
 /// ゲームの本体。
@@ -12,6 +13,7 @@ import 'joystick.dart';
 /// 時間軸を変更することが可能で、Worldはゲーム内に複数存在する可能性がある
 class World implements JoystickListener {
 
+  Sprite background;
   Entity _entity;
   List<Entity> _entities;
   PointerEventHandler _pointerEventHandler;
@@ -39,6 +41,10 @@ class World implements JoystickListener {
     _pointerEventHandler.addListener('world', this);
 
     this.addEntity(JoyStick(JoyStickSpriteResolver(), x: x, y: y));
+  }
+
+  void setBackground(Sprite _sprite) {
+    background = _sprite;
   }
 
   /// 画面からのポインタに関するイベントを受け取る
