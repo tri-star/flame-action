@@ -1,18 +1,18 @@
 import 'dart:ui';
 
-enum JoystickInputEventType {
+enum PointerEventType {
   START,
   UPDATE,
   END
 }
 
 /// UIから伝達される移動関連のイベント情報
-class JoystickInputEvent {
-  JoystickInputEventType type;
+class UiPointerEvent {
+  PointerEventType type;
   double x;
   double y;
 
-  JoystickInputEvent(this.type, this.x, this.y);
+  UiPointerEvent(this.type, this.x, this.y);
 }
 
 enum JoystickDirection {
@@ -43,7 +43,7 @@ abstract class JoystickListener {
 
 /// UIからの入力イベントを判定し、
 /// ゲーム向けのイベントに変換して通知する
-class JoystickEventHandler {
+class PointerEventHandler {
 
   double _startX = 0;
   double _startY = 0;
@@ -52,7 +52,7 @@ class JoystickEventHandler {
   Rect _joystickPosition;
   Map<String, JoystickListener> _listeners;
 
-  JoystickEventHandler(Rect position):
+  PointerEventHandler(Rect position):
     _joystickPosition = position,
     _listeners = Map<String, JoystickListener>();
 
@@ -60,23 +60,23 @@ class JoystickEventHandler {
     _listeners[key] = listener;
   }
 
-  void handle(JoystickInputEvent event) {
+  void handle(UiPointerEvent event) {
 
     switch(event.type) {
-      case JoystickInputEventType.START:
+      case PointerEventType.START:
         if(!_isStarted && _isContained(event.x, event.y)) {
           _isStarted = true;
           _startX = event.x;
           _startY = event.y;
         }
         break;
-      case JoystickInputEventType.END:
+      case PointerEventType.END:
         _isStarted = false;
         JoystickMoveEvent gameEvent = JoystickMoveEvent(direction: JoystickDirection.NEUTRAL);
         _notifyListeners(gameEvent);
         break;
       
-      case JoystickInputEventType.UPDATE:
+      case PointerEventType.UPDATE:
         if(_isStarted) {
           JoystickMoveEvent gameEvent = JoystickMoveEvent(direction: _getDimension(event.x, event.y));
           _notifyListeners(gameEvent);

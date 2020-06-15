@@ -6,9 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'joystick.dart';
 import 'world.dart';
 import '../domain/entity/enemy.dart';
-import '../domain/entity/joystick.dart';
 import '../domain/entity/player.dart';
-import '../presentation/animation/joystick_sprite_resolver.dart';
 import '../presentation/animation/enemy_sprite_resolver.dart';
 import '../presentation/animation/player_sprite_resolver.dart';
 
@@ -18,23 +16,22 @@ class GameWidget extends Game with TapDetector {
 
   bool _initialized = false;
   World _world;
-  JoystickEventHandler _joystickEventHandler;
 
-  Application() {
+  GameWidget() {
     _initialize();
   }
 
   _initialize() async {
     await Flame.util.setLandscape();
     await Flame.util.fullScreen();
+    await Flame.util.initialDimensions();
     // Size dimension = await Flame.util.initialDimensions();
-    _joystickEventHandler = JoystickEventHandler(Rect.fromLTWH(60-40.0, 280-40.0, 80, 80));
 
     _world = World();
     _world.addEntity(Player(PlayerSpriteResolver(),  x: 10, y: 200));
     _world.addEntity(Enemy(EnemySpriteResolver(), x: 200, y: 200));
-    _world.addEntity(JoyStick(JoyStickSpriteResolver(), x: 60, y: 280));
-    _world.addJoystickEventHandler(_joystickEventHandler);
+    
+    _world.createJoystick(60, 280);
     _initialized = true;
   }
 
@@ -69,18 +66,18 @@ class GameWidget extends Game with TapDetector {
   }
 
   void onPointerMove(PointerMoveEvent event) {
-    final joystickEvent = JoystickInputEvent(JoystickInputEventType.UPDATE, event.position.dx, event.delta.dy);
-    _joystickEventHandler.handle(joystickEvent);
+    final pointerEvent = UiPointerEvent(PointerEventType.UPDATE, event.position.dx, event.delta.dy);
+    _world.onPointerEvent(pointerEvent);
   }
 
   void onPointerDown(PointerDownEvent event) {
-    final joystickEvent = JoystickInputEvent(JoystickInputEventType.START, event.position.dx, event.position.dy);
-    _joystickEventHandler.handle(joystickEvent);
+    final pointerEvent = UiPointerEvent(PointerEventType.START, event.position.dx, event.position.dy);
+    _world.onPointerEvent(pointerEvent);
   }
 
   void onPointerUp(PointerUpEvent event) {
-    final joystickEvent = JoystickInputEvent(JoystickInputEventType.END, event.position.dx, event.position.dy);
-    _joystickEventHandler.handle(joystickEvent);
+    final pointerEvent = UiPointerEvent(PointerEventType.END, event.position.dx, event.position.dy);
+    _world.onPointerEvent(pointerEvent);
   }
 
 }
