@@ -1,5 +1,8 @@
 
 import 'package:flame_action/domain/entity/entity.dart';
+import 'package:flame_action/domain/entity/joystick.dart';
+import 'package:flame_action/presentation/animation/joystick_sprite_resolver.dart';
+import 'package:flutter/painting.dart';
 
 import 'joystick.dart';
 
@@ -11,7 +14,7 @@ class World implements JoystickListener {
 
   Entity _entity;
   List<Entity> _entities;
-  PointerEventHandler _joystickEventHandler;
+  PointerEventHandler _pointerEventHandler;
 
   int _randomSeed;  
 
@@ -30,11 +33,20 @@ class World implements JoystickListener {
     _entities.add(entity);
   }
 
-  void addJoystickEventHandler(PointerEventHandler handler) {
-    _joystickEventHandler = handler;
-    handler.addListener('world', this);
+  void createJoystick(double x, double y) {
+    // 横幅/縦幅またはRectの情報をEntityやSpriteから取得する
+    _pointerEventHandler = PointerEventHandler(Rect.fromLTWH(x-40.0, y-40.0, 80, 80));;
+    _pointerEventHandler.addListener('world', this);
+
+    this.addEntity(JoyStick(JoyStickSpriteResolver(), x: x, y: y));
   }
 
+  /// 画面からのポインタに関するイベントを受け取る
+  void onPointerEvent(UiPointerEvent uiPointerEvent) {
+    _pointerEventHandler.handle(uiPointerEvent);
+  }
+
+  /// UIからのイベントをJoystickのイベントに変換した結果を受け取る
   @override
   onJoystickMove(JoystickMoveEvent event) {
     _entities.forEach((entity) {
