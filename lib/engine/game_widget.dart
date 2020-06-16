@@ -27,14 +27,16 @@ class GameWidget extends Game with TapDetector {
     await Flame.util.setLandscape();
     await Flame.util.fullScreen();
     await Flame.util.initialDimensions();
-    // Size dimension = await Flame.util.initialDimensions();
+    Size dimension = await Flame.util.initialDimensions();
+    Player player = Player(PlayerSpriteResolver(),  x: 10, y: 200);
 
-    _world = World();
+    _world = World(1000, 340, dimension.width, dimension.height);
     _world.setBackground(FlameSprite(Sprite('background01.png'), x: 0, y: -80));  // Flameを直接使わないようにする
-    _world.addEntity(Player(PlayerSpriteResolver(),  x: 10, y: 200));
+    _world.addEntity(player);
     _world.addEntity(Enemy(EnemySpriteResolver(), x: 200, y: 200));
     
     _world.createJoystick(60, 300);
+    _world.camera.followEntity(player);
     _initialized = true;
   }
 
@@ -62,12 +64,13 @@ class GameWidget extends Game with TapDetector {
     }
 
     if(_world.background != null) {
-      _world.background.render(canvas);
+      _world.background.render(canvas, _world.camera);
     }
 
     _world.entities.forEach((entity) {
       entity.getSprites().forEach((sprite) {
-        sprite.render(canvas);
+        //canvas.
+        sprite.render(canvas, _world.camera);
       });
     });
   }

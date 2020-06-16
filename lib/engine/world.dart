@@ -4,6 +4,7 @@ import 'package:flame_action/domain/entity/joystick.dart';
 import 'package:flame_action/presentation/image/joystick_sprite_resolver.dart';
 import 'package:flutter/painting.dart';
 
+import 'camera.dart';
 import 'image/sprite.dart';
 import 'joystick.dart';
 
@@ -17,17 +18,24 @@ class World implements JoystickListener {
   Entity _entity;
   List<Entity> _entities;
   PointerEventHandler _pointerEventHandler;
+  double _worldW;
+  double _worldH;
+  Camera _camera;
 
   int _randomSeed;  
 
-  World({randomSeed: 0}): 
+  World(double worldW, double worldH, double cameraW, double cameraH, {randomSeed: 0}): 
     _randomSeed = randomSeed,
-    _entities = List<Entity>();
+    _entities = List<Entity>(),
+    _worldW = worldW,
+    _worldH = worldH,
+    _camera = Camera(cameraW, cameraH, worldW, worldH);
 
   void update(double dt) {
     _entities.forEach((entity) {
       entity.update(dt);
     });
+    _camera.update();
   }
 
   void addEntity(Entity entity) {
@@ -64,4 +72,5 @@ class World implements JoystickListener {
 
   Entity get entity => _entity;
   List<Entity> get entities => _entities;
+  Camera get camera => _camera;
 }
