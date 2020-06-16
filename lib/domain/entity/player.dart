@@ -27,7 +27,8 @@ class Player extends Entity implements JoystickListener {
     }
     sprite
       ..x = x
-      ..y = y;
+      ..y = y
+      ..dimension = dimension;
 
     return List<Sprite>.from([sprite]);
   }
