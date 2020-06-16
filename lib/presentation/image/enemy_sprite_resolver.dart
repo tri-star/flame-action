@@ -1,8 +1,8 @@
-import 'package:flame/animation.dart';
 import 'package:flame/spritesheet.dart';
+import 'package:flame_action/engine/image/animation.dart';
+import 'package:flame_action/presentation/flame/flame_animation.dart';
 import '../../engine/image/sprite.dart';
 import '../../engine/image/sprite_resolver.dart';
-import '../flame/flame_sprite.dart';
 
 class EnemySpriteResolver extends SpriteResolver {
 
@@ -11,16 +11,29 @@ class EnemySpriteResolver extends SpriteResolver {
 
   EnemySpriteResolver() {
     _spriteSheet = SpriteSheet(imageName: 'enemy01_state_normal.png', textureWidth: 80, textureHeight: 100, columns: 2, rows: 1);
-    _animation = _spriteSheet.createAnimation(0, stepTime: 0.2);
   }
 
   @override
   Sprite resolve(SpriteContext context) {
-    return FlameSprite(_animation.getSprite())..anchor = AnchorPoint.BOTTOM_LEFT;;
+    if(_animation == null) {
+      _animation = resolveAnimation(context);
+    }
+    if(!_animation.isLoaded()) {
+      return null;
+    }
+    return _animation.getSprite();
+  }
+
+  @override
+  Animation resolveAnimation(SpriteContext context) {
+    return FlameAnimation(_spriteSheet.createAnimation(0, stepTime: 0.2), anchor: AnchorPoint.BOTTOM_CENTER);
   }
 
   @override
   void update() {
-    _animation.update(0.016);
+    if(_animation == null) {
+      return;
+    }
+    _animation.update();
   }
 }

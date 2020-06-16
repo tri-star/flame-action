@@ -1,8 +1,8 @@
-import 'package:flame/animation.dart';
 import 'package:flame/spritesheet.dart';
+import '../../engine/image/animation.dart';
 import '../../engine/image/sprite.dart';
 import '../../engine/image/sprite_resolver.dart';
-import '../../presentation/flame/flame_sprite.dart';
+import '../../presentation/flame/flame_animation.dart';
 
 class PlayerSpriteResolver extends SpriteResolver {
 
@@ -19,26 +19,33 @@ class PlayerSpriteResolver extends SpriteResolver {
 
   @override
   Sprite resolve(SpriteContext context) {
-
-    if(context.state != _currentState) {
-      _currentState = context.state;
-      //TODO: アニメーションの管理も状態が関係する
-      _currentAnimation = _spriteSheets[_currentState].createAnimation(0, stepTime: 0.2);
+    if(_currentAnimation == null || context.state != _currentState) {
+      _currentAnimation = resolveAnimation(context);
     }
-    if(!_currentAnimation.loaded()) {
+    if(!_currentAnimation.isLoaded()) {
       return null;
     }
-
-    return FlameSprite(_currentAnimation.getSprite())
-      ..anchor = AnchorPoint.BOTTOM_LEFT
-      ..dimension = context.dimension;
+    return _currentAnimation.getSprite();
   }
 
   @override
   void update() {
-    if(_currentAnimation == null || !_currentAnimation.loaded()) {
+    if(_currentAnimation == null || !_currentAnimation.isLoaded()) {
       return;
     }
-    _currentAnimation?.update(0.016);
+    _currentAnimation?.update();
+  }
+
+  @override
+  Animation resolveAnimation(SpriteContext context) {
+    if(context.state != _currentState) {
+      _currentState = context.state;
+      //TODO: アニメーションの管理も状態が関係する
+      _currentAnimation = FlameAnimation(_spriteSheets[_currentState].createAnimation(0, stepTime: 0.2), 
+        anchor: AnchorPoint.BOTTOM_CENTER,
+        dimension: context.dimension
+      );
+    }
+    return _currentAnimation;
   }
 }
