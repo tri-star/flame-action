@@ -1,5 +1,5 @@
-import 'package:flame_action/engine/animation/sprite.dart';
-import 'package:flame_action/engine/animation/sprite_resolver.dart';
+import 'package:flame_action/engine/image/sprite.dart';
+import 'package:flame_action/engine/image/sprite_resolver.dart';
 import 'package:flame_action/engine/joystick.dart';
 
 import 'entity.dart';

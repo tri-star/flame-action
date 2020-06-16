@@ -4,7 +4,7 @@ import 'package:flame_action/domain/entity/joystick.dart';
 import 'package:flame_action/presentation/animation/joystick_sprite_resolver.dart';
 import 'package:flutter/painting.dart';
 
-import 'animation/sprite.dart';
+import 'image/sprite.dart';
 import 'joystick.dart';
 
 /// ゲームの本体。

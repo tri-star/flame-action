@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flame/position.dart';
 import 'package:flame/sprite.dart' as Flame;
-import 'package:flame_action/engine/animation/sprite.dart';
 import 'package:flutter/rendering.dart';
 
 import '../../domain/entity/entity.dart';
+import '../../engine/image/sprite.dart';
 
 class FlameSprite extends Sprite {
 

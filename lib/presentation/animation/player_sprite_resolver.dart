@@ -1,8 +1,8 @@
 import 'package:flame/animation.dart';
 import 'package:flame/spritesheet.dart';
-import 'package:flame_action/engine/animation/sprite.dart';
-import 'package:flame_action/engine/animation/sprite_resolver.dart';
-import 'package:flame_action/presentation/flame/flame_sprite.dart';
+import '../../engine/image/sprite.dart';
+import '../../engine/image/sprite_resolver.dart';
+import '../../presentation/flame/flame_sprite.dart';
 
 class PlayerSpriteResolver extends SpriteResolver {
 
