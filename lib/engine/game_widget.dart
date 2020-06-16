@@ -69,8 +69,12 @@ class GameWidget extends Game with TapDetector {
 
     _world.entities.forEach((entity) {
       entity.getSprites().forEach((sprite) {
-        //canvas.
         sprite.render(canvas, _world.camera);
+      });
+    });
+    _world.huds.forEach((entity) {
+      entity.getSprites().forEach((sprite) {
+        sprite.render(canvas, null);
       });
     });
   }
