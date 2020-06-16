@@ -1,7 +1,7 @@
 
 import 'package:flame_action/domain/entity/entity.dart';
 import 'package:flame_action/domain/entity/joystick.dart';
-import 'package:flame_action/presentation/animation/joystick_sprite_resolver.dart';
+import 'package:flame_action/presentation/image/joystick_sprite_resolver.dart';
 import 'package:flutter/painting.dart';
 
 import 'image/sprite.dart';

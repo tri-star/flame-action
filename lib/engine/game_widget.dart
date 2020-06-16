@@ -9,8 +9,8 @@ import 'joystick.dart';
 import 'world.dart';
 import '../domain/entity/enemy.dart';
 import '../domain/entity/player.dart';
-import '../presentation/animation/enemy_sprite_resolver.dart';
-import '../presentation/animation/player_sprite_resolver.dart';
+import '../presentation/image/enemy_sprite_resolver.dart';
+import '../presentation/image/player_sprite_resolver.dart';
 
 /// ユーザーからの入力を受け付け、GameModelに伝える
 /// GameModelの内容をレンダリングする
