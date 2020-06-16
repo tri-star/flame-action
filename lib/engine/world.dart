@@ -15,12 +15,9 @@ import 'joystick.dart';
 class World implements JoystickListener {
 
   Sprite background;
-  Entity _entity;
   List<Entity> _entities;
   List<Entity> _huds;
   PointerEventHandler _pointerEventHandler;
-  double _worldW;
-  double _worldH;
   Camera _camera;
 
   int _randomSeed;  
@@ -29,8 +26,6 @@ class World implements JoystickListener {
     _randomSeed = randomSeed,
     _entities = List<Entity>(),
     _huds = List<Entity>(),
-    _worldW = worldW,
-    _worldH = worldH,
     _camera = Camera(cameraW, cameraH, worldW, worldH);
 
   void update(double dt) {
@@ -44,7 +39,6 @@ class World implements JoystickListener {
   }
 
   void addEntity(Entity entity) {
-    _entity = entity;
     _entities.add(entity);
   }
 
@@ -80,7 +74,6 @@ class World implements JoystickListener {
     });
   }
 
-  Entity get entity => _entity;
   List<Entity> get entities => _entities;
   List<Entity> get huds => _huds;
   Camera get camera => _camera;
