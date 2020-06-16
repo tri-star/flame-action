@@ -1,7 +1,8 @@
-import 'package:flame/sprite.dart' as Flame; 
-import 'package:flame_action/engine/animation/sprite.dart';
-import 'package:flame_action/engine/animation/sprite_resolver.dart';
-import 'package:flame_action/presentation/flame/flame_sprite.dart';
+import 'package:flame/sprite.dart' as Flame;
+import '../../engine/image/animation.dart'; 
+import '../../engine/image/sprite.dart';
+import '../../engine/image/sprite_resolver.dart';
+import '../flame/flame_sprite.dart';
 
 class JoyStickSpriteResolver extends SpriteResolver {
 
@@ -24,6 +25,11 @@ class JoyStickSpriteResolver extends SpriteResolver {
 
   @override
   void update() {
+  }
+
+  @override
+  Animation resolveAnimation(SpriteContext context) {
+    return null;
   }
 
 }

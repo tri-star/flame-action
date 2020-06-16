@@ -43,6 +43,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/images/background01.png
     - assets/images/player_normal.png
     - assets/images/player_walk.png
     - assets/images/enemy01_state_normal.png

@@ -1,8 +1,10 @@
 import 'dart:ui';
 
 import 'package:flame/position.dart';
-import 'package:flame_action/domain/entity/entity.dart';
 import 'package:flutter/foundation.dart';
+
+import '../camera.dart';
+import '../../domain/entity/entity.dart';
 
 enum AnchorPoint {
   TOP_LEFT,
@@ -25,7 +27,7 @@ abstract class Sprite {
   Dimension dimension = Dimension.RIGHT;
   AnchorPoint anchor = AnchorPoint.TOP_LEFT;
 
-  void render(Canvas canvas);
+  void render(Canvas canvas, Camera camera);
   Paint paint;
 
   @protected

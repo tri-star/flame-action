@@ -1,5 +1,5 @@
-import 'package:flame_action/engine/animation/sprite.dart';
-import 'package:flame_action/engine/animation/sprite_resolver.dart';
+import 'package:flame_action/engine/image/sprite.dart';
+import 'package:flame_action/engine/image/sprite_resolver.dart';
 import 'package:flame_action/engine/joystick.dart';
 
 import 'entity.dart';
@@ -27,7 +27,8 @@ class Player extends Entity implements JoystickListener {
     }
     sprite
       ..x = x
-      ..y = y;
+      ..y = y
+      ..dimension = dimension;
 
     return List<Sprite>.from([sprite]);
   }

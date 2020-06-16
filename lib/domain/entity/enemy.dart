@@ -1,6 +1,6 @@
 
-import 'package:flame_action/engine/animation/sprite.dart';
-import 'package:flame_action/engine/animation/sprite_resolver.dart';
+import 'package:flame_action/engine/image/sprite.dart';
+import 'package:flame_action/engine/image/sprite_resolver.dart';
 
 import 'entity.dart';
 
@@ -20,11 +20,15 @@ class Enemy extends Entity {
   }
 
   List<Sprite> getSprites() {
-    return List<Sprite>.from([
-      _spriteResolver.resolve(null)
-        ..x = x
-        ..y = y
-        ..dimension = dimension
-    ]);
+    Sprite sprite = _spriteResolver.resolve(null);
+    if(sprite == null) {
+      return [];
+    }
+    sprite
+      ..x = x
+      ..y = y
+      ..dimension = dimension;
+
+    return List<Sprite>.from([sprite]);
   }
 }
