@@ -100,6 +100,10 @@ class PointerEventHandler {
       return JoystickDirection.LEFT;
     } else if (_joystickPosition.center.dx - x < -15) {
       return JoystickDirection.RIGHT;
+    } else if (_joystickPosition.center.dy - y > 15) {
+      return JoystickDirection.UP;
+    } else if (_joystickPosition.center.dy - y < -15) {
+      return JoystickDirection.DOWN;
     }
     return JoystickDirection.NEUTRAL;
   }

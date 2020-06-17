@@ -8,9 +8,10 @@ class Enemy extends Entity {
   
   SpriteResolver _spriteResolver;
 
-  Enemy(SpriteResolver spriteResolver, {double x, double y}) {
+  Enemy(SpriteResolver spriteResolver, {double x, double y, double z}) {
     this.x = x;
     this.y = y;
+    this.z = z;
     this._spriteResolver = spriteResolver;
     this.dimension = Dimension.LEFT;
   }
@@ -26,7 +27,7 @@ class Enemy extends Entity {
     }
     sprite
       ..x = x
-      ..y = y
+      ..y = y - (z * 10)
       ..dimension = dimension;
 
     return List<Sprite>.from([sprite]);

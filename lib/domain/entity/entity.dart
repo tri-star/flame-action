@@ -19,11 +19,15 @@ class Entity {
   double x = 0;
   @protected
   double y = 0;
+  @protected
+  double z = 0;
 
   @protected
   double vx = 0;
   @protected
   double vy = 0;
+  @protected
+  double vz = 0;
 
   @protected
   Dimension dimension = Dimension.RIGHT;
@@ -40,6 +44,7 @@ class Entity {
 
   double getX() => x;
   double getY() => y;
+  double getZ() => z;
   Dimension getDimension() => dimension;
 
   List<Sprite> getSprites() {

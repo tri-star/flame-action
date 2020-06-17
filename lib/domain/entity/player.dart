@@ -8,15 +8,17 @@ class Player extends Entity implements JoystickListener {
   
   SpriteResolver _spriteResolver;
 
-  Player(SpriteResolver spriteResolver, {double x, double y}) {
+  Player(SpriteResolver spriteResolver, {double x, double y, double z}) {
     this.x = x;
     this.y = y;
+    this.z = z;
     this._spriteResolver = spriteResolver;
   }
 
   void update(double dt) {
     x += vx;
     y += vy;
+    z += vz;
     _spriteResolver.update();
   }
 
@@ -27,7 +29,7 @@ class Player extends Entity implements JoystickListener {
     }
     sprite
       ..x = x
-      ..y = y
+      ..y = y + (z * 0.1)
       ..dimension = dimension;
 
     return List<Sprite>.from([sprite]);
@@ -46,8 +48,17 @@ class Player extends Entity implements JoystickListener {
       dimension = Dimension.RIGHT;
       state = 'walk';
     }
+    if(event.direction == JoystickDirection.UP) {
+      vz = -10;
+      state = 'walk';
+    }
+    if(event.direction == JoystickDirection.DOWN) {
+      vz = 10;
+      state = 'walk';
+    }
     if(event.direction == JoystickDirection.NEUTRAL) {
       vx = 0;
+      vz = 0;
       state = 'neutral';
     }
   }

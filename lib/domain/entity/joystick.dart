@@ -13,6 +13,7 @@ class JoyStick extends Entity implements JoystickListener {
   JoyStick(SpriteResolver spriteResolver, {double x, double y}) {
     this.x = x;
     this.y = y;
+    this.z = 0;
     this._spriteResolver = spriteResolver;
     this._baseSprite = _spriteResolver.resolve(SpriteContext(state: 'base'));
     this._knobSprite = _spriteResolver.resolve(SpriteContext(state: 'knob'));
@@ -38,7 +39,12 @@ class JoyStick extends Entity implements JoystickListener {
     switch(event.direction) {
       case JoystickDirection.LEFT:    _knobSprite.x = _baseSprite.x - 30; break;
       case JoystickDirection.RIGHT:   _knobSprite.x = _baseSprite.x + 30; break;
-      case JoystickDirection.NEUTRAL: _knobSprite.x = _baseSprite.x; break;
+      case JoystickDirection.UP:      _knobSprite.y = _baseSprite.y - 30; break;
+      case JoystickDirection.DOWN:    _knobSprite.y = _baseSprite.y + 30; break;
+      case JoystickDirection.NEUTRAL:
+        _knobSprite.x = _baseSprite.x; 
+        _knobSprite.y = _baseSprite.y;
+        break;
       default:
     }
   }
