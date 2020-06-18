@@ -50,4 +50,8 @@ class Entity {
   List<Sprite> getSprites() {
     return null;    
   }
+
+  void addZ(double distance) {
+    z += distance;
+  }
 }
