@@ -15,6 +15,10 @@ class ZOrderedCollection extends Iterable<Entity> {
   void add(Entity entity) {
     _list.add(entity);
   }
+
+  void sync() {
+    _list.sync();
+  }
 }
 
 

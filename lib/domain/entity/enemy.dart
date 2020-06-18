@@ -27,7 +27,7 @@ class Enemy extends Entity {
     }
     sprite
       ..x = x
-      ..y = y - (z * 10)
+      ..y = y + (z * 0.1)
       ..dimension = dimension;
 
     return List<Sprite>.from([sprite]);

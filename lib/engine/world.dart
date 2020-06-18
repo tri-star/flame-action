@@ -7,6 +7,7 @@ import 'package:flutter/painting.dart';
 import 'camera.dart';
 import 'image/sprite.dart';
 import 'joystick.dart';
+import '../util/list.dart';
 
 /// ゲームの本体。
 /// ユーザーの入力などをデバイスに依存しない形で受け付ける
@@ -15,7 +16,7 @@ import 'joystick.dart';
 class World implements JoystickListener {
 
   Sprite background;
-  List<Entity> _entities;
+  ZOrderedCollection _entities;
   List<Entity> _huds;
   PointerEventHandler _pointerEventHandler;
   Camera _camera;
@@ -24,7 +25,7 @@ class World implements JoystickListener {
 
   World(double worldW, double worldH, double cameraW, double cameraH, {randomSeed: 0}): 
     _randomSeed = randomSeed,
-    _entities = List<Entity>(),
+    _entities = ZOrderedCollection(),
     _huds = List<Entity>(),
     _camera = Camera(cameraW, cameraH, worldW, worldH);
 
@@ -74,7 +75,10 @@ class World implements JoystickListener {
     });
   }
 
-  List<Entity> get entities => _entities;
+  ZOrderedCollection get entities {
+    return _entities..sync();
+  }
+  
   List<Entity> get huds => _huds;
   Camera get camera => _camera;
 }

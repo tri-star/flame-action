@@ -33,7 +33,7 @@ class GameWidget extends Game with TapDetector {
     _world = World(1000, 340, dimension.width, dimension.height);
     _world.setBackground(FlameSprite(Sprite('background01.png'), x: 0, y: -80));  // Flameを直接使わないようにする
     _world.addEntity(player);
-    _world.addEntity(Enemy(EnemySpriteResolver(), x: 200, y: 200, z: 0));
+    _world.addEntity(Enemy(EnemySpriteResolver(), x: 200, y: 160, z: 400));
     
     _world.createJoystick(60, 300);
     _world.camera.followEntity(player);
