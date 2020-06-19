@@ -30,8 +30,8 @@ class GameWidget extends Game with TapDetector {
     Size dimension = await Flame.util.initialDimensions();
     Player player = Player(PlayerSpriteResolver(),  x: 10, y: 160, z: 400);
 
-    _world = World(1000, 340, dimension.width, dimension.height);
-    _world.setBackground(FlameSprite(Sprite('background01.png'), x: 0, y: -80));  // Flameを直接使わないようにする
+    _world = World(2000, 340, dimension.width, dimension.height);
+    _world.setBackground(FlameSprite(Sprite('background01.png'), x: 0, y: 0));  // Flameを直接使わないようにする
     _world.addEntity(player);
     _world.addEntity(Enemy(EnemySpriteResolver(), x: 200, y: 160, z: 400));
     
