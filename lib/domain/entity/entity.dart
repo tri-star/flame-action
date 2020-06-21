@@ -83,6 +83,10 @@ class Entity {
     return Rect3d(x, y, z, getW(), getH(), getD());
   }
 
+  Position3d getPosition() {
+    return Position3d(x, y, z);    
+  }
+
   void addZ(double distance) {
     z += distance;
   }

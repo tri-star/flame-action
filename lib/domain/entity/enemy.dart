@@ -16,15 +16,17 @@ class Enemy extends Entity {
   }
 
   List<Sprite> getSprites() {
-    Sprite sprite = spriteResolver.resolve(null);
+    if(animation == null) {
+      return [];
+    }
+    Sprite sprite = animation.getSprite();
     if(sprite == null) {
       return [];
     }
     sprite
       ..x = x
-      ..y = y + (z * 0.1)
+      ..y = y + z
       ..dimension = dimension;
 
-    return List<Sprite>.from([sprite]);
-  }
+    return List<Sprite>.from([sprite]);  }
 }

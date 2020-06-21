@@ -29,7 +29,7 @@ class Player extends Entity implements JoystickListener {
     }
     sprite
       ..x = x
-      ..y = y + (z * 0.1)
+      ..y = y + z
       ..dimension = dimension;
 
     return List<Sprite>.from([sprite]);
@@ -49,11 +49,11 @@ class Player extends Entity implements JoystickListener {
       state = 'walk';
     }
     if(event.direction == JoystickDirection.UP) {
-      vz = -10;
+      vz = -1;
       state = 'walk';
     }
     if(event.direction == JoystickDirection.DOWN) {
-      vz = 10;
+      vz = 1;
       state = 'walk';
     }
     if(event.direction == JoystickDirection.NEUTRAL) {

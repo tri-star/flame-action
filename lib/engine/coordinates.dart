@@ -7,6 +7,18 @@ class Position3d {
   double z;
 
   Position3d(this.x, this.y, this.z);
+
+  String toString() {
+    return '$x,$y,$z';
+  }
+
+  @override
+  bool operator ==(other) {
+    return other is Position3d && 
+      x == other.x &&
+      y == other.y &&
+      z == other.z;
+  }
 }
 
 /// 物体の移動量を表すオブジェクト

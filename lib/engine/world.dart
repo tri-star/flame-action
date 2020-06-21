@@ -1,10 +1,12 @@
 
+import 'package:flame_action/domain/boundary_adjustment_service.dart';
 import 'package:flame_action/domain/entity/entity.dart';
 import 'package:flame_action/domain/entity/joystick.dart';
 import 'package:flame_action/presentation/image/joystick_sprite_resolver.dart';
 import 'package:flutter/painting.dart';
 
 import 'camera.dart';
+import 'coordinates.dart';
 import 'image/sprite.dart';
 import 'joystick.dart';
 import '../util/list.dart';
@@ -19,6 +21,8 @@ class World implements JoystickListener {
   ZOrderedCollection _entities;
   List<Entity> _huds;
   PointerEventHandler _pointerEventHandler;
+  BoundaryAdjustmentService _boundaryAdjustmentService;
+  Rect3d _worldRect;
   Camera _camera;
 
   int _randomSeed;  
@@ -27,11 +31,14 @@ class World implements JoystickListener {
     _randomSeed = randomSeed,
     _entities = ZOrderedCollection(),
     _huds = List<Entity>(),
-    _camera = Camera(cameraW, cameraH, worldW, worldH);
+    _camera = Camera(cameraW, cameraH, worldW, worldH),
+    _worldRect = Rect3d.fromSizeAndPosition(Size3d(worldW, worldH, 100), Position3d(0,0,0)),
+    _boundaryAdjustmentService = BoundaryAdjustmentService();
 
   void update(double dt) {
     _entities.forEach((entity) {
       entity.update(dt);
+      _boundaryAdjustmentService.adjust(_worldRect, entity);
     });
     _huds.forEach((entity) {
       entity.update(dt);
