@@ -94,4 +94,9 @@ class GameWidget extends Game with TapDetector {
     _world.onPointerEvent(pointerEvent);
   }
 
+  @override
+  void onTapDown(TapDownDetails details) {
+    
+  }
+
 }

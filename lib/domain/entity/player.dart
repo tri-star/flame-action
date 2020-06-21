@@ -62,4 +62,9 @@ class Player extends Entity implements JoystickListener {
       state = 'neutral';
     }
   }
+
+  @override
+  onJoystickAction(JoystickActionEvent event) {
+    print(event.action);
+  }
 }

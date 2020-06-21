@@ -2,6 +2,8 @@
 import 'package:flame_action/domain/boundary_adjustment_service.dart';
 import 'package:flame_action/domain/entity/entity.dart';
 import 'package:flame_action/domain/entity/joystick.dart';
+import 'package:flame_action/domain/entity/action_button.dart';
+import 'package:flame_action/presentation/image/action_button_sprite_resolver.dart';
 import 'package:flame_action/presentation/image/joystick_sprite_resolver.dart';
 import 'package:flutter/painting.dart';
 
@@ -52,10 +54,14 @@ class World implements JoystickListener {
 
   void createJoystick(double x, double y) {
     // 横幅/縦幅またはRectの情報をEntityやSpriteから取得する
-    _pointerEventHandler = PointerEventHandler(Rect.fromLTWH(x-40.0, y-40.0, 80, 80));;
+    _pointerEventHandler = PointerEventHandler(
+      Rect.fromLTWH(x-40.0, y-40.0, 80, 80),
+      Rect.fromLTWH((_camera.w - 120)-30, y-30.0, 60, 60),
+    );
     _pointerEventHandler.addListener('world', this);
 
     this._huds.add(JoyStick(3, JoyStickSpriteResolver(), x: x, y: y));
+    this._huds.add(ActionButton(3, ActionButtonSpriteResolver(), x: _camera.w - 120, y: y));
   }
 
   void setBackground(Sprite _sprite) {
@@ -81,6 +87,21 @@ class World implements JoystickListener {
       }
     });
   }
+
+  @override
+  onJoystickAction(JoystickActionEvent event) {
+    _entities.forEach((entity) {
+      if(entity is JoystickListener) {
+        (entity as JoystickListener).onJoystickAction(event);
+      }
+    });
+    _huds.forEach((entity) {
+      if(entity is JoystickListener) {
+        (entity as JoystickListener).onJoystickAction(event);
+      }
+    });
+  }
+
 
   ZOrderedCollection get entities {
     return _entities..sync();
