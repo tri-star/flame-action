@@ -14,7 +14,7 @@ import '../presentation/image/player_sprite_resolver.dart';
 
 /// ユーザーからの入力を受け付け、GameModelに伝える
 /// GameModelの内容をレンダリングする
-class GameWidget extends Game with TapDetector {
+class GameWidget extends Game {
 
   bool _initialized = false;
   World _world;
@@ -80,23 +80,17 @@ class GameWidget extends Game with TapDetector {
   }
 
   void onPointerMove(PointerMoveEvent event) {
-    final pointerEvent = UiPointerEvent(PointerEventType.UPDATE, event.position.dx, event.position.dy);
+    final pointerEvent = UiPointerEvent(PointerEventType.UPDATE, event.pointer, event.position.dx, event.position.dy);
     _world.onPointerEvent(pointerEvent);
   }
 
   void onPointerDown(PointerDownEvent event) {
-    final pointerEvent = UiPointerEvent(PointerEventType.START, event.position.dx, event.position.dy);
+    final pointerEvent = UiPointerEvent(PointerEventType.START, event.pointer, event.position.dx, event.position.dy);
     _world.onPointerEvent(pointerEvent);
   }
 
   void onPointerUp(PointerUpEvent event) {
-    final pointerEvent = UiPointerEvent(PointerEventType.END, event.position.dx, event.position.dy);
+    final pointerEvent = UiPointerEvent(PointerEventType.END, event.pointer, event.position.dx, event.position.dy);
     _world.onPointerEvent(pointerEvent);
   }
-
-  @override
-  void onTapDown(TapDownDetails details) {
-    
-  }
-
 }

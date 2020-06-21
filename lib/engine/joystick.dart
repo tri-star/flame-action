@@ -9,10 +9,11 @@ enum PointerEventType {
 /// UIから伝達される移動関連のイベント情報
 class UiPointerEvent {
   PointerEventType type;
+  int pointerId;
   double x;
   double y;
 
-  UiPointerEvent(this.type, this.x, this.y);
+  UiPointerEvent(this.type, this.pointerId, this.x, this.y);
 }
 
 enum JoystickDirection {
@@ -61,7 +62,8 @@ class PointerEventHandler {
 
   double _startX = 0;
   double _startY = 0;
-  bool _isStarted = false;
+  int _actionButtonPointerId;
+  bool _isStarted;
 
   Rect _joystickPosition;
   Rect _actionButtonPosition;
@@ -70,7 +72,9 @@ class PointerEventHandler {
   PointerEventHandler(Rect joyStickPosition, Rect actionButtonPosition):
     _joystickPosition = joyStickPosition,
     _actionButtonPosition = actionButtonPosition,
-    _listeners = Map<String, JoystickListener>();
+    _listeners = Map<String, JoystickListener>(),
+    _actionButtonPointerId = 0,
+    _isStarted = false;
 
   addListener(String key, JoystickListener listener) {
     _listeners[key] = listener;
@@ -78,7 +82,7 @@ class PointerEventHandler {
 
   void handle(UiPointerEvent event) {
 
-    if(_isContainedActionComponent(event.x, event.y)) {
+    if(_isContainedActionComponent(event.pointerId, event.x, event.y)) {
       handleActionButtonEvent(event);
       return;
     }
@@ -108,6 +112,7 @@ class PointerEventHandler {
 
 
   void handleActionButtonEvent(UiPointerEvent event) {
+    _actionButtonPointerId = event.pointerId;
     switch(event.type) {
       case PointerEventType.START:
         JoystickActionEvent gameEvent = JoystickActionEvent(JoystickAction.ATTACK_DOWN);
@@ -139,8 +144,8 @@ class PointerEventHandler {
     return _joystickPosition.contains(Offset(x, y));
   }
 
-  bool _isContainedActionComponent(double x, double y) {
-    return _actionButtonPosition.contains(Offset(x, y));
+  bool _isContainedActionComponent(int pointerId, double x, double y) {
+    return pointerId == _actionButtonPointerId || _actionButtonPosition.contains(Offset(x, y));
   }
 
   JoystickDirection _getDimension(double x, double y) {
