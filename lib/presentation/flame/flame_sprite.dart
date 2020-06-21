@@ -12,10 +12,11 @@ class FlameSprite extends Sprite {
 
   Flame.Sprite _flameSprite;
 
-  FlameSprite(Flame.Sprite flameSprite, {double x, double y, Dimension dimension}): 
+  FlameSprite(Flame.Sprite flameSprite, {double x, double y, double d, Dimension dimension}): 
     _flameSprite = flameSprite {
     this.x = x ?? 0;
     this.y = y ?? 0;
+    this.d = d ?? 1;
     this.dimension = dimension;
   }
 

@@ -12,18 +12,19 @@ class FlameAnimation extends Animation {
   Sprite _currentSprite;
   AnchorPoint _anchorPoint;
   Dimension _dimension;
+  double _depth;
 
-
-  FlameAnimation(Flame.Animation flameAnimation, {AnchorPoint anchor, Dimension dimension}):
+  FlameAnimation(Flame.Animation flameAnimation, {AnchorPoint anchor, Dimension dimension, double depth}):
     _animation = flameAnimation,
     _currentIndex = 0,
     _anchorPoint = anchor ?? AnchorPoint.TOP_LEFT,
-    _dimension = dimension;
+    _dimension = dimension,
+    _depth = depth;
 
   @override
   Sprite getSprite() {
     if(_currentIndex != _animation.currentIndex || _currentSprite == null) {
-      _currentSprite = FlameSprite(_animation.getSprite());
+      _currentSprite = FlameSprite(_animation.getSprite(), d: _depth);
       _currentSprite.anchor = _anchorPoint;
       _currentSprite.dimension = _dimension;
       _currentIndex = _animation.currentIndex;

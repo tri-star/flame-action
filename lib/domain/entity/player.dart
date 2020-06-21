@@ -6,30 +6,30 @@ import 'entity.dart';
 
 class Player extends Entity implements JoystickListener {
   
-  SpriteResolver _spriteResolver;
-
-  Player(SpriteResolver spriteResolver, {double x, double y, double z}) {
+  Player(int id, SpriteResolver spriteResolver, {double x, double y, double z}) {
+    this.id = id;
     this.x = x;
     this.y = y;
     this.z = z;
-    this._spriteResolver = spriteResolver;
+    this.spriteResolver = spriteResolver;
   }
 
+  @override
   void update(double dt) {
-    x += vx;
-    y += vy;
-    z += vz;
-    _spriteResolver.update();
+    super.update(dt);
   }
 
   List<Sprite> getSprites() {
-    Sprite sprite = _spriteResolver.resolve(SpriteContext(state: state, dimension: dimension));
+    if(animation == null) {
+      return [];
+    }
+    Sprite sprite = animation.getSprite();
     if(sprite == null) {
       return [];
     }
     sprite
       ..x = x
-      ..y = y + (z * 0.1)
+      ..y = y + z
       ..dimension = dimension;
 
     return List<Sprite>.from([sprite]);
@@ -49,11 +49,11 @@ class Player extends Entity implements JoystickListener {
       state = 'walk';
     }
     if(event.direction == JoystickDirection.UP) {
-      vz = -10;
+      vz = -1;
       state = 'walk';
     }
     if(event.direction == JoystickDirection.DOWN) {
-      vz = 10;
+      vz = 1;
       state = 'walk';
     }
     if(event.direction == JoystickDirection.NEUTRAL) {

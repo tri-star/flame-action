@@ -22,8 +22,10 @@ enum AnchorPoint {
 abstract class Sprite {
   double x = 0;
   double y = 0;
+  double z = 0;
   double w = 0;
   double h = 0;
+  double d = 1;
   Dimension dimension = Dimension.RIGHT;
   AnchorPoint anchor = AnchorPoint.TOP_LEFT;
 

@@ -43,6 +43,7 @@ class PlayerSpriteResolver extends SpriteResolver {
       //TODO: アニメーションの管理も状態が関係する
       _currentAnimation = FlameAnimation(_spriteSheets[_currentState].createAnimation(0, stepTime: 0.2), 
         anchor: AnchorPoint.BOTTOM_CENTER,
+        depth: 10,
         dimension: context.dimension
       );
     }
