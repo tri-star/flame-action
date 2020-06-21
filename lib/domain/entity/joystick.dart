@@ -6,7 +6,6 @@ import 'entity.dart';
 
 class JoyStick extends Entity implements JoystickListener {
 
-  SpriteResolver _spriteResolver;
   Sprite _baseSprite;
   Sprite _knobSprite;
 
@@ -15,19 +14,21 @@ class JoyStick extends Entity implements JoystickListener {
     this.x = x;
     this.y = y;
     this.z = 0;
-    this._spriteResolver = spriteResolver;
-    this._baseSprite = _spriteResolver.resolve(SpriteContext(state: 'base'));
-    this._knobSprite = _spriteResolver.resolve(SpriteContext(state: 'knob'));
+    this.spriteResolver = spriteResolver;
+    this._baseSprite = spriteResolver.resolve(SpriteContext(state: 'base'));
+    this._knobSprite = spriteResolver.resolve(SpriteContext(state: 'knob'));
     _baseSprite.x = x;
     _baseSprite.y = y;
     _knobSprite.x = x;
     _knobSprite.y = y;
   }
 
+  @override
   void update(double dt) {
 
   }
 
+  @override
   List<Sprite> getSprites() {
     return List<Sprite>.from([
       _baseSprite,

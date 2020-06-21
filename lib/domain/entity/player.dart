@@ -6,25 +6,24 @@ import 'entity.dart';
 
 class Player extends Entity implements JoystickListener {
   
-  SpriteResolver _spriteResolver;
-
   Player(int id, SpriteResolver spriteResolver, {double x, double y, double z}) {
     this.id = id;
     this.x = x;
     this.y = y;
     this.z = z;
-    this._spriteResolver = spriteResolver;
+    this.spriteResolver = spriteResolver;
   }
 
+  @override
   void update(double dt) {
-    x += vx;
-    y += vy;
-    z += vz;
-    _spriteResolver.update();
+    super.update(dt);
   }
 
   List<Sprite> getSprites() {
-    Sprite sprite = _spriteResolver.resolve(SpriteContext(state: state, dimension: dimension));
+    if(animation == null) {
+      return [];
+    }
+    Sprite sprite = animation.getSprite();
     if(sprite == null) {
       return [];
     }

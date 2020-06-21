@@ -6,23 +6,17 @@ import 'entity.dart';
 
 class Enemy extends Entity {
   
-  SpriteResolver _spriteResolver;
-
   Enemy(int id, SpriteResolver spriteResolver, {double x, double y, double z}) {
     this.id = id;
     this.x = x;
     this.y = y;
     this.z = z;
-    this._spriteResolver = spriteResolver;
+    this.spriteResolver = spriteResolver;
     this.dimension = Dimension.LEFT;
   }
 
-  void update(double dt) {
-    _spriteResolver.update();
-  }
-
   List<Sprite> getSprites() {
-    Sprite sprite = _spriteResolver.resolve(null);
+    Sprite sprite = spriteResolver.resolve(null);
     if(sprite == null) {
       return [];
     }
