@@ -46,7 +46,9 @@ flutter:
     - assets/images/background01.png
     - assets/images/player_normal.png
     - assets/images/player_walk.png
+    - assets/images/player_attack01.png
     - assets/images/enemy01_state_normal.png
+    - assets/images/enemy01_state_damage.png
     - assets/images/joystick_base.png
     - assets/images/joystick_knob.png
 
