@@ -9,7 +9,7 @@ void main() {
 
     test('Forで1回ループ出来る', () {
       ZOrderedCollection collection = ZOrderedCollection();
-      collection.add(Player(null, z: 1));
+      collection.add(Player(0, null, z: 1));
 
       int count = 0;
       for(Entity e in collection) {
@@ -22,8 +22,8 @@ void main() {
 
     test('Forで2回ループ出来る', () {
       ZOrderedCollection collection = ZOrderedCollection();
-      collection.add(Player(null, z: 1));
-      collection.add(Player(null, z: 2));
+      collection.add(Player(0, null, z: 1));
+      collection.add(Player(0, null, z: 2));
 
       int count = 0;
       for(Entity e in collection) {
@@ -38,7 +38,7 @@ void main() {
   group('ZOrderedListIterator', () {
 
     test('1つ取り出せる', () {
-      Entity player = Player(null, z: 1);
+      Entity player = Player(0, null, z: 1);
       ZOrderedList list = ZOrderedList();
       list.add(player);
 
@@ -50,8 +50,8 @@ void main() {
     });
 
     test('2つ取り出せる', () {
-      Entity player = Player(null, z: 1);
-      Entity player2 = Player(null, z: 2);
+      Entity player = Player(0, null, z: 1);
+      Entity player2 = Player(0, null, z: 2);
 
       ZOrderedList list = ZOrderedList();
       list.add(player);
@@ -68,7 +68,7 @@ void main() {
     });
 
     test('終端はnullを返す', () {
-      Entity player = Player(null, z: 1);
+      Entity player = Player(0, null, z: 1);
       ZOrderedList list = ZOrderedList();
       list.add(player);
 
@@ -80,7 +80,7 @@ void main() {
     });
 
     test('終端到着後にmoveNextを呼んでもエラーにならない', () {
-      Entity player = Player(null, z: 1);
+      Entity player = Player(0, null, z: 1);
       ZOrderedList list = ZOrderedList();
       list.add(player);
 
@@ -93,8 +93,8 @@ void main() {
     });
 
     test('2つのインスタンスが別々の位置を保持していること', () {
-      Entity player = Player(null, z: 1);
-      Entity player2 = Player(null, z: 2);
+      Entity player = Player(0, null, z: 1);
+      Entity player2 = Player(0, null, z: 2);
       ZOrderedList list = ZOrderedList();
       list.add(player);
       list.add(player2);
@@ -109,8 +109,8 @@ void main() {
     });
 
     test('登録時にZ座標の小さい順に格納されること', () {
-      Entity player = Player(null, z: 1);
-      Entity player2 = Player(null, z: 1.1);
+      Entity player = Player(0, null, z: 1);
+      Entity player2 = Player(0, null, z: 1.1);
       ZOrderedList list = ZOrderedList();
       list.add(player2);
       list.add(player);
@@ -122,9 +122,9 @@ void main() {
 
     test('3個のうちの2番目に挿入', () {
       ZOrderedList list = ZOrderedList();
-      list.add(Player(null, z: 1));
-      list.add(Player(null, z: 1.3));
-      list.add(Player(null, z: 1.2));
+      list.add(Player(0, null, z: 1));
+      list.add(Player(0, null, z: 1.3));
+      list.add(Player(0, null, z: 1.2));
 
       ZOrderedListIterator iterator = ZOrderedListIterator(list);
       iterator.moveNext();
@@ -139,9 +139,9 @@ void main() {
 
     test('途中でz-orderが変化しても対応できる(3番目が2番目になる)', () {
       ZOrderedList list = ZOrderedList();
-      Player p = Player(null, z: 3);
-      list.add(Player(null, z: 1));
-      list.add(Player(null, z: 2));
+      Player p = Player(0, null, z: 3);
+      list.add(Player(0, null, z: 1));
+      list.add(Player(0, null, z: 2));
       list.add(p);
 
       p.addZ(-1.5);
@@ -160,10 +160,10 @@ void main() {
 
     test('途中でz-orderが変化しても対応できる(1度に2つ以上上に移動するケース)', () {
       ZOrderedList list = ZOrderedList();
-      Player p = Player(null, z: 4);
-      list.add(Player(null, z: 1));
-      list.add(Player(null, z: 2));
-      list.add(Player(null, z: 3));
+      Player p = Player(0, null, z: 4);
+      list.add(Player(0, null, z: 1));
+      list.add(Player(0, null, z: 2));
+      list.add(Player(0, null, z: 3));
       list.add(p);
 
       p.addZ(-2.5);
@@ -184,10 +184,10 @@ void main() {
 
     test('途中でz-orderが変化しても対応できる(リストの先頭が入れ替わる)', () {
       ZOrderedList list = ZOrderedList();
-      Player p = Player(null, z: 4);
-      list.add(Player(null, z: 1));
-      list.add(Player(null, z: 2));
-      list.add(Player(null, z: 3));
+      Player p = Player(0, null, z: 4);
+      list.add(Player(0, null, z: 1));
+      list.add(Player(0, null, z: 2));
+      list.add(Player(0, null, z: 3));
       list.add(p);
 
       p.addZ(-4);
@@ -210,8 +210,8 @@ void main() {
 
   group('ZOrderedItem', () {
     test('1つ追加した後でリストの関連が崩れていないこと', () {
-      ZOrderedItem item = ZOrderedItem(Player(null, z: 1), null);
-      ZOrderedItem item2 = ZOrderedItem(Player(null, z: 2), null);
+      ZOrderedItem item = ZOrderedItem(Player(0, null, z: 1), null);
+      ZOrderedItem item2 = ZOrderedItem(Player(0, null, z: 2), null);
       item.append(item2);
 
       expect(item.entity.getZ(), 1);
@@ -220,9 +220,9 @@ void main() {
     });
 
     test('2つ目の手前に挿入してもリストの関係が崩れていないこと', () {
-      ZOrderedItem item = ZOrderedItem(Player(null, z: 1), null);
-      ZOrderedItem item2 = ZOrderedItem(Player(null, z: 2), null);
-      ZOrderedItem item3 = ZOrderedItem(Player(null, z: 3), null);
+      ZOrderedItem item = ZOrderedItem(Player(0, null, z: 1), null);
+      ZOrderedItem item2 = ZOrderedItem(Player(0, null, z: 2), null);
+      ZOrderedItem item3 = ZOrderedItem(Player(0, null, z: 3), null);
       item.append(item2);
       item2.insertBefore(item3);
 
@@ -234,9 +234,9 @@ void main() {
     });
 
     test('1つ前との入れ替え(3番目と2番目)', () {
-      ZOrderedItem item = ZOrderedItem(Player(null, z: 1), null);
-      ZOrderedItem item2 = ZOrderedItem(Player(null, z: 2), null);
-      ZOrderedItem item3 = ZOrderedItem(Player(null, z: 3), null);
+      ZOrderedItem item = ZOrderedItem(Player(0, null, z: 1), null);
+      ZOrderedItem item2 = ZOrderedItem(Player(0, null, z: 2), null);
+      ZOrderedItem item3 = ZOrderedItem(Player(0, null, z: 3), null);
       item.append(item2);
       item2.append(item3);
 

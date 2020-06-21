@@ -10,7 +10,8 @@ class JoyStick extends Entity implements JoystickListener {
   Sprite _baseSprite;
   Sprite _knobSprite;
 
-  JoyStick(SpriteResolver spriteResolver, {double x, double y}) {
+  JoyStick(int id, SpriteResolver spriteResolver, {double x, double y}) {
+    this.id = id;
     this.x = x;
     this.y = y;
     this.z = 0;

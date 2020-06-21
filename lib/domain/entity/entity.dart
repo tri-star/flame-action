@@ -13,7 +13,7 @@ class Entity {
   
   /// エンティティを一意に特定するID
   @protected
-  String id = '';
+  int id = 0;
 
   @protected
   double x = 0;
@@ -42,6 +42,7 @@ class Entity {
     throw new UnimplementedError();
   }
 
+  int getId() => id;
   double getX() => x;
   double getY() => y;
   double getZ() => z;

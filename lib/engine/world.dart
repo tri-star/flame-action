@@ -48,7 +48,7 @@ class World implements JoystickListener {
     _pointerEventHandler = PointerEventHandler(Rect.fromLTWH(x-40.0, y-40.0, 80, 80));;
     _pointerEventHandler.addListener('world', this);
 
-    this._huds.add(JoyStick(JoyStickSpriteResolver(), x: x, y: y));
+    this._huds.add(JoyStick(3, JoyStickSpriteResolver(), x: x, y: y));
   }
 
   void setBackground(Sprite _sprite) {
