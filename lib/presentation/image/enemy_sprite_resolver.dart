@@ -26,7 +26,10 @@ class EnemySpriteResolver extends SpriteResolver {
 
   @override
   Animation resolveAnimation(SpriteContext context) {
-    return FlameAnimation(_spriteSheet.createAnimation(0, stepTime: 0.2), anchor: AnchorPoint.BOTTOM_CENTER);
+    if(_animation == null) {
+      _animation = FlameAnimation(_spriteSheet.createAnimation(0, stepTime: 0.2), anchor: AnchorPoint.BOTTOM_CENTER);
+    }
+    return _animation;
   }
 
   @override
