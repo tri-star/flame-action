@@ -30,6 +30,9 @@ class ActionButton extends Entity implements JoystickListener {
     return List<Sprite>.from([sprite]);
   }
 
+  void updateState() {
+  }
+
   @override
   onJoystickMove(JoystickMoveEvent event) {
   }

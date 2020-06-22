@@ -28,8 +28,8 @@ class ActionButtonSpriteResolver extends SpriteResolver {
   @override
   Animation resolveAnimation(SpriteContext context) {
     if(_currentAnimation == null || _currentState != context.state) {
-      _currentAnimation = context.state == 'neutral' ? FlameAnimation(_spriteSheetButton.createAnimation(0, stepTime: 0.2)..loop = false, anchor: AnchorPoint.MIDDLE_CENTER) : 
-        FlameAnimation(_spriteSheetPressed.createAnimation(0, stepTime: 0.05)..loop=false, anchor: AnchorPoint.MIDDLE_CENTER);
+      _currentAnimation = context.state == 'neutral' ? FlameAnimation(_spriteSheetButton.createAnimation(0, stepTime: 0.2), anchor: AnchorPoint.MIDDLE_CENTER) : 
+        FlameAnimation(_spriteSheetPressed.createAnimation(0, stepTime: 0.05), anchor: AnchorPoint.MIDDLE_CENTER, loop: false);
       _currentState = context.state;
     }
     return _currentAnimation;
