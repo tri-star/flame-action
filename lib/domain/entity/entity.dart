@@ -51,9 +51,16 @@ class Entity {
     x += vx;
     y += vy;
     z += vz;
-    
+
+    updateState();
     updateAnimation();
     animation?.update();
+  }
+
+  void updateState() {
+    if(animation?.isDone() ?? false) {
+      state = getNextState(state);
+    }
   }
 
   void updateAnimation() {
@@ -95,5 +102,9 @@ class Entity {
     x += vector.x;
     y += vector.y;
     z += vector.z;
+  }
+
+  String getNextState(String currentState) {
+    return 'neutral';
   }
 }

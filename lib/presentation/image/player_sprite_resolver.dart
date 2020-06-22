@@ -14,6 +14,7 @@ class PlayerSpriteResolver extends SpriteResolver {
     _spriteSheets = Map<String, SpriteSheet>();
     _spriteSheets['neutral'] = SpriteSheet(imageName: 'player_normal.png', textureWidth: 60, textureHeight: 100, columns: 1, rows: 1);
     _spriteSheets['walk'] = SpriteSheet(imageName: 'player_walk.png', textureWidth: 60, textureHeight: 100, columns: 4, rows: 1);
+    _spriteSheets['attack'] = SpriteSheet(imageName: 'player_attack01.png', textureWidth: 80, textureHeight: 100, columns: 5, rows: 1);
     _currentState = '';
   }
 
@@ -40,11 +41,20 @@ class PlayerSpriteResolver extends SpriteResolver {
   Animation resolveAnimation(SpriteContext context) {
     if(context.state != _currentState) {
       _currentState = context.state;
+
+      bool loop = true;
+      double stepTime = 0.2;
+      if(_currentState == 'attack') {
+        loop = false;
+        stepTime = 0.08;
+      }
+
       //TODO: アニメーションの管理も状態が関係する
-      _currentAnimation = FlameAnimation(_spriteSheets[_currentState].createAnimation(0, stepTime: 0.2), 
+      _currentAnimation = FlameAnimation(_spriteSheets[_currentState].createAnimation(0, stepTime: stepTime),
         anchor: AnchorPoint.BOTTOM_CENTER,
         depth: 10,
-        dimension: context.dimension
+        dimension: context.dimension,
+        loop: loop
       );
     }
     return _currentAnimation;

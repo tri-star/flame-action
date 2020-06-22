@@ -65,6 +65,12 @@ class Player extends Entity implements JoystickListener {
 
   @override
   onJoystickAction(JoystickActionEvent event) {
-    print(event.action);
+    if(event.action == JoystickAction.ATTACK_DOWN) {
+      changeState('atack');
+    }
+  }
+
+  void changeState(String newState) {
+    state = 'attack';
   }
 }

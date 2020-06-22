@@ -13,13 +13,17 @@ class FlameAnimation extends Animation {
   AnchorPoint _anchorPoint;
   Dimension _dimension;
   double _depth;
+  bool _loop;
 
-  FlameAnimation(Flame.Animation flameAnimation, {AnchorPoint anchor, Dimension dimension, double depth}):
+  FlameAnimation(Flame.Animation flameAnimation, {AnchorPoint anchor, Dimension dimension, double depth, bool loop=true}):
     _animation = flameAnimation,
     _currentIndex = 0,
     _anchorPoint = anchor ?? AnchorPoint.TOP_LEFT,
     _dimension = dimension,
-    _depth = depth;
+    _depth = depth,
+    _loop = loop {
+    _animation.loop = _loop ?? true;
+  }
 
   @override
   Sprite getSprite() {
