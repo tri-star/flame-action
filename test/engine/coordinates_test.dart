@@ -61,51 +61,51 @@ main() {
   });
 
   group('getOverflowAdjustment', () {
-      Rect3d baseRect;
-      setUp(() {
-        baseRect = Rect3d.fromSizeAndPosition(Size3d(100, 200, 50), Position3d(0, 0, 0));
-      });
+    Rect3d baseRect;
+    setUp(() {
+      baseRect = Rect3d.fromSizeAndPosition(Size3d(100, 200, 50), Position3d(0, 0, 0));
+    });
 
-      test('枠と同じサイズ', () {
-        Rect3d targetRect = Rect3d.fromSizeAndPosition(Size3d(baseRect.w, baseRect.h, baseRect.d), Position3d(baseRect.x, baseRect.y, baseRect.z));
-        Vector3d adjustment = baseRect.getOverflowAdjustment(targetRect);
-        expect(adjustment, Vector3d(0,0,0));
-      });
-      test('左にはみ出している場合', () {
-        Rect3d targetRect = Rect3d.fromSizeAndPosition(Size3d(baseRect.w, baseRect.h, baseRect.d), Position3d(baseRect.x-1, baseRect.y, baseRect.z));
-        Vector3d adjustment = baseRect.getOverflowAdjustment(targetRect);
-        expect(adjustment, Vector3d(1,0,0));
-      });
+    test('枠と同じサイズ', () {
+      Rect3d targetRect = Rect3d.fromSizeAndPosition(Size3d(baseRect.w, baseRect.h, baseRect.d), Position3d(baseRect.x, baseRect.y, baseRect.z));
+      Vector3d adjustment = baseRect.getOverflowAdjustment(targetRect);
+      expect(adjustment, Vector3d(0,0,0));
+    });
+    test('左にはみ出している場合', () {
+      Rect3d targetRect = Rect3d.fromSizeAndPosition(Size3d(baseRect.w, baseRect.h, baseRect.d), Position3d(baseRect.x-1, baseRect.y, baseRect.z));
+      Vector3d adjustment = baseRect.getOverflowAdjustment(targetRect);
+      expect(adjustment, Vector3d(1,0,0));
+    });
 
-      test('上にはみ出している場合', () {
-        Rect3d targetRect = Rect3d.fromSizeAndPosition(Size3d(baseRect.w, baseRect.h, baseRect.d), Position3d(baseRect.x, baseRect.y-1, baseRect.z));
-        Vector3d adjustment = baseRect.getOverflowAdjustment(targetRect);
-        expect(adjustment, Vector3d(0,1,0));
-      });
+    test('上にはみ出している場合', () {
+      Rect3d targetRect = Rect3d.fromSizeAndPosition(Size3d(baseRect.w, baseRect.h, baseRect.d), Position3d(baseRect.x, baseRect.y-1, baseRect.z));
+      Vector3d adjustment = baseRect.getOverflowAdjustment(targetRect);
+      expect(adjustment, Vector3d(0,1,0));
+    });
 
-      test('右にはみ出している場合', () {
-        Rect3d targetRect = Rect3d.fromSizeAndPosition(Size3d(baseRect.w-1, baseRect.h, baseRect.d), Position3d(baseRect.x+2, baseRect.y, baseRect.z));
-        Vector3d adjustment = baseRect.getOverflowAdjustment(targetRect);
-        expect(adjustment, Vector3d(-1,0,0));
-      });
+    test('右にはみ出している場合', () {
+      Rect3d targetRect = Rect3d.fromSizeAndPosition(Size3d(baseRect.w-1, baseRect.h, baseRect.d), Position3d(baseRect.x+2, baseRect.y, baseRect.z));
+      Vector3d adjustment = baseRect.getOverflowAdjustment(targetRect);
+      expect(adjustment, Vector3d(-1,0,0));
+    });
 
-      test('下にはみ出している場合', () {
-        Rect3d targetRect = Rect3d.fromSizeAndPosition(Size3d(baseRect.w, baseRect.h-1, baseRect.d), Position3d(baseRect.x, baseRect.y+2, baseRect.z));
-        Vector3d adjustment = baseRect.getOverflowAdjustment(targetRect);
-        expect(adjustment, Vector3d(0,-1,0));
-      });
+    test('下にはみ出している場合', () {
+      Rect3d targetRect = Rect3d.fromSizeAndPosition(Size3d(baseRect.w, baseRect.h-1, baseRect.d), Position3d(baseRect.x, baseRect.y+2, baseRect.z));
+      Vector3d adjustment = baseRect.getOverflowAdjustment(targetRect);
+      expect(adjustment, Vector3d(0,-1,0));
+    });
 
-      test('手前にはみ出している場合', () {
-        Rect3d targetRect = Rect3d.fromSizeAndPosition(Size3d(baseRect.w, baseRect.h, baseRect.d), Position3d(baseRect.x, baseRect.y, baseRect.z+1));
-        Vector3d adjustment = baseRect.getOverflowAdjustment(targetRect);
-        expect(adjustment, Vector3d(0,0,-1));
-      });
+    test('手前にはみ出している場合', () {
+      Rect3d targetRect = Rect3d.fromSizeAndPosition(Size3d(baseRect.w, baseRect.h, baseRect.d), Position3d(baseRect.x, baseRect.y, baseRect.z+1));
+      Vector3d adjustment = baseRect.getOverflowAdjustment(targetRect);
+      expect(adjustment, Vector3d(0,0,-1));
+    });
 
-      test('奥にはみ出している場合', () {
-        Rect3d targetRect = Rect3d.fromSizeAndPosition(Size3d(baseRect.w, baseRect.h, baseRect.d), Position3d(baseRect.x, baseRect.y, baseRect.z-1));
-        Vector3d adjustment = baseRect.getOverflowAdjustment(targetRect);
-        expect(adjustment, Vector3d(0,0,1));
-      });
+    test('奥にはみ出している場合', () {
+      Rect3d targetRect = Rect3d.fromSizeAndPosition(Size3d(baseRect.w, baseRect.h, baseRect.d), Position3d(baseRect.x, baseRect.y, baseRect.z-1));
+      Vector3d adjustment = baseRect.getOverflowAdjustment(targetRect);
+      expect(adjustment, Vector3d(0,0,1));
+    });
 
   });
 
