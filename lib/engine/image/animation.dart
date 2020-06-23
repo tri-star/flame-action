@@ -4,6 +4,7 @@ import 'sprite.dart';
 
 /// アニメーションの定義情報
 class AnimationDefinition {
+  String key;
   String fileName;
   int width;
   int height;
@@ -15,7 +16,9 @@ class AnimationDefinition {
   AnchorPoint anchorPoint;
   bool loop;
 
-  AnimationDefinition(this.fileName, this.width, this.height, this.depth, this.cols, this.rows, this.frameSpeed, {this.startRow=0, this.anchorPoint=AnchorPoint.TOP_LEFT, this.loop=true});
+  AnimationDefinition(this.fileName, this.width, this.height, this.depth, this.cols, this.rows, this.frameSpeed, {this.key, this.startRow=0, this.anchorPoint=AnchorPoint.TOP_LEFT, this.loop=true}) {
+    this.key = key ?? this.fileName;
+  }
 }
 
 abstract class Animation {
