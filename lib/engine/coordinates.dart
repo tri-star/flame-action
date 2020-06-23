@@ -106,6 +106,29 @@ class Rect3d {
     return true;
   }
 
+  /// 指定したオブジェクトと衝突しているかを返す
+  bool isIntersect(Rect3d target) {
+    if(right <= target.x) {
+      return false;
+    }
+    if(_x >= target.right) {
+      return false;
+    }
+    if(bottom <= target.y) {
+      return false;
+    }
+    if(_y >= target.bottom) {
+      return false;
+    }
+    if(rear <= target.z) {
+      return false;
+    }
+    if(z >= target.rear) {
+      return false;
+    }
+    return true;
+  }
+
   /// オブジェクトが自身の中に収まるために必要な移動量を返す
   Vector3d getOverflowAdjustment(Rect3d target) {
     double adjustX = 0;
