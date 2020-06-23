@@ -1,5 +1,5 @@
 import 'package:flame/animation.dart' as Flame;
-import 'package:flame_action/domain/entity/entity.dart';
+import 'package:flame/spritesheet.dart';
 import 'package:flame_action/engine/image/sprite.dart';
 
 import '../../engine/image/animation.dart';
@@ -7,33 +7,31 @@ import '../../presentation/flame/flame_sprite.dart';
 
 class FlameAnimation extends Animation {
 
+  SpriteSheet _spriteSheet;
   Flame.Animation _animation;
-  int _currentIndex;
-  Sprite _currentSprite;
-  AnchorPoint _anchorPoint;
-  Dimension _dimension;
-  double _depth;
-  bool _loop;
 
-  FlameAnimation(Flame.Animation flameAnimation, {AnchorPoint anchor, Dimension dimension, double depth, bool loop=true}):
-    _animation = flameAnimation,
-    _currentIndex = 0,
-    _anchorPoint = anchor ?? AnchorPoint.TOP_LEFT,
-    _dimension = dimension,
-    _depth = depth,
-    _loop = loop {
-    _animation.loop = _loop ?? true;
+  FlameAnimation(AnimationDefinition definition) {
+    this.definition = definition;
+    this.currentIndex = 0;
+
+    this._spriteSheet = SpriteSheet(imageName: this.definition.fileName, 
+      textureWidth: this.definition.width, 
+      textureHeight: this.definition.height, 
+      columns: this.definition.cols, 
+      rows: this.definition.rows
+    );
+    _animation = _spriteSheet.createAnimation(this.definition.startRow, stepTime: this.definition.frameSpeed);
+    _animation.loop = this.definition.loop ?? true;
   }
 
   @override
   Sprite getSprite() {
-    if(_currentIndex != _animation.currentIndex || _currentSprite == null) {
-      _currentSprite = FlameSprite(_animation.getSprite(), d: _depth);
-      _currentSprite.anchor = _anchorPoint;
-      _currentSprite.dimension = _dimension;
-      _currentIndex = _animation.currentIndex;
+    if(currentIndex != _animation.currentIndex || currentSprite == null) {
+      currentSprite = FlameSprite(_animation.getSprite(), d: this.definition.depth);
+      currentSprite.anchor = this.definition.anchorPoint;
+      currentIndex = _animation.currentIndex;
     }
-    return _currentSprite;
+    return currentSprite;
   }
 
   @override
@@ -47,14 +45,8 @@ class FlameAnimation extends Animation {
   }
 
   @override
-  bool isLoop() {
-    return _animation.loop;
-  }
-
-  @override
   void update() {
     //TODO: 1tick分として正確な値を渡すようにする
     _animation.update(0.016);
   }
-
 }
