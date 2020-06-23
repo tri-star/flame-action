@@ -15,8 +15,15 @@ class AnimationDefinition {
   int startRow;
   AnchorPoint anchorPoint;
   bool loop;
+  double afterWait;
 
-  AnimationDefinition(this.fileName, this.width, this.height, this.depth, this.cols, this.rows, this.frameSpeed, {this.key, this.startRow=0, this.anchorPoint=AnchorPoint.TOP_LEFT, this.loop=true}) {
+  AnimationDefinition(this.fileName, this.width, this.height, this.depth, this.cols, this.rows, this.frameSpeed, {
+    this.key, 
+    this.startRow=0, 
+    this.anchorPoint=AnchorPoint.TOP_LEFT, 
+    this.loop=true, 
+    this.afterWait=0
+  }) {
     this.key = key ?? this.fileName;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flame/animation.dart' as Flame;
 import 'package:flame/spritesheet.dart';
 import 'package:flame_action/engine/image/sprite.dart';
+import 'package:flame_action/util/timer.dart';
 
 import '../../engine/image/animation.dart';
 import '../../presentation/flame/flame_sprite.dart';
@@ -11,6 +12,7 @@ class FlameAnimation extends Animation {
 
   SpriteSheet _spriteSheet;
   Flame.Animation _animation;
+  TimeoutTimer _afterWaitTimer;
 
   FlameAnimation(AnimationDefinition definition) {
     this.definition = definition;
@@ -19,6 +21,7 @@ class FlameAnimation extends Animation {
     this._spriteSheet = _loadSpriteSheet(definition);
     _animation = _spriteSheet.createAnimation(this.definition.startRow, stepTime: this.definition.frameSpeed);
     _animation.loop = this.definition.loop ?? true;
+    _afterWaitTimer = TimeoutTimer(this.definition.afterWait);
   }
 
   @override
@@ -38,7 +41,11 @@ class FlameAnimation extends Animation {
 
   @override
   bool isDone() {
-    return _animation.done();
+    if(!_animation.done()) {
+      return false;
+    }
+    _afterWaitTimer.update();
+    return _afterWaitTimer.isDone();
   }
 
   @override
