@@ -26,10 +26,8 @@ class FlameAnimation extends Animation {
 
   @override
   Sprite getSprite() {
-    if(currentIndex != _animation.currentIndex || currentSprite == null) {
-      currentSprite = FlameSprite(_animation.getSprite(), d: this.definition.depth);
-      currentSprite.anchor = this.definition.anchorPoint;
-      currentIndex = _animation.currentIndex;
+    if(currentSprite == null) {
+      update();
     }
     return currentSprite;
   }
@@ -49,9 +47,19 @@ class FlameAnimation extends Animation {
   }
 
   @override
-  void update() {
+  void update({AnimationEventCallback animationEventCallback}) {
     //TODO: 1tick分として正確な値を渡すようにする
     _animation.update(0.016);
+
+    if(currentIndex != _animation.currentIndex || currentSprite == null) {
+      currentSprite = FlameSprite(_animation.getSprite(), d: definition.depth);
+      currentSprite.anchor = definition.anchorPoint;
+      currentIndex = _animation.currentIndex;
+
+      if(animationEventCallback != null && (definition.events?.containsKey(currentIndex) ?? false)) {
+        animationEventCallback(definition.events[currentIndex]);
+      }
+    }
   }
 
   SpriteSheet _loadSpriteSheet(AnimationDefinition definition) {

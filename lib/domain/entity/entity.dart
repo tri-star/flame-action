@@ -54,7 +54,9 @@ class Entity {
 
     updateState();
     updateAnimation();
-    animation?.update();
+    animation?.update(animationEventCallback: (AnimationFrameEvent event) {
+      print(event.type);
+    });
   }
 
   void updateState() {
