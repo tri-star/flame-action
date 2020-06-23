@@ -11,8 +11,8 @@ class ActionButtonSpriteResolver extends SpriteResolver {
   String _currentState;
 
   ActionButtonSpriteResolver() {
-    _neutralDefinition = AnimationDefinition('action-button.png', 60, 60, 1, 1, 1, 0.2, anchorPoint: AnchorPoint.MIDDLE_CENTER);
-    _pressedDefinition = AnimationDefinition('action-button.png', 60, 60, 1, 3, 1, 0.05, anchorPoint: AnchorPoint.MIDDLE_CENTER, loop: false);
+    _neutralDefinition = AnimationDefinition('action-button.png', 60, 60, 1, 1, 1, 0.2, anchorPoint: AnchorPoint.MIDDLE_CENTER, key: 'action-button-neutral');
+    _pressedDefinition = AnimationDefinition('action-button.png', 60, 60, 1, 3, 1, 0.05, anchorPoint: AnchorPoint.MIDDLE_CENTER, loop: false, key: 'action-button-pressed');
   }
 
   @override

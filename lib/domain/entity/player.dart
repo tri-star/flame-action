@@ -38,39 +38,63 @@ class Player extends Entity implements JoystickListener {
   @override
   onJoystickMove(JoystickMoveEvent event) {
     if(event.direction == JoystickDirection.LEFT) {
-      vx = -2;
-      dimension = Dimension.LEFT;
-      // TODO: 状態遷移不可能なケースもあるので状態マシンで管理が必要
-      state = 'walk';
+      if(changeState('walk')) {
+        vx = -2;
+        dimension = Dimension.LEFT;
+      }
     }
     if(event.direction == JoystickDirection.RIGHT) {
-      vx = 2;
-      dimension = Dimension.RIGHT;
-      state = 'walk';
+      if(changeState('walk')) {
+        vx = 2;
+        dimension = Dimension.RIGHT;
+      }
     }
     if(event.direction == JoystickDirection.UP) {
-      vz = -1;
-      state = 'walk';
+      if(changeState('walk')) {
+        vz = -1;
+        state = 'walk';
+      }
     }
     if(event.direction == JoystickDirection.DOWN) {
-      vz = 1;
-      state = 'walk';
+      if(changeState('walk')) {
+        vz = 1;
+        state = 'walk';
+      }
     }
     if(event.direction == JoystickDirection.NEUTRAL) {
-      vx = 0;
-      vz = 0;
-      state = 'neutral';
+      if(changeState('walk')) {
+        vx = 0;
+        vz = 0;
+        state = 'neutral';
+      }
     }
   }
 
   @override
   onJoystickAction(JoystickActionEvent event) {
     if(event.action == JoystickAction.ATTACK_DOWN) {
-      changeState('atack');
+      if(changeState('attack')) {
+        vx = 0;
+        vz = 0;
+      }
     }
   }
 
-  void changeState(String newState) {
-    state = 'attack';
+  /// 状態を変更出来るか確認したうえで状態の変更を行う。
+  /// 変更できたかどうかを戻り値で返す。
+  bool changeState(String newState) {
+    switch(newState) {
+      case 'walk':
+        if(state == 'attack') {
+          return false;
+        }
+        break;
+      case 'attack':
+        break;
+      case 'newtral':
+        break;
+    }
+    state = newState;
+    return true;
   }
 }
