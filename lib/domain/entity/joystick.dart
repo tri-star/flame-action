@@ -2,6 +2,7 @@ import 'package:flame_action/engine/image/sprite.dart';
 import 'package:flame_action/engine/image/sprite_resolver.dart';
 import 'package:flame_action/engine/joystick.dart';
 
+import '../../engine/world.dart';
 import 'entity.dart';
 
 class JoyStick extends Entity implements JoystickListener {
@@ -24,7 +25,7 @@ class JoyStick extends Entity implements JoystickListener {
   }
 
   @override
-  void update(double dt) {
+  void update(double dt, WorldContext context) {
 
   }
 

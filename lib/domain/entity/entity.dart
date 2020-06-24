@@ -5,6 +5,8 @@ import 'package:flame_action/engine/image/sprite.dart';
 import 'package:flame_action/engine/image/sprite_resolver.dart';
 import 'package:flutter/foundation.dart';
 
+import '../../engine/world.dart';
+
 enum Dimension {
   LEFT,
   RIGHT
@@ -47,7 +49,7 @@ class Entity {
   @protected
   List<String> tags = List<String>();
 
-  void update(double dt) {
+  void update(double dt, WorldContext context) {
     x += vx;
     y += vy;
     z += vz;
@@ -55,7 +57,7 @@ class Entity {
     updateState();
     updateAnimation();
     animation?.update(animationEventCallback: (AnimationFrameEvent event) {
-      print(event.type);
+      onAnimationEvent(context, event);
     });
   }
 
@@ -108,5 +110,8 @@ class Entity {
 
   String getNextState(String currentState) {
     return 'neutral';
+  }
+
+  void onAnimationEvent(WorldContext context, AnimationFrameEvent event) {
   }
 }

@@ -53,7 +53,7 @@ void main() {
         Player player = Player(0, spriteResolver, x: initialPosition.x, y: initialPosition.y, z: initialPosition.z);
         Rect3d worldRect = Rect3d.fromSizeAndPosition(worldSize, Position3d(0,0,0));
 
-        player.update(0.16);
+        player.update(0.16, null);
         service.adjust(worldRect, player);
         expect(player.getPosition(), expectedPosition);
       });

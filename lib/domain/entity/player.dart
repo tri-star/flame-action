@@ -1,22 +1,23 @@
+import 'package:flame_action/engine/coordinates.dart';
+import 'package:flame_action/engine/image/animation.dart';
 import 'package:flame_action/engine/image/sprite.dart';
 import 'package:flame_action/engine/image/sprite_resolver.dart';
 import 'package:flame_action/engine/joystick.dart';
+import 'package:flame_action/engine/services/collision_detect_service.dart';
 
+import '../../engine/world.dart';
 import 'entity.dart';
 
-class Player extends Entity implements JoystickListener {
+class Player extends Entity with CollisionEventListener implements JoystickListener {
   
+  
+
   Player(int id, SpriteResolver spriteResolver, {double x, double y, double z}) {
     this.id = id;
     this.x = x;
     this.y = y;
     this.z = z;
     this.spriteResolver = spriteResolver;
-  }
-
-  @override
-  void update(double dt) {
-    super.update(dt);
   }
 
   List<Sprite> getSprites() {
@@ -96,5 +97,17 @@ class Player extends Entity implements JoystickListener {
     }
     state = newState;
     return true;
+  }
+
+  @override
+  void onCollide(CollisionEvent event) {
+    print(event);
+  }
+
+  @override
+  void onAnimationEvent(WorldContext context, AnimationFrameEvent event) {
+
+    CollisionEvent collisionEvent = CollisionEvent('attack', this, Vector3d(10, -10, 0));
+    context.collisionDetectService.detect(this, collisionEvent);
   }
 }

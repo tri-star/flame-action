@@ -1,10 +1,11 @@
 
 import 'package:flame_action/engine/image/sprite.dart';
 import 'package:flame_action/engine/image/sprite_resolver.dart';
+import 'package:flame_action/engine/services/collision_detect_service.dart';
 
 import 'entity.dart';
 
-class Enemy extends Entity {
+class Enemy extends Entity with CollisionEventListener {
   
   Enemy(int id, SpriteResolver spriteResolver, {double x, double y, double z}) {
     this.id = id;
@@ -28,5 +29,11 @@ class Enemy extends Entity {
       ..y = y + z
       ..dimension = dimension;
 
-    return List<Sprite>.from([sprite]);  }
+    return List<Sprite>.from([sprite]);
+  }
+
+  @override
+  void onCollide(CollisionEvent event) {
+    print(event);
+  }
 }

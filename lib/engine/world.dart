@@ -3,6 +3,7 @@ import 'package:flame_action/domain/boundary_adjustment_service.dart';
 import 'package:flame_action/domain/entity/entity.dart';
 import 'package:flame_action/domain/entity/joystick.dart';
 import 'package:flame_action/domain/entity/action_button.dart';
+import 'package:flame_action/engine/services/collision_detect_service.dart';
 import 'package:flame_action/presentation/image/action_button_sprite_resolver.dart';
 import 'package:flame_action/presentation/image/joystick_sprite_resolver.dart';
 import 'package:flutter/painting.dart';
@@ -12,6 +13,15 @@ import 'coordinates.dart';
 import 'image/sprite.dart';
 import 'joystick.dart';
 import '../util/list.dart';
+
+
+class WorldContext {
+  ZOrderedCollection entities;
+  CollisionDetectService collisionDetectService;
+
+  WorldContext(this.collisionDetectService);
+}
+
 
 /// ゲームの本体。
 /// ユーザーの入力などをデバイスに依存しない形で受け付ける
@@ -24,6 +34,8 @@ class World implements JoystickListener {
   List<Entity> _huds;
   PointerEventHandler _pointerEventHandler;
   BoundaryAdjustmentService _boundaryAdjustmentService;
+  CollisionDetectService _collisionDetectService;
+  WorldContext _context;
   Rect3d _worldRect;
   Camera _camera;
 
@@ -35,15 +47,18 @@ class World implements JoystickListener {
     _huds = List<Entity>(),
     _camera = Camera(cameraW, cameraH, worldW, worldH),
     _worldRect = Rect3d.fromSizeAndPosition(Size3d(worldW, worldH, 100), Position3d(0,0,0)),
-    _boundaryAdjustmentService = BoundaryAdjustmentService();
+    _boundaryAdjustmentService = BoundaryAdjustmentService() {
+      _collisionDetectService = CollisionDetectService(_entities);
+      _context = WorldContext(_collisionDetectService);
+    }
 
   void update(double dt) {
     _entities.forEach((entity) {
-      entity.update(dt);
+      entity.update(dt, _context);
       _boundaryAdjustmentService.adjust(_worldRect, entity);
     });
     _huds.forEach((entity) {
-      entity.update(dt);
+      entity.update(dt, _context);
     });
     _camera.update();
   }
