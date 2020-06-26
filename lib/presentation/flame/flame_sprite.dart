@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flame/position.dart';
 import 'package:flame/sprite.dart' as Flame;
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import '../../domain/entity/entity.dart';
@@ -48,5 +49,16 @@ class FlameSprite extends Sprite {
     //TODO: 画面外の場合描画する必要がない
 
     _flameSprite.renderPosition(canvas, Position(localX, localY), overridePaint: paint);
+
+/*
+    canvas.drawRect(Rect.fromLTWH(localX, localY, w, h), paint
+    ..style=PaintingStyle.stroke
+    ..strokeWidth=1
+    ..color=Colors.greenAccent);
+    canvas.drawRect(Rect.fromLTWH(localX, localY+d, w, h), paint
+    ..style=PaintingStyle.stroke
+    ..strokeWidth=1
+    ..color=Colors.greenAccent);
+*/
   }
 }
