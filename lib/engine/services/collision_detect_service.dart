@@ -6,20 +6,21 @@ import '../coordinates.dart';
 class CollisionEvent {
   String type;
   Entity source;
+
+  /// 衝突した結果Entityに与えられるべき加速度
   Vector3d force;
 
-  CollisionEvent(this.type, this.source, this.force);
+  /// 衝突した結果位置調整が必要な場合セットされる
+  Vector3d adjustment;
+
+  CollisionEvent(this.type, this.source, {this.force, this.adjustment});
 
   String toString() {
-    return 'type: $type, source: $source, force: ($force)';
+    return 'type: $type, source: $source, force: ($force), adjustment: ($adjustment)';
   }
 }
 
 
-/// 衝突判定を行うEntityが持つmixin
-mixin CollisionEventListener {
-  void onCollide(CollisionEvent event);
-}
 
 
 /// Entity同士の衝突の検出を行うサービス
@@ -33,7 +34,7 @@ class CollisionDetectService {
   void detect(Entity source, CollisionEvent event) {
     Rect3d sourceRect = source.getRect();
     _entities.forEach((Entity entity) {
-      if(!(entity is CollisionEventListener)) {
+      if(!(entity.isCollidable())) {
         return;
       }
       if(entity == source) {
@@ -41,7 +42,7 @@ class CollisionDetectService {
       }
 
       if(sourceRect.isIntersect(entity.getRect())) {
-        (entity as CollisionEventListener).onCollide(event);
+        entity.onCollide(event);
       }
     });
   }

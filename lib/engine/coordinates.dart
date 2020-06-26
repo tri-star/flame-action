@@ -168,6 +168,25 @@ class Rect3d {
     return null;
   }
 
+  /// 衝突があった場合の調整分を返す
+  /// 完全に重なっている場合などではあまり適切ではない値を返す可能性がある
+  Vector3d getIntersectAdjustment(Rect3d target) {
+    Rect3d intersection = getIntersection(target);
+    IntersectDimension dimension = getIntersectDimension(target);
+    switch(dimension) {
+      case IntersectDimension.TOP:
+        return Vector3d(0, intersection.h, 0);
+      case IntersectDimension.LEFT:
+        return Vector3d(intersection.w, 0, 0);
+      case IntersectDimension.RIGHT:
+        return Vector3d(-intersection.w, 0, 0);
+      case IntersectDimension.BOTTOM:
+        return Vector3d(0, -intersection.h, 0);
+    }
+    return Vector3d(0, 0, 0);
+  }
+
+
   /// オブジェクトが自身の中に収まるために必要な移動量を返す
   Vector3d getOverflowAdjustment(Rect3d target) {
     double adjustX = 0;

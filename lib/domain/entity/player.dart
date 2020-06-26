@@ -8,7 +8,7 @@ import 'package:flame_action/engine/services/collision_detect_service.dart';
 import '../../engine/world.dart';
 import 'entity.dart';
 
-class Player extends Entity with CollisionEventListener implements JoystickListener {
+class Player extends Entity implements JoystickListener {
   
   
 
@@ -18,6 +18,8 @@ class Player extends Entity with CollisionEventListener implements JoystickListe
     this.y = y;
     this.z = z;
     this.spriteResolver = spriteResolver;
+    this.gravityFlag = true;
+    this.collidableFlag = true;
   }
 
   List<Sprite> getSprites() {
@@ -101,13 +103,15 @@ class Player extends Entity with CollisionEventListener implements JoystickListe
 
   @override
   void onCollide(CollisionEvent event) {
-    print(event);
+    super.onCollide(event);
   }
 
   @override
   void onAnimationEvent(WorldContext context, AnimationFrameEvent event) {
 
-    CollisionEvent collisionEvent = CollisionEvent('attack', this, Vector3d(10, -10, 0));
+    CollisionEvent collisionEvent = CollisionEvent('attack', this, force: Vector3d(10, -10, 0));
     context.collisionDetectService.detect(this, collisionEvent);
+    vy = -10;
+    y += vy;
   }
 }
