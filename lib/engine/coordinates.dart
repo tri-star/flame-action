@@ -1,5 +1,7 @@
 
 
+import 'dart:math';
+
 /// 物体の座標を表すオブジェクト
 class Position3d {
   double x;
@@ -59,6 +61,13 @@ class Size3d {
 
 }
 
+/// 衝突の方向
+enum IntersectDimension {
+  BOTTOM,
+  TOP,
+  LEFT,
+  RIGHT
+}
 
 class Rect3d {
 
@@ -127,6 +136,36 @@ class Rect3d {
       return false;
     }
     return true;
+  }
+
+  Rect3d getIntersection(Rect3d target) {
+    double left = max(_x, target.x) - _x;
+    double width = min(right, target.right) - max(_x, target.x);
+    double top = max(_y, target.y) - _y;
+    double height = min(bottom, target.bottom) - max(_y, target.y);
+    double front = max(_z, target.z) - _z;
+    double depth = min(rear, target.rear) - max(_z, target.z);
+
+    return Rect3d(left, top, front, width, height, depth);
+  }
+
+  /// 衝突の方向を返す
+  /// 完全に重なっている場合などではあまり適切ではない値を返す可能性がある
+  IntersectDimension getIntersectDimension(Rect3d target) {
+    Rect3d intersection = getIntersection(target);
+    if(intersection.w > intersection.h && intersection.y >= (_h / 2)) {
+      return IntersectDimension.BOTTOM;
+    }
+    if(intersection.w > intersection.h && intersection.y < (_h / 2)) {
+      return IntersectDimension.TOP;
+    }
+    if(intersection.h >= intersection.w && intersection.x >= (_w / 2)) {
+      return IntersectDimension.RIGHT;
+    }
+    if(intersection.h >= intersection.w && intersection.x < (_w / 2)) {
+      return IntersectDimension.LEFT;
+    }
+    return null;
   }
 
   /// オブジェクトが自身の中に収まるために必要な移動量を返す
