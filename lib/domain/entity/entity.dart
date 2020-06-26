@@ -87,11 +87,13 @@ class Entity {
   Dimension getDimension() => dimension;
 
   List<Sprite> getSprites() {
-    return null;    
+    return [];    
   }
 
   Rect3d getRect() {
-    return Rect3d(x, y, z, getW(), getH(), getD());
+    double offsetX = animation?.getSprite()?.getOffset()?.x ?? 0;
+    double offsetY = animation?.getSprite()?.getOffset()?.y ?? 0;
+    return Rect3d(x + offsetX, y + offsetY, z, getW(), getH(), getD());
   }
 
   Position3d getPosition() {

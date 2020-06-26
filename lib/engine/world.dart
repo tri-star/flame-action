@@ -41,12 +41,12 @@ class World implements JoystickListener {
 
   int _randomSeed;  
 
-  World(double worldW, double worldH, double cameraW, double cameraH, {randomSeed: 0}): 
+  World(double worldW, double worldH, double worldD, double cameraW, double cameraH, {randomSeed: 0}): 
     _randomSeed = randomSeed,
     _entities = ZOrderedCollection(),
     _huds = List<Entity>(),
-    _camera = Camera(cameraW, cameraH, worldW, worldH),
-    _worldRect = Rect3d.fromSizeAndPosition(Size3d(worldW, worldH, 100), Position3d(0,0,0)),
+    _camera = Camera(cameraW, cameraH, worldW, worldH + worldD),
+    _worldRect = Rect3d.fromSizeAndPosition(Size3d(worldW, worldH, worldD), Position3d(0,0,0)),
     _boundaryAdjustmentService = BoundaryAdjustmentService() {
       _collisionDetectService = CollisionDetectService(_entities);
       _context = WorldContext(_collisionDetectService);

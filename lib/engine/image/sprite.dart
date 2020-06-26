@@ -32,7 +32,6 @@ abstract class Sprite {
   void render(Canvas canvas, Camera camera);
   Paint paint;
 
-  @protected
   Position getOffset() {
     switch(anchor) {
       case AnchorPoint.TOP_LEFT: return Position(0, 0);
