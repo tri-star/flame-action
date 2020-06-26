@@ -37,6 +37,16 @@ class Enemy extends Entity {
   @override
   void onCollide(CollisionEvent event) {
     super.onCollide(event);
-    print(event);
+    if(event.type == 'attack') {
+      state = 'damage';
+      vx += event.force?.x ?? 0;
+      vy += event.force?.y ?? 0;
+      y += vy;
+    }
+    if(event.type == 'collide' && event.source.getTags().contains('obstacle')) {
+      if(state == 'damage') {
+        vx = 0;
+      }
+    }
   }
 }

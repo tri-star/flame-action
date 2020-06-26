@@ -5,37 +5,46 @@ import '../../engine/image/sprite_resolver.dart';
 
 class EnemySpriteResolver extends SpriteResolver {
 
-  AnimationDefinition _definition;
-  Animation _animation;
+  Map<String, AnimationDefinition> _definitions;
+  String _currentState;
+  Animation _currentAnimation;
+
 
   EnemySpriteResolver() {
-    _definition = AnimationDefinition('enemy01_state_normal.png', 80, 100, 10, 2, 1, 0.2, anchorPoint: AnchorPoint.BOTTOM_CENTER);
+    _definitions = Map<String, AnimationDefinition>();
+    _definitions['neutral'] = AnimationDefinition('enemy01_state_normal.png', 80, 100, 10, 2, 1, 0.2, anchorPoint: AnchorPoint.BOTTOM_CENTER);
+    _definitions['damage'] = AnimationDefinition('enemy01_state_damage.png', 80, 100, 10, 1, 1, 0.08, anchorPoint: AnchorPoint.BOTTOM_CENTER, 
+      loop: false, 
+      afterWait: 1
+    );
   }
 
   @override
   Sprite resolve(SpriteContext context) {
-    if(_animation == null) {
-      _animation = resolveAnimation(context);
+    if(_currentAnimation == null || context.state != _currentState) {
+      _currentAnimation = resolveAnimation(context);
     }
-    if(!_animation.isLoaded()) {
+    if(!_currentAnimation.isLoaded()) {
       return null;
     }
-    return _animation.getSprite();
-  }
-
-  @override
-  Animation resolveAnimation(SpriteContext context) {
-    if(_animation == null) {
-      _animation = FlameAnimation(_definition);
-    }
-    return _animation;
+    return _currentAnimation.getSprite();
   }
 
   @override
   void update() {
-    if(_animation == null) {
+    if(_currentAnimation == null || !_currentAnimation.isLoaded()) {
       return;
     }
-    _animation.update();
+    _currentAnimation?.update();
+  }
+
+  @override
+  Animation resolveAnimation(SpriteContext context) {
+    if(context.state != _currentState) {
+      _currentState = context.state;
+
+      _currentAnimation = FlameAnimation(_definitions[_currentState]);
+    }
+    return _currentAnimation;
   }
 }

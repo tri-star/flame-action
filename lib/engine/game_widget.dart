@@ -36,7 +36,7 @@ class GameWidget extends Game {
     _world = World(worldW, worldH, worldD, deviceSize.width, deviceSize.height);
     _world.setBackground(FlameSprite(Sprite('background01.png'), x: 0, y: 0));  // Flameを直接使わないようにする
     _world.addEntity(player);
-    _world.addEntity(Enemy(2, EnemySpriteResolver(), x: 1200, y: worldH, z: 50));
+    _world.addEntity(Enemy(2, EnemySpriteResolver(), x: 600, y: worldH, z: 50));
     _world.addEntity(Ground(10, x: 0, y: worldH, z: 0, w: worldW, h: worldH, d: worldD));
     
     _world.createJoystick(60, 300);

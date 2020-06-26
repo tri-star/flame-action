@@ -143,13 +143,13 @@ class Entity {
 
       Rect3d sourceRect = event.source.getRect();
       Rect3d ownRect = getRect();
-      if(ownRect.getIntersectDimension(sourceRect) == IntersectDimension.BOTTOM) {
-        if(gravityFlag) {
-          vy = 0;
-        }
-      }
       Vector3d adjustment = ownRect.getIntersectAdjustment(sourceRect);
       if(event.source.getTags().contains("obstacle")) {
+        if(ownRect.getIntersectDimension(sourceRect) == IntersectDimension.BOTTOM) {
+          if(gravityFlag) {
+            vy = 0;
+          }
+        }
         addAdjustment(adjustment);
       }
     }

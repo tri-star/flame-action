@@ -109,7 +109,8 @@ class Player extends Entity implements JoystickListener {
   @override
   void onAnimationEvent(WorldContext context, AnimationFrameEvent event) {
 
-    CollisionEvent collisionEvent = CollisionEvent('attack', this, force: Vector3d(10, -10, 0));
+    double forceX = (dimension == Dimension.RIGHT) ? 3 : - 3;
+    CollisionEvent collisionEvent = CollisionEvent('attack', this, force: Vector3d(forceX, -18, 0));
     context.collisionDetectService.detect(this, collisionEvent);
     vy = -10;
     y += vy;
