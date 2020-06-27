@@ -120,7 +120,8 @@ class Entity {
     }
     sprite
       ..x = x
-      ..y = y + z
+      ..y = y
+      ..z = z
       ..dimension = dimension;
 
     return List<Sprite>.from([sprite]);

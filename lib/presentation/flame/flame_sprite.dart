@@ -13,10 +13,11 @@ class FlameSprite extends Sprite {
 
   Flame.Sprite _flameSprite;
 
-  FlameSprite(Flame.Sprite flameSprite, {double x, double y, double d, Dimension dimension}): 
+  FlameSprite(Flame.Sprite flameSprite, {double x, double y, double z, double d, Dimension dimension}): 
     _flameSprite = flameSprite {
     this.x = x ?? 0;
     this.y = y ?? 0;
+    this.z = z ?? 0;
     this.d = d ?? 1;
     this.dimension = dimension;
   }
@@ -29,10 +30,10 @@ class FlameSprite extends Sprite {
     Paint paint = Paint();
     Position anchorOffset = getOffset();
     double localX = x + anchorOffset.x;
-    double localY = y + anchorOffset.y;
+    double localY = y + anchorOffset.y + z;
     if(dimension == Dimension.LEFT) {
       Matrix4 cc = Matrix4.identity()
-        ..translate(x + anchorOffset.x - (camera?.x ?? 0), y + anchorOffset.y - (camera?.y ?? 0))
+        ..translate(x + anchorOffset.x - (camera?.x ?? 0), y + anchorOffset.y + z - (camera?.y ?? 0))
         ..translate(w, 0)
         ..rotateY(180.0 * 3.14 / 180);
 
