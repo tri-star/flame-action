@@ -70,7 +70,7 @@ class World implements JoystickListener {
   void createJoystick(double x, double y) {
     // 横幅/縦幅またはRectの情報をEntityやSpriteから取得する
     _pointerEventHandler = PointerEventHandler(
-      Rect.fromLTWH(x-40.0, y-40.0, 80, 80),
+      Rect.fromLTWH(x-70.0, y-70.0, 140, 140),
       Rect.fromLTWH((_camera.w - 120)-30, y-30.0, 60, 60),
     );
     _pointerEventHandler.addListener('world', this);

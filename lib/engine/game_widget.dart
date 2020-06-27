@@ -39,7 +39,7 @@ class GameWidget extends Game {
     _world.addEntity(Enemy(2, EnemySpriteResolver(), x: 600, y: worldH, z: 50));
     _world.addEntity(Ground(10, x: 0, y: worldH, z: 0, w: worldW, h: worldH, d: worldD));
     
-    _world.createJoystick(60, 300);
+    _world.createJoystick(90, 320);
     _world.camera.followEntity(player);
     _initialized = true;
   }
