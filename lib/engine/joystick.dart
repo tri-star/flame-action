@@ -154,10 +154,15 @@ class PointerEventHandler {
     double radius = _joystickPosition.width / 2;
     double distance = min(radius, Point(_joystickPosition.center.dx, _joystickPosition.center.dy).distanceTo(Point(x, y)));
 
-    if(distance < 15) {
-      distance = 0;
+    double distanceX = distance * cos(radAngle);
+    double distanceY = distance * sin(radAngle);
+    if(distanceX.abs() <= 15) {
+      distanceX = 0;
+    }
+    if(distanceY.abs() <= 15) {
+      distanceY = 0;
     }
 
-    return JoystickMoveEvent(distanceX: distance * cos(radAngle), distanceY: distance * sin(radAngle));
+    return JoystickMoveEvent(distanceX: distanceX, distanceY: distanceY);
   }
 }
