@@ -1,9 +1,10 @@
 
-import 'package:flame_action/domain/boundary_adjustment_service.dart';
 import 'package:flame_action/domain/entity/player.dart';
 import 'package:flame_action/engine/coordinates.dart';
+import 'package:flame_action/engine/services/boundary_adjustment_service.dart';
 import 'package:flame_action/presentation/image/stub_sprite_resolver.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 
 void main() {
 

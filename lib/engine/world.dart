@@ -1,5 +1,3 @@
-
-import 'package:flame_action/domain/boundary_adjustment_service.dart';
 import 'package:flame_action/domain/entity/entity.dart';
 import 'package:flame_action/domain/entity/joystick.dart';
 import 'package:flame_action/domain/entity/action_button.dart';
@@ -12,6 +10,7 @@ import 'camera.dart';
 import 'coordinates.dart';
 import 'image/sprite.dart';
 import 'joystick.dart';
+import 'services/boundary_adjustment_service.dart';
 import '../util/list.dart';
 
 
