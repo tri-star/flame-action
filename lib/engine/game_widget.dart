@@ -34,7 +34,7 @@ class GameWidget extends Game {
   }
 
   void setBackground(String fileName) {
-    _world.setBackground(FlameSprite(Sprite(fileName), x: 0, y: 0));  // Flameを直接使わないようにする
+    _world.setBackground(FlameSprite(Sprite(fileName), x: 0, y: 0, z: 0, d: 1));  // Flameを直接使わないようにする
   }
 
   void addEntity(Entity entity) {

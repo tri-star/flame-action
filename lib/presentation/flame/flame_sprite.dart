@@ -7,6 +7,7 @@ import 'package:flutter/rendering.dart';
 
 import '../../domain/entity/entity.dart';
 import '../../engine/camera.dart';
+import '../../engine/coordinates.dart';
 import '../../engine/image/sprite.dart';
 
 class FlameSprite extends Sprite {
@@ -28,7 +29,7 @@ class FlameSprite extends Sprite {
   void render(Canvas canvas, Camera camera) {
 
     Paint paint = Paint();
-    Position anchorOffset = getOffset();
+    Vector3d anchorOffset = getOffsets();
     double localX = x + anchorOffset.x;
     double localY = y + anchorOffset.y + z;
     if(dimension == Dimension.LEFT) {
@@ -52,11 +53,11 @@ class FlameSprite extends Sprite {
     _flameSprite.renderPosition(canvas, Position(localX, localY), overridePaint: paint);
 
 /*
-    canvas.drawRect(Rect.fromLTWH(localX, localY, w, h), paint
+    canvas.drawRect(Rect.fromLTWH(localX, localY - anchorOffset.z, w, h), paint
     ..style=PaintingStyle.stroke
     ..strokeWidth=1
     ..color=Colors.greenAccent);
-    canvas.drawRect(Rect.fromLTWH(localX, localY+d, w, h), paint
+    canvas.drawRect(Rect.fromLTWH(localX, localY + anchorOffset.z, w, h), paint
     ..style=PaintingStyle.stroke
     ..strokeWidth=1
     ..color=Colors.greenAccent);

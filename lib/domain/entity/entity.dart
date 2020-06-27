@@ -128,9 +128,10 @@ class Entity {
   }
 
   Rect3d getRect() {
-    double offsetX = animation?.getSprite()?.getOffset()?.x ?? 0;
-    double offsetY = animation?.getSprite()?.getOffset()?.y ?? 0;
-    return Rect3d(x + offsetX, y + offsetY, z, getW(), getH(), getD());
+    double offsetX = animation?.getSprite()?.getOffsets()?.x ?? 0;
+    double offsetY = animation?.getSprite()?.getOffsets()?.y ?? 0;
+    double offsetZ = animation?.getSprite()?.getOffsets()?.z ?? 0;
+    return Rect3d(x + offsetX, y + offsetY, z + offsetZ, getW(), getH(), getD());
   }
 
   Position3d getPosition() {

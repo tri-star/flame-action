@@ -12,6 +12,7 @@ class StubSprite extends Sprite {
     this.w = w;
     this.h = h;
     this.d = d;
+    this.zAnchor = ZAnchorPoint.FRONT;
   }
 
   @override
