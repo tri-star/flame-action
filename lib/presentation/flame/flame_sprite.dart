@@ -51,7 +51,6 @@ class FlameSprite extends Sprite {
     //TODO: 画面外の場合描画する必要がない
 
     _flameSprite.renderPosition(canvas, Position(localX, localY), overridePaint: paint);
-
 /*
     canvas.drawRect(Rect.fromLTWH(localX, localY - anchorOffset.z, w, h), paint
     ..style=PaintingStyle.stroke

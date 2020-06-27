@@ -12,8 +12,8 @@ class EnemySpriteResolver extends SpriteResolver {
 
   EnemySpriteResolver() {
     _definitions = Map<String, AnimationDefinition>();
-    _definitions['neutral'] = AnimationDefinition('enemy01_state_normal.png', 80, 100, 10, 2, 1, 0.2, anchorPoint: AnchorPoint.BOTTOM_CENTER);
-    _definitions['damage'] = AnimationDefinition('enemy01_state_damage.png', 80, 100, 10, 1, 1, 0.08, anchorPoint: AnchorPoint.BOTTOM_CENTER, 
+    _definitions['neutral'] = AnimationDefinition('enemy01_state_normal.png', 80, 100, 20, 2, 1, 0.2, anchorPoint: AnchorPoint.BOTTOM_CENTER);
+    _definitions['damage'] = AnimationDefinition('enemy01_state_damage.png', 80, 100, 20, 1, 1, 0.08, anchorPoint: AnchorPoint.BOTTOM_CENTER, 
       loop: false, 
       afterWait: 1
     );
