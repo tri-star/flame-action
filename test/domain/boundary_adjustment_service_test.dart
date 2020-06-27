@@ -20,17 +20,17 @@ void main() {
         "initialPosition": Position3d(-1, 20, 30),
         "expectedPosition": Position3d(0, 20, 30),
       },
-      '上にはみ出して調整されるケース': {
+      '上にはみ出して調整されるケース_上下はこのサービスでは調整されない': {
         "initialPosition": Position3d(0, -1, 30),
-        "expectedPosition": Position3d(0, 0, 30),
+        "expectedPosition": Position3d(0, -1, 30),
       },
       '右にはみ出して調整されるケース': {
         "initialPosition": Position3d(501, 0, 30),
         "expectedPosition": Position3d(500, 0, 30),
       },
-      '下にはみ出して調整されるケース': {
+      '下にはみ出して調整されるケース_上下はこのサービスでは調整されない': {
         "initialPosition": Position3d(500, 201, 30),
-        "expectedPosition": Position3d(500, 200, 30),
+        "expectedPosition": Position3d(500, 201, 30),
       },
       '手前にはみ出して調整されるケース': {
         "initialPosition": Position3d(500, 200, 91),
@@ -50,7 +50,8 @@ void main() {
         Position3d expectedPosition = pattern['expectedPosition'];
 
         StubSpriteResolver spriteResolver = StubSpriteResolver(w: playerSize.w, h: playerSize.h, d: playerSize.d);
-        Player player = Player(0, spriteResolver, x: initialPosition.x, y: initialPosition.y, z: initialPosition.z);
+        Player player = Player(0, spriteResolver, x: initialPosition.x, y: initialPosition.y, z: initialPosition.z)
+          ..disableGravity();
         Rect3d worldRect = Rect3d.fromSizeAndPosition(worldSize, Position3d(0,0,0));
 
         player.update(0.16, null);

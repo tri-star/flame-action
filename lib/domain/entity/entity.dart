@@ -79,7 +79,7 @@ class Entity {
     });
 
     CollisionEvent collisionEvent = CollisionEvent('collide', this);
-    context.collisionDetectService.detect(this, collisionEvent);
+    context?.collisionDetectService?.detect(this, collisionEvent);
   }
 
   void updateState() {
@@ -126,6 +126,10 @@ class Entity {
 
   void addZ(double distance) {
     z += distance;
+  }
+
+  void disableGravity() {
+    gravityFlag = false;
   }
 
   void addAdjustment(Vector3d vector) {
