@@ -111,7 +111,19 @@ class Entity {
   bool isCollidable() => collidableFlag;
 
   List<Sprite> getSprites() {
-    return [];    
+    if(animation == null) {
+      return [];
+    }
+    Sprite sprite = animation.getSprite();
+    if(sprite == null) {
+      return [];
+    }
+    sprite
+      ..x = x
+      ..y = y + z
+      ..dimension = dimension;
+
+    return List<Sprite>.from([sprite]);
   }
 
   Rect3d getRect() {
