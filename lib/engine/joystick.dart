@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 enum PointerEventType {
@@ -36,10 +37,10 @@ enum JoystickAction {
 
 /// ゲーム向けに伝搬される移動関連のイベント
 class JoystickMoveEvent {
-  JoystickDirection direction;
-  double distance;
+  double distanceX;
+  double distanceY;
 
-  JoystickMoveEvent({this.direction, this.distance});
+  JoystickMoveEvent({this.distanceX, this.distanceY});
 }
 
 /// ゲーム向けに伝搬される移動関連のイベント
@@ -97,13 +98,13 @@ class PointerEventHandler {
         break;
       case PointerEventType.END:
         _isStarted = false;
-        JoystickMoveEvent gameEvent = JoystickMoveEvent(direction: JoystickDirection.NEUTRAL);
+        JoystickMoveEvent gameEvent = JoystickMoveEvent(distanceX: 0, distanceY: 0);
         _notifyMoveEventToListeners(gameEvent);
         break;
       
       case PointerEventType.UPDATE:
         if(_isStarted) {
-          JoystickMoveEvent gameEvent = JoystickMoveEvent(direction: _getDimension(event.x, event.y));
+          JoystickMoveEvent gameEvent = _getMoveEvent(event.x, event.y);
           _notifyMoveEventToListeners(gameEvent);
         }
         break;
@@ -148,16 +149,15 @@ class PointerEventHandler {
     return pointerId == _actionButtonPointerId || _actionButtonPosition.contains(Offset(x, y));
   }
 
-  JoystickDirection _getDimension(double x, double y) {
-    if(_joystickPosition.center.dx - x > 15) {
-      return JoystickDirection.LEFT;
-    } else if (_joystickPosition.center.dx - x < -15) {
-      return JoystickDirection.RIGHT;
-    } else if (_joystickPosition.center.dy - y > 15) {
-      return JoystickDirection.UP;
-    } else if (_joystickPosition.center.dy - y < -15) {
-      return JoystickDirection.DOWN;
+  JoystickMoveEvent _getMoveEvent(double x, double y) {
+    double radAngle = atan2(y - _joystickPosition.center.dy, x - _joystickPosition.center.dx);
+    double radius = _joystickPosition.width / 2;
+    double distance = min(radius, Point(_joystickPosition.center.dx, _joystickPosition.center.dy).distanceTo(Point(x, y)));
+
+    if(distance < 15) {
+      distance = 0;
     }
-    return JoystickDirection.NEUTRAL;
+
+    return JoystickMoveEvent(distanceX: distance * cos(radAngle), distanceY: distance * sin(radAngle));
   }
 }

@@ -39,17 +39,8 @@ class JoyStick extends Entity implements JoystickListener {
 
   @override
   onJoystickMove(JoystickMoveEvent event) {
-    switch(event.direction) {
-      case JoystickDirection.LEFT:    _knobSprite.x = _baseSprite.x - 30; break;
-      case JoystickDirection.RIGHT:   _knobSprite.x = _baseSprite.x + 30; break;
-      case JoystickDirection.UP:      _knobSprite.y = _baseSprite.y - 30; break;
-      case JoystickDirection.DOWN:    _knobSprite.y = _baseSprite.y + 30; break;
-      case JoystickDirection.NEUTRAL:
-        _knobSprite.x = _baseSprite.x; 
-        _knobSprite.y = _baseSprite.y;
-        break;
-      default:
-    }
+    _knobSprite.x = _baseSprite.x + event.distanceX;
+    _knobSprite.y = _baseSprite.y + event.distanceY;
   }
 
   @override
