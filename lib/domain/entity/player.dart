@@ -1,6 +1,5 @@
 import 'package:flame_action/engine/coordinates.dart';
 import 'package:flame_action/engine/image/animation.dart';
-import 'package:flame_action/engine/image/sprite.dart';
 import 'package:flame_action/engine/image/sprite_resolver.dart';
 import 'package:flame_action/engine/joystick.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
@@ -22,21 +21,6 @@ class Player extends Entity implements JoystickListener {
     this.collidableFlag = true;
   }
 
-  List<Sprite> getSprites() {
-    if(animation == null) {
-      return [];
-    }
-    Sprite sprite = animation.getSprite();
-    if(sprite == null) {
-      return [];
-    }
-    sprite
-      ..x = x
-      ..y = y + z
-      ..dimension = dimension;
-
-    return List<Sprite>.from([sprite]);
-  }
 
   @override
   onJoystickMove(JoystickMoveEvent event) {

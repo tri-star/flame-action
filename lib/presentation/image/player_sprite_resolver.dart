@@ -12,9 +12,9 @@ class PlayerSpriteResolver extends SpriteResolver {
 
   PlayerSpriteResolver() {
     _definitions = Map<String, AnimationDefinition>();
-    _definitions['neutral'] = AnimationDefinition('player_normal.png', 60, 100, 10, 1, 1, 0.1, anchorPoint: AnchorPoint.BOTTOM_CENTER);
-    _definitions['walk'] = AnimationDefinition('player_walk.png', 60, 100, 10, 4, 1, 0.2, anchorPoint: AnchorPoint.BOTTOM_CENTER);
-    _definitions['attack'] = AnimationDefinition('player_attack01.png', 80, 100, 10, 5, 1, 0.08, 
+    _definitions['neutral'] = AnimationDefinition('player_normal.png', 60, 100, 20, 1, 1, 0.1, anchorPoint: AnchorPoint.BOTTOM_CENTER);
+    _definitions['walk'] = AnimationDefinition('player_walk.png', 60, 100, 20, 4, 1, 0.2, anchorPoint: AnchorPoint.BOTTOM_CENTER);
+    _definitions['attack'] = AnimationDefinition('player_attack01.png', 80, 100, 20, 5, 1, 0.08, 
       anchorPoint: AnchorPoint.BOTTOM_CENTER, 
       loop: false, 
       afterWait: 0.3,
