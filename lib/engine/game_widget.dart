@@ -1,16 +1,12 @@
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/sprite.dart';
-import 'package:flame_action/domain/entity/ground.dart';
+import 'package:flame_action/domain/entity/entity.dart';
 import 'package:flame_action/presentation/flame/flame_sprite.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 import 'joystick.dart';
 import 'world.dart';
-import '../domain/entity/enemy.dart';
-import '../domain/entity/player.dart';
-import '../presentation/image/enemy_sprite_resolver.dart';
-import '../presentation/image/player_sprite_resolver.dart';
 
 /// ユーザーからの入力を受け付け、GameModelに伝える
 /// GameModelの内容をレンダリングする
@@ -18,31 +14,43 @@ class GameWidget extends Game {
 
   bool _initialized = false;
   World _world;
+  double _deviceW;
+  double _deviceH;
 
-  GameWidget() {
-    _initialize();
-  }
+  GameWidget():
+    _deviceW = 0,
+    _deviceH = 0;
 
-  _initialize() async {
+  Future<void> initialize(double worldW, double worldH, double worldD) async {
     await Flame.util.setLandscape();
     await Flame.util.fullScreen();
     await Flame.util.initialDimensions();
     Size deviceSize = await Flame.util.initialDimensions();
-    double worldW = 2000;
-    double worldH = 200;
-    double worldD = 100;
-    Player player = Player(1, PlayerSpriteResolver(),  x: 10, y: worldH, z: 40);
+    _deviceW = deviceSize.width;
+    _deviceH = deviceSize.height;
 
     _world = World(worldW, worldH, worldD, deviceSize.width, deviceSize.height);
-    _world.setBackground(FlameSprite(Sprite('background01.png'), x: 0, y: 0));  // Flameを直接使わないようにする
-    _world.addEntity(player);
-    _world.addEntity(Enemy(2, EnemySpriteResolver(), x: 600, y: worldH, z: 50));
-    _world.addEntity(Ground(10, x: 0, y: worldH, z: 0, w: worldW, h: worldH, d: worldD));
-    
-    _world.createJoystick(90, 320);
-    _world.camera.followEntity(player);
     _initialized = true;
   }
+
+  void setBackground(String fileName) {
+    _world.setBackground(FlameSprite(Sprite(fileName), x: 0, y: 0));  // Flameを直接使わないようにする
+  }
+
+  void addEntity(Entity entity) {
+    _world.addEntity(entity);
+  }
+
+  void createJoystick(double x, double y) {
+    _world.createJoystick(x, y);
+  }
+
+  void setCameraFocus(Entity entity) {
+    _world.camera.followEntity(entity);
+  }
+
+  double getDeviceWidth() => _deviceW;
+  double getDeviceHeight() => _deviceH;
 
   Widget getWidget() {
     return Listener(

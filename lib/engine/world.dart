@@ -31,6 +31,7 @@ class World implements JoystickListener {
 
   Sprite background;
   ZOrderedCollection _entities;
+  List<Entity> _pendingEntities;
   List<Entity> _huds;
   PointerEventHandler _pointerEventHandler;
   BoundaryAdjustmentService _boundaryAdjustmentService;
@@ -44,6 +45,7 @@ class World implements JoystickListener {
   World(double worldW, double worldH, double worldD, double cameraW, double cameraH, {randomSeed: 0}): 
     _randomSeed = randomSeed,
     _entities = ZOrderedCollection(),
+    _pendingEntities = [],
     _huds = List<Entity>(),
     _camera = Camera(cameraW, cameraH, worldW, worldH + worldD),
     _worldRect = Rect3d.fromSizeAndPosition(Size3d(worldW, worldH, worldD), Position3d(0,0,0)),
@@ -53,6 +55,14 @@ class World implements JoystickListener {
     }
 
   void update(double dt) {
+    //TODO: firstで判定しなくても動作するようにする
+    if(_entities.first == null) {
+      _pendingEntities.forEach((entity) {
+        _entities.add(entity);
+      });
+      _pendingEntities.clear();
+      return;
+    }
     _entities.forEach((entity) {
       entity.update(dt, _context);
       _boundaryAdjustmentService.adjust(_worldRect, entity);
@@ -61,10 +71,14 @@ class World implements JoystickListener {
       entity.update(dt, _context);
     });
     _camera.update();
+    _pendingEntities.forEach((entity) {
+      _entities.add(entity);
+    });
+    _pendingEntities.clear();
   }
 
   void addEntity(Entity entity) {
-    _entities.add(entity);
+    _pendingEntities.add(entity);
   }
 
   void createJoystick(double x, double y) {
