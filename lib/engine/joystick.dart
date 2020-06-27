@@ -9,10 +9,11 @@ enum PointerEventType {
 /// UIから伝達される移動関連のイベント情報
 class UiPointerEvent {
   PointerEventType type;
+  int pointerId;
   double x;
   double y;
 
-  UiPointerEvent(this.type, this.x, this.y);
+  UiPointerEvent(this.type, this.pointerId, this.x, this.y);
 }
 
 enum JoystickDirection {
@@ -27,6 +28,12 @@ enum JoystickDirection {
   DOWN_RIGHT,
 }
 
+enum JoystickAction {
+  ATTACK_DOWN,
+  ATTACK_UP,
+}
+
+
 /// ゲーム向けに伝搬される移動関連のイベント
 class JoystickMoveEvent {
   JoystickDirection direction;
@@ -35,9 +42,17 @@ class JoystickMoveEvent {
   JoystickMoveEvent({this.direction, this.distance});
 }
 
+/// ゲーム向けに伝搬される移動関連のイベント
+class JoystickActionEvent {
+  JoystickAction action;
+  JoystickActionEvent(this.action);
+}
+
+
 /// Joystickのイベントを受け取るオブジェクト用のインターフェース
 abstract class JoystickListener {
   onJoystickMove(JoystickMoveEvent event);
+  onJoystickAction(JoystickActionEvent event);
 }
 
 
@@ -47,14 +62,19 @@ class PointerEventHandler {
 
   double _startX = 0;
   double _startY = 0;
-  bool _isStarted = false;
+  int _actionButtonPointerId;
+  bool _isStarted;
 
   Rect _joystickPosition;
+  Rect _actionButtonPosition;
   Map<String, JoystickListener> _listeners;
 
-  PointerEventHandler(Rect position):
-    _joystickPosition = position,
-    _listeners = Map<String, JoystickListener>();
+  PointerEventHandler(Rect joyStickPosition, Rect actionButtonPosition):
+    _joystickPosition = joyStickPosition,
+    _actionButtonPosition = actionButtonPosition,
+    _listeners = Map<String, JoystickListener>(),
+    _actionButtonPointerId = 0,
+    _isStarted = false;
 
   addListener(String key, JoystickListener listener) {
     _listeners[key] = listener;
@@ -62,9 +82,14 @@ class PointerEventHandler {
 
   void handle(UiPointerEvent event) {
 
+    if(_isContainedActionComponent(event.pointerId, event.x, event.y)) {
+      handleActionButtonEvent(event);
+      return;
+    }
+
     switch(event.type) {
       case PointerEventType.START:
-        if(!_isStarted && _isContained(event.x, event.y)) {
+        if(!_isStarted && _isContainedDirectionalComponent(event.x, event.y)) {
           _isStarted = true;
           _startX = event.x;
           _startY = event.y;
@@ -73,26 +98,54 @@ class PointerEventHandler {
       case PointerEventType.END:
         _isStarted = false;
         JoystickMoveEvent gameEvent = JoystickMoveEvent(direction: JoystickDirection.NEUTRAL);
-        _notifyListeners(gameEvent);
+        _notifyMoveEventToListeners(gameEvent);
         break;
       
       case PointerEventType.UPDATE:
         if(_isStarted) {
           JoystickMoveEvent gameEvent = JoystickMoveEvent(direction: _getDimension(event.x, event.y));
-          _notifyListeners(gameEvent);
+          _notifyMoveEventToListeners(gameEvent);
         }
         break;
     }
   }
 
-  void _notifyListeners(JoystickMoveEvent event) {
+
+  void handleActionButtonEvent(UiPointerEvent event) {
+    _actionButtonPointerId = event.pointerId;
+    switch(event.type) {
+      case PointerEventType.START:
+        JoystickActionEvent gameEvent = JoystickActionEvent(JoystickAction.ATTACK_DOWN);
+        _notifyActionEventToListeners(gameEvent);
+        break;
+      case PointerEventType.END:
+        JoystickActionEvent gameEvent = JoystickActionEvent(JoystickAction.ATTACK_UP);
+        _notifyActionEventToListeners(gameEvent);
+        break;
+      default:
+    }
+  }
+
+
+  void _notifyMoveEventToListeners(JoystickMoveEvent event) {
     _listeners.forEach((key, listener) {
       listener.onJoystickMove(event);
     });
   }
 
-  bool _isContained(double x, double y) {
+  void _notifyActionEventToListeners(JoystickActionEvent event) {
+    _listeners.forEach((key, listener) {
+      listener.onJoystickAction(event);
+    });
+  }
+
+
+  bool _isContainedDirectionalComponent(double x, double y) {
     return _joystickPosition.contains(Offset(x, y));
+  }
+
+  bool _isContainedActionComponent(int pointerId, double x, double y) {
+    return pointerId == _actionButtonPointerId || _actionButtonPosition.contains(Offset(x, y));
   }
 
   JoystickDirection _getDimension(double x, double y) {

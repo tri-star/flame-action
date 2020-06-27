@@ -35,7 +35,7 @@ class StubAnimation extends Animation{
   }
 
   @override
-  void update() {
+  void update({AnimationEventCallback animationEventCallback}) {
   }
 
 }

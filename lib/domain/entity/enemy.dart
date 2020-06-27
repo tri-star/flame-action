@@ -1,6 +1,7 @@
 
 import 'package:flame_action/engine/image/sprite.dart';
 import 'package:flame_action/engine/image/sprite_resolver.dart';
+import 'package:flame_action/engine/services/collision_detect_service.dart';
 
 import 'entity.dart';
 
@@ -13,6 +14,8 @@ class Enemy extends Entity {
     this.z = z;
     this.spriteResolver = spriteResolver;
     this.dimension = Dimension.LEFT;
+    this.gravityFlag = true;
+    this.collidableFlag = true;
   }
 
   List<Sprite> getSprites() {
@@ -28,5 +31,22 @@ class Enemy extends Entity {
       ..y = y + z
       ..dimension = dimension;
 
-    return List<Sprite>.from([sprite]);  }
+    return List<Sprite>.from([sprite]);
+  }
+
+  @override
+  void onCollide(CollisionEvent event) {
+    super.onCollide(event);
+    if(event.type == 'attack') {
+      state = 'damage';
+      vx += event.force?.x ?? 0;
+      vy += event.force?.y ?? 0;
+      y += vy;
+    }
+    if(event.type == 'collide' && event.source.getTags().contains('obstacle')) {
+      if(state == 'damage') {
+        vx = 0;
+      }
+    }
+  }
 }

@@ -6,14 +6,21 @@ import '../../presentation/flame/flame_animation.dart';
 
 class PlayerSpriteResolver extends SpriteResolver {
 
-  Map<String, SpriteSheet> _spriteSheets;
+  Map<String, AnimationDefinition> _definitions;
   String _currentState;
   Animation _currentAnimation;
 
   PlayerSpriteResolver() {
-    _spriteSheets = Map<String, SpriteSheet>();
-    _spriteSheets['neutral'] = SpriteSheet(imageName: 'player_normal.png', textureWidth: 60, textureHeight: 100, columns: 1, rows: 1);
-    _spriteSheets['walk'] = SpriteSheet(imageName: 'player_walk.png', textureWidth: 60, textureHeight: 100, columns: 4, rows: 1);
+    _definitions = Map<String, AnimationDefinition>();
+    _definitions['neutral'] = AnimationDefinition('player_normal.png', 60, 100, 10, 1, 1, 0.1, anchorPoint: AnchorPoint.BOTTOM_CENTER);
+    _definitions['walk'] = AnimationDefinition('player_walk.png', 60, 100, 10, 4, 1, 0.2, anchorPoint: AnchorPoint.BOTTOM_CENTER);
+    _definitions['attack'] = AnimationDefinition('player_attack01.png', 80, 100, 10, 5, 1, 0.08, 
+      anchorPoint: AnchorPoint.BOTTOM_CENTER, 
+      loop: false, 
+      afterWait: 0.3,
+      events: {
+        4: AnimationFrameEvent('attack')
+      });
     _currentState = '';
   }
 
@@ -40,12 +47,8 @@ class PlayerSpriteResolver extends SpriteResolver {
   Animation resolveAnimation(SpriteContext context) {
     if(context.state != _currentState) {
       _currentState = context.state;
-      //TODO: アニメーションの管理も状態が関係する
-      _currentAnimation = FlameAnimation(_spriteSheets[_currentState].createAnimation(0, stepTime: 0.2), 
-        anchor: AnchorPoint.BOTTOM_CENTER,
-        depth: 10,
-        dimension: context.dimension
-      );
+
+      _currentAnimation = FlameAnimation(_definitions[_currentState]);
     }
     return _currentAnimation;
   }

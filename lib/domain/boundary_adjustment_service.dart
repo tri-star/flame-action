@@ -10,7 +10,10 @@ class BoundaryAdjustmentService {
     if(baseRect.isContain(targetRect)) {
       return;
     }
-    entity.addAdjustment(baseRect.getOverflowAdjustment(targetRect));
+    Vector3d adjustment = baseRect.getOverflowAdjustment(targetRect);
+    // Y 方向は今は別のサービスで調整するため制御しない
+    adjustment.y = 0;
+    entity.addAdjustment(adjustment);
   }
 
 }
