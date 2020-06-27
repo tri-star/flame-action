@@ -40,31 +40,34 @@ class Player extends Entity implements JoystickListener {
 
   @override
   onJoystickMove(JoystickMoveEvent event) {
-    if(event.direction == JoystickDirection.LEFT) {
+
+    if(event.distanceX < -1) {
       if(changeState('walk')) {
         vx = -2;
         dimension = Dimension.LEFT;
       }
-    }
-    if(event.direction == JoystickDirection.RIGHT) {
+    } else if(event.distanceX > 1) {
       if(changeState('walk')) {
         vx = 2;
         dimension = Dimension.RIGHT;
       }
+    } else {
+        vx = 0;
     }
-    if(event.direction == JoystickDirection.UP) {
+    if(event.distanceY < -1) {
       if(changeState('walk')) {
         vz = -1;
         state = 'walk';
       }
-    }
-    if(event.direction == JoystickDirection.DOWN) {
+    } else if(event.distanceY > 1) {
       if(changeState('walk')) {
         vz = 1;
         state = 'walk';
       }
+    } else {
+        vz = 0;
     }
-    if(event.direction == JoystickDirection.NEUTRAL) {
+    if(event.distanceX == 0 && event.distanceY == 0) {
       if(changeState('walk')) {
         vx = 0;
         vz = 0;
