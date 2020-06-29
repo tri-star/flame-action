@@ -1,6 +1,7 @@
 import 'package:flame_action/engine/coordinates.dart';
 import 'package:flame_action/engine/image/animation.dart';
 import 'package:flame_action/engine/image/sprite_resolver.dart';
+import 'package:flame_action/engine/image/sprite_string/pop_with_gravity_string.dart';
 import 'package:flame_action/engine/joystick.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
 
@@ -101,5 +102,8 @@ class Player extends Entity implements JoystickListener {
     context.collisionDetectService.detect(this, collisionEvent);
     vy = -10;
     y += vy;
+
+    Entity newEntity = PopWithGravityString(11, '123', x, y ,z);
+    context.addEntity(newEntity);
   }
 }

@@ -1,4 +1,6 @@
 
+import 'package:flame_action/engine/image/sprite_font.dart';
+import 'package:flame_action/presentation/flame/flame_sprite_font.dart';
 import 'package:flutter/widgets.dart';
 
 import 'domain/entity/enemy.dart';
@@ -17,12 +19,14 @@ void main() async {
   double worldD = 100;
   await gameWidget.initialize(worldW, worldH, worldD);
 
+  SpriteFontRegistry().register('default', FlameSpriteFont('damage_number.png', 10, 20, 5, 1, type: SpriteFontType.NUMBER));
+
   Player player = Player(1, PlayerSpriteResolver(),  x: 10, y: worldH, z: 40);
   gameWidget.setBackground('background01.png');
   gameWidget.addEntity(player);
   gameWidget.addEntity(Enemy(2, EnemySpriteResolver(), x: 600, y: worldH, z: 50));
   gameWidget.addEntity(Ground(10, x: 0, y: worldH, z: 0, w: worldW, h: worldH, d: worldD));
-  
+
   gameWidget.createJoystick(90, 320);
   gameWidget.setCameraFocus(player);
 
