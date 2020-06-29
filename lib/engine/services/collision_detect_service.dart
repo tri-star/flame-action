@@ -14,10 +14,14 @@ class CollisionEvent {
   /// 衝突した結果位置調整が必要な場合セットされる
   Vector3d adjustment;
 
+  ///通知される相手にとって、どの方向から衝突したか
+  ///(通知される相手が地面と衝突した場合、BOTTOM)
+  IntersectDimension intersectDimension;
+
   CollisionEvent(this.type, this.source, {this.force, this.adjustment});
 
   String toString() {
-    return 'type: $type, source: $source, force: ($force), adjustment: ($adjustment)';
+    return 'type: $type, source: $source, force: ($force), adjustment: ($adjustment), intersectDimension: $intersectDimension';
   }
 }
 
@@ -29,7 +33,9 @@ class CollisionDetectService {
 
   void detect(WorldContext context, Entity source, CollisionEvent event) {
     Rect3d sourceRect = source.getRect();
+    Rect3d targetRect;
     _entities.forEach((Entity entity) {
+      targetRect = entity.getRect();
       if (!(entity.isCollidable())) {
         return;
       }
@@ -38,6 +44,7 @@ class CollisionDetectService {
       }
 
       if (sourceRect.isIntersect(entity.getRect())) {
+        event.intersectDimension = targetRect.getIntersectDimension(sourceRect);
         entity.onCollide(context, event);
       }
     });

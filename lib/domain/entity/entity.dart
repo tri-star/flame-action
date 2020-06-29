@@ -164,8 +164,7 @@ class Entity {
       Rect3d ownRect = getRect();
       Vector3d adjustment = ownRect.getIntersectAdjustment(sourceRect);
       if (event.source.getTags().contains("obstacle")) {
-        if (ownRect.getIntersectDimension(sourceRect) ==
-            IntersectDimension.BOTTOM) {
+        if (event.intersectDimension == IntersectDimension.BOTTOM) {
           if (gravityFlag) {
             vy *= -(bounceFactor.abs());
           }

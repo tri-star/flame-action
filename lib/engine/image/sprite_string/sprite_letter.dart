@@ -69,18 +69,20 @@ class SpriteLetter extends Entity {
 
   void onCollide(WorldContext context, CollisionEvent event) {
     super.onCollide(context, event);
-    if (event.type == 'collide') {
-      Rect3d sourceRect = event.source.getRect();
-      Rect3d ownRect = getRect();
-      if (event.source.getTags().contains("obstacle")) {
-        if (ownRect.getIntersectDimension(sourceRect) ==
-            IntersectDimension.BOTTOM) {
-          if (gravityFlag) {
-            vx *= bounceFactor;
-            vz *= bounceFactor;
-          }
-        }
-      }
+
+    if (event.type != 'collide') {
+      return;
+    }
+    if (!gravityFlag) {
+      return;
+    }
+    if (!event.source.getTags().contains("obstacle")) {
+      return;
+    }
+
+    if (event.intersectDimension == IntersectDimension.BOTTOM) {
+      vx *= bounceFactor;
+      vz *= bounceFactor;
     }
   }
 }
