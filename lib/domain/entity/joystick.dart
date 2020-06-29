@@ -6,7 +6,6 @@ import '../../engine/world.dart';
 import 'entity.dart';
 
 class JoyStick extends Entity implements JoystickListener {
-
   Sprite _baseSprite;
   Sprite _knobSprite;
 
@@ -25,16 +24,11 @@ class JoyStick extends Entity implements JoystickListener {
   }
 
   @override
-  void update(double dt, WorldContext context) {
-
-  }
+  void update(double dt, WorldContext context) {}
 
   @override
   List<Sprite> getSprites() {
-    return List<Sprite>.from([
-      _baseSprite,
-      _knobSprite
-    ]);
+    return List<Sprite>.from([_baseSprite, _knobSprite]);
   }
 
   @override
@@ -44,6 +38,5 @@ class JoyStick extends Entity implements JoystickListener {
   }
 
   @override
-  onJoystickAction(JoystickActionEvent event) {
-  }
+  onJoystickAction(JoystickActionEvent event) {}
 }

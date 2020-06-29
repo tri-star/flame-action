@@ -3,8 +3,7 @@ import 'package:flame_action/engine/image/sprite.dart';
 
 import 'stub_sprite.dart';
 
-class StubAnimation extends Animation{
-
+class StubAnimation extends Animation {
   double x;
   double y;
   double z;
@@ -35,7 +34,5 @@ class StubAnimation extends Animation{
   }
 
   @override
-  void update({AnimationEventCallback animationEventCallback}) {
-  }
-
+  void update({AnimationEventCallback animationEventCallback}) {}
 }

@@ -11,11 +11,11 @@ import '../../engine/coordinates.dart';
 import '../../engine/image/sprite.dart';
 
 class FlameSprite extends Sprite {
-
   Flame.Sprite _flameSprite;
 
-  FlameSprite(Flame.Sprite flameSprite, {double x, double y, double z, double d, Dimension dimension}): 
-    _flameSprite = flameSprite {
+  FlameSprite(Flame.Sprite flameSprite,
+      {double x, double y, double z, double d, Dimension dimension})
+      : _flameSprite = flameSprite {
     this.x = x ?? 0;
     this.y = y ?? 0;
     this.z = z ?? 0;
@@ -27,14 +27,14 @@ class FlameSprite extends Sprite {
   double get h => _flameSprite.loaded() ? _flameSprite.size?.y : 0;
 
   void render(Canvas canvas, Camera camera) {
-
     Paint paint = Paint();
     Vector3d anchorOffset = getOffsets();
     double localX = x + anchorOffset.x;
     double localY = y + anchorOffset.y + z;
-    if(dimension == Dimension.LEFT) {
+    if (dimension == Dimension.LEFT) {
       Matrix4 cc = Matrix4.identity()
-        ..translate(x + anchorOffset.x - (camera?.x ?? 0), y + anchorOffset.y + z - (camera?.y ?? 0))
+        ..translate(x + anchorOffset.x - (camera?.x ?? 0),
+            y + anchorOffset.y + z - (camera?.y ?? 0))
         ..translate(w, 0)
         ..rotateY(180.0 * 3.14 / 180);
 
@@ -43,14 +43,15 @@ class FlameSprite extends Sprite {
       localY = (camera?.y ?? 0);
     }
 
-    if(camera != null) {
+    if (camera != null) {
       localX -= camera.x;
       localY -= camera.y;
     }
 
     //TODO: 画面外の場合描画する必要がない
 
-    _flameSprite.renderPosition(canvas, Position(localX, localY), overridePaint: paint);
+    _flameSprite.renderPosition(canvas, Position(localX, localY),
+        overridePaint: paint);
 /*
     canvas.drawRect(Rect.fromLTWH(localX, localY - anchorOffset.z, w, h), paint
     ..style=PaintingStyle.stroke

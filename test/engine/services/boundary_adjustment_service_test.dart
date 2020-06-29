@@ -1,17 +1,13 @@
-
 import 'package:flame_action/domain/entity/player.dart';
 import 'package:flame_action/engine/coordinates.dart';
 import 'package:flame_action/engine/services/boundary_adjustment_service.dart';
 import 'package:flame_action/presentation/image/stub_sprite_resolver.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-
 void main() {
-
   BoundaryAdjustmentService service = BoundaryAdjustmentService();
 
   group('adjust', () {
-
     Map<String, dynamic> patterns = {
       '調整不要なケース': {
         "initialPosition": Position3d(10, 20, 30),
@@ -50,17 +46,18 @@ void main() {
         Position3d initialPosition = pattern['initialPosition'];
         Position3d expectedPosition = pattern['expectedPosition'];
 
-        StubSpriteResolver spriteResolver = StubSpriteResolver(w: playerSize.w, h: playerSize.h, d: playerSize.d);
-        Player player = Player(0, spriteResolver, x: initialPosition.x, y: initialPosition.y, z: initialPosition.z)
+        StubSpriteResolver spriteResolver = StubSpriteResolver(
+            w: playerSize.w, h: playerSize.h, d: playerSize.d);
+        Player player = Player(0, spriteResolver,
+            x: initialPosition.x, y: initialPosition.y, z: initialPosition.z)
           ..disableGravity();
-        Rect3d worldRect = Rect3d.fromSizeAndPosition(worldSize, Position3d(0,0,0));
+        Rect3d worldRect =
+            Rect3d.fromSizeAndPosition(worldSize, Position3d(0, 0, 0));
 
         player.update(0.16, null);
         service.adjust(worldRect, player);
         expect(player.getPosition(), expectedPosition);
       });
     });
-
   });
-
 }

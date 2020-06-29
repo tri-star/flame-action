@@ -20,31 +20,25 @@ class CollisionEvent {
   }
 }
 
-
-
-
 /// Entity同士の衝突の検出を行うサービス
 class CollisionDetectService {
-
   ZOrderedCollection _entities;
 
-  CollisionDetectService(ZOrderedCollection entities): 
-    _entities = entities;
+  CollisionDetectService(ZOrderedCollection entities) : _entities = entities;
 
   void detect(Entity source, CollisionEvent event) {
     Rect3d sourceRect = source.getRect();
     _entities.forEach((Entity entity) {
-      if(!(entity.isCollidable())) {
+      if (!(entity.isCollidable())) {
         return;
       }
-      if(entity == source) {
+      if (entity == source) {
         return;
       }
 
-      if(sourceRect.isIntersect(entity.getRect())) {
+      if (sourceRect.isIntersect(entity.getRect())) {
         entity.onCollide(event);
       }
     });
   }
-
 }

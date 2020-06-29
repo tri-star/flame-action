@@ -1,4 +1,3 @@
-
 import 'package:flame_action/engine/image/sprite_font.dart';
 
 import '../../../domain/entity/entity.dart';
@@ -9,16 +8,16 @@ import '../sprite.dart';
 
 /// スプライト文字列の1文字分を表示するEntity
 class SpriteLetter extends Entity {
-
   String _fontName;
 
   String _char;
 
   SpriteFont _font;
 
-  SpriteLetter(int id, String char, double x, double y, double z, {String fontName}): 
-    _char = char, 
-    _fontName = fontName ?? 'default' {
+  SpriteLetter(int id, String char, double x, double y, double z,
+      {String fontName})
+      : _char = char,
+        _fontName = fontName ?? 'default' {
     this.id = id;
     this.x = x;
     this.y = y;
@@ -31,7 +30,7 @@ class SpriteLetter extends Entity {
 
   @override
   void update(double dt, WorldContext context) {
-    if(gravityFlag) {
+    if (gravityFlag) {
       vy += 0.98;
     }
 
@@ -55,7 +54,8 @@ class SpriteLetter extends Entity {
     double offsetX = _font.getSprite(_char).getOffsets().x;
     double offsetY = _font.getSprite(_char).getOffsets().y;
     double offsetZ = _font.getSprite(_char).getOffsets().z;
-    return Rect3d(x + offsetX, y + offsetY, z + offsetZ, getW(), getH(), getD());
+    return Rect3d(
+        x + offsetX, y + offsetY, z + offsetZ, getW(), getH(), getD());
   }
 
   List<Sprite> getSprites() {

@@ -2,7 +2,7 @@ class TimeoutTimer {
   double timeout;
   double _current;
 
-  TimeoutTimer(this.timeout): _current=0;
+  TimeoutTimer(this.timeout) : _current = 0;
 
   void update() {
     //TODO: 1フレームの正式な値で更新する(定数など)

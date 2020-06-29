@@ -13,14 +13,13 @@ import 'joystick.dart';
 import 'services/boundary_adjustment_service.dart';
 import '../util/list.dart';
 
-
 class WorldContext {
   ZOrderedCollection entities;
   CollisionDetectService collisionDetectService;
   List<Entity> _pendingEntities;
 
-  WorldContext(this.collisionDetectService, this.entities):
-    _pendingEntities = List<Entity>();
+  WorldContext(this.collisionDetectService, this.entities)
+      : _pendingEntities = List<Entity>();
 
   void addEntity(Entity entity) {
     _pendingEntities.add(entity);
@@ -35,13 +34,11 @@ class WorldContext {
   }
 }
 
-
 /// ゲームの本体。
 /// ユーザーの入力などをデバイスに依存しない形で受け付ける
 /// World単位でスローモーションにしたり高速化するなど
 /// 時間軸を変更することが可能で、Worldはゲーム内に複数存在する可能性がある
 class World implements JoystickListener {
-
   Sprite background;
   ZOrderedCollection _entities;
   List<Entity> _pendingEntities;
@@ -53,23 +50,26 @@ class World implements JoystickListener {
   Rect3d _worldRect;
   Camera _camera;
 
-  int _randomSeed;  
+  int _randomSeed;
 
-  World(double worldW, double worldH, double worldD, double cameraW, double cameraH, {randomSeed: 0}): 
-    _randomSeed = randomSeed,
-    _entities = ZOrderedCollection(),
-    _pendingEntities = [],
-    _huds = List<Entity>(),
-    _camera = Camera(cameraW, cameraH, worldW, worldH + worldD),
-    _worldRect = Rect3d.fromSizeAndPosition(Size3d(worldW, worldH, worldD), Position3d(0,0,0)),
-    _boundaryAdjustmentService = BoundaryAdjustmentService() {
-      _collisionDetectService = CollisionDetectService(_entities);
-      _context = WorldContext(_collisionDetectService, _entities);
-    }
+  World(double worldW, double worldH, double worldD, double cameraW,
+      double cameraH,
+      {randomSeed: 0})
+      : _randomSeed = randomSeed,
+        _entities = ZOrderedCollection(),
+        _pendingEntities = [],
+        _huds = List<Entity>(),
+        _camera = Camera(cameraW, cameraH, worldW, worldH + worldD),
+        _worldRect = Rect3d.fromSizeAndPosition(
+            Size3d(worldW, worldH, worldD), Position3d(0, 0, 0)),
+        _boundaryAdjustmentService = BoundaryAdjustmentService() {
+    _collisionDetectService = CollisionDetectService(_entities);
+    _context = WorldContext(_collisionDetectService, _entities);
+  }
 
   void update(double dt) {
     //TODO: firstで判定しなくても動作するようにする
-    if(_entities.first == null) {
+    if (_entities.first == null) {
       _context.getPendingEntities().forEach((entity) {
         _entities.add(entity);
       });
@@ -98,13 +98,14 @@ class World implements JoystickListener {
   void createJoystick(double x, double y) {
     // 横幅/縦幅またはRectの情報をEntityやSpriteから取得する
     _pointerEventHandler = PointerEventHandler(
-      Rect.fromLTWH(x-70.0, y-70.0, 140, 140),
-      Rect.fromLTWH((_camera.w - 120)-30, y-30.0, 60, 60),
+      Rect.fromLTWH(x - 70.0, y - 70.0, 140, 140),
+      Rect.fromLTWH((_camera.w - 120) - 30, y - 30.0, 60, 60),
     );
     _pointerEventHandler.addListener('world', this);
 
     this._huds.add(JoyStick(3, JoyStickSpriteResolver(), x: x, y: y));
-    this._huds.add(ActionButton(3, ActionButtonSpriteResolver(), x: _camera.w - 120, y: y));
+    this._huds.add(ActionButton(3, ActionButtonSpriteResolver(),
+        x: _camera.w - 120, y: y));
   }
 
   void setBackground(Sprite _sprite) {
@@ -120,12 +121,12 @@ class World implements JoystickListener {
   @override
   onJoystickMove(JoystickMoveEvent event) {
     _entities.forEach((entity) {
-      if(entity is JoystickListener) {
+      if (entity is JoystickListener) {
         (entity as JoystickListener).onJoystickMove(event);
       }
     });
     _huds.forEach((entity) {
-      if(entity is JoystickListener) {
+      if (entity is JoystickListener) {
         (entity as JoystickListener).onJoystickMove(event);
       }
     });
@@ -134,22 +135,21 @@ class World implements JoystickListener {
   @override
   onJoystickAction(JoystickActionEvent event) {
     _entities.forEach((entity) {
-      if(entity is JoystickListener) {
+      if (entity is JoystickListener) {
         (entity as JoystickListener).onJoystickAction(event);
       }
     });
     _huds.forEach((entity) {
-      if(entity is JoystickListener) {
+      if (entity is JoystickListener) {
         (entity as JoystickListener).onJoystickAction(event);
       }
     });
   }
 
-
   ZOrderedCollection get entities {
     return _entities;
   }
-  
+
   List<Entity> get huds => _huds;
   Camera get camera => _camera;
 }

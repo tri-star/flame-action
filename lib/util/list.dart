@@ -1,13 +1,9 @@
-
-
 import '../domain/entity/entity.dart';
 
 class ZOrderedCollection extends Iterable<Entity> {
-
   ZOrderedList _list;
 
-  ZOrderedCollection():
-    _list = ZOrderedList();
+  ZOrderedCollection() : _list = ZOrderedList();
 
   @override
   Iterator<Entity> get iterator => ZOrderedListIterator(_list);
@@ -21,19 +17,18 @@ class ZOrderedCollection extends Iterable<Entity> {
   }
 }
 
-
 class ZOrderedListIterator extends Iterator<Entity> {
   ZOrderedList _list;
   ZOrderedItem _current;
   bool _started;
 
-  ZOrderedListIterator(ZOrderedList list): 
-    _list = list,
-    _started = false;
+  ZOrderedListIterator(ZOrderedList list)
+      : _list = list,
+        _started = false;
 
   @override
   Entity get current {
-    if(_list == null) {
+    if (_list == null) {
       return null;
     }
     return _current?.entity;
@@ -41,14 +36,14 @@ class ZOrderedListIterator extends Iterator<Entity> {
 
   @override
   bool moveNext() {
-    if(_list == null) {
+    if (_list == null) {
       return false;
     }
-    if(!_started) {
+    if (!_started) {
       _started = true;
       _current = _list.getHead();
       return true;
-    } else if(_current == null) {
+    } else if (_current == null) {
       return false;
     }
     _current = _current.next;
@@ -56,9 +51,7 @@ class ZOrderedListIterator extends Iterator<Entity> {
   }
 }
 
-
 class ZOrderedList {
-
   ZOrderedItem _list;
 
   ZOrderedItem getHead() {
@@ -66,26 +59,26 @@ class ZOrderedList {
   }
 
   void add(Entity entity) {
-    if(_list == null) {
+    if (_list == null) {
       _list = ZOrderedItem(entity, null);
       return;
     }
     ZOrderedItem head = _list;
-    if(head.entity.getZ() > entity.getZ()) {
+    if (head.entity.getZ() > entity.getZ()) {
       ZOrderedItem newHead = ZOrderedItem(entity, null);
       head.insertBefore(newHead);
       _list = newHead;
       return;
     }
 
-    while(head.next != null) {
-      if(head.entity.getZ() > entity.getZ()) {
+    while (head.next != null) {
+      if (head.entity.getZ() > entity.getZ()) {
         head.insertBefore(ZOrderedItem(entity, null));
         return;
       }
       head = head.next;
     }
-    if(head.entity.getZ() > entity.getZ()) {
+    if (head.entity.getZ() > entity.getZ()) {
       head.insertBefore(ZOrderedItem(entity, null));
       return;
     }
@@ -93,35 +86,33 @@ class ZOrderedList {
   }
 
   void sync() {
-    for(ZOrderedItem head = _list.next; head != null; head = head.next) {
-      if(head.isNeedSwap()) {
+    for (ZOrderedItem head = _list.next; head != null; head = head.next) {
+      if (head.isNeedSwap()) {
         _fixOrder(head);
       }
     }
   }
 
-
   void _fixOrder(ZOrderedItem item) {
-    if(item.isHead()) {
+    if (item.isHead()) {
       return;
     }
-    while(item.isNeedSwap()) {
+    while (item.isNeedSwap()) {
       item.swapBefore();
     }
-    if(item.isHead()) {
+    if (item.isHead()) {
       _list = item;
     }
   }
 }
 
-
 class ZOrderedItem {
   Entity _entity;
 
-  ZOrderedItem(Entity entity, ZOrderedItem prev):
-    _entity = entity,
-    _prev = prev,
-    _next = null;
+  ZOrderedItem(Entity entity, ZOrderedItem prev)
+      : _entity = entity,
+        _prev = prev,
+        _next = null;
 
   ZOrderedItem _prev;
   ZOrderedItem _next;
@@ -131,7 +122,7 @@ class ZOrderedItem {
   ZOrderedItem get next => _next;
 
   void insertBefore(ZOrderedItem item) {
-    if(_prev != null) {
+    if (_prev != null) {
       item.setPrev(_prev);
       _prev.setNext(item);
     }
@@ -140,7 +131,7 @@ class ZOrderedItem {
   }
 
   void append(ZOrderedItem item) {
-    if(_next != null) {
+    if (_next != null) {
       item.setNext(_next);
       _next.setPrev(item);
     }
@@ -149,18 +140,18 @@ class ZOrderedItem {
   }
 
   void swapBefore() {
-    if(_prev == null) {
+    if (_prev == null) {
       return;
     }
-    
-    if(_prev.prev != null) {
+
+    if (_prev.prev != null) {
       _prev.prev.setNext(this);
     }
 
     ZOrderedItem newPrev = _prev.prev;
     _prev.setNext(_next);
     _prev.setPrev(this);
-    if(_next != null) {
+    if (_next != null) {
       _next.setPrev(_prev);
     }
     _next = _prev;
@@ -170,7 +161,7 @@ class ZOrderedItem {
   void setNext(ZOrderedItem item) {
     _next = item;
   }
-  
+
   void setPrev(ZOrderedItem item) {
     _prev = item;
   }
@@ -180,7 +171,7 @@ class ZOrderedItem {
   }
 
   bool isNeedSwap() {
-    if(_prev == null ) {
+    if (_prev == null) {
       return false;
     }
     return _entity.getZ() < _prev.entity.getZ();

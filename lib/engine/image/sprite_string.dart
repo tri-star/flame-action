@@ -7,7 +7,6 @@ import 'sprite.dart';
 
 /// 文字列を1文字単位で座標管理する必要がある場合に使用する
 abstract class SpriteString extends Entity {
-
   @protected
   String fontName;
 
@@ -16,8 +15,8 @@ abstract class SpriteString extends Entity {
 
   int _length;
 
-
-  SpriteString(int id, this.message, double x, double y, double z, {this.fontName}) {
+  SpriteString(int id, this.message, double x, double y, double z,
+      {this.fontName}) {
     this.id = id;
     this.x = x;
     this.y = y;
@@ -26,8 +25,7 @@ abstract class SpriteString extends Entity {
 
   @protected
   void update(double dt, WorldContext context) {
-
-    if(gravityFlag) {
+    if (gravityFlag) {
       vy += 0.98;
     }
 
@@ -39,7 +37,6 @@ abstract class SpriteString extends Entity {
     context?.collisionDetectService?.detect(this, collisionEvent);
   }
 
-
   @protected
   double getW() => 0;
   @protected
@@ -50,5 +47,4 @@ abstract class SpriteString extends Entity {
   List<Sprite> getSprites() {
     return [];
   }
-
 }

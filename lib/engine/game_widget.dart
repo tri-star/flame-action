@@ -11,15 +11,14 @@ import 'world.dart';
 /// ユーザーからの入力を受け付け、GameModelに伝える
 /// GameModelの内容をレンダリングする
 class GameWidget extends Game {
-
   bool _initialized = false;
   World _world;
   double _deviceW;
   double _deviceH;
 
-  GameWidget():
-    _deviceW = 0,
-    _deviceH = 0;
+  GameWidget()
+      : _deviceW = 0,
+        _deviceH = 0;
 
   Future<void> initialize(double worldW, double worldH, double worldD) async {
     await Flame.util.setLandscape();
@@ -34,7 +33,8 @@ class GameWidget extends Game {
   }
 
   void setBackground(String fileName) {
-    _world.setBackground(FlameSprite(Sprite(fileName), x: 0, y: 0, z: 0, d: 1));  // Flameを直接使わないようにする
+    _world.setBackground(FlameSprite(Sprite(fileName),
+        x: 0, y: 0, z: 0, d: 1)); // Flameを直接使わないようにする
   }
 
   void addEntity(Entity entity) {
@@ -54,16 +54,15 @@ class GameWidget extends Game {
 
   Widget getWidget() {
     return Listener(
-      onPointerMove: onPointerMove,
-      onPointerUp: onPointerUp,
-      onPointerDown: onPointerDown,
-      child: widget
-    );
+        onPointerMove: onPointerMove,
+        onPointerUp: onPointerUp,
+        onPointerDown: onPointerDown,
+        child: widget);
   }
 
   @override
   void update(double dt) {
-    if(!_initialized) {
+    if (!_initialized) {
       return;
     }
     _world.update(dt);
@@ -71,11 +70,11 @@ class GameWidget extends Game {
 
   @override
   void render(Canvas canvas) {
-    if(!_initialized) {
+    if (!_initialized) {
       return;
     }
 
-    if(_world.background != null) {
+    if (_world.background != null) {
       _world.background.render(canvas, _world.camera);
     }
 
@@ -92,17 +91,20 @@ class GameWidget extends Game {
   }
 
   void onPointerMove(PointerMoveEvent event) {
-    final pointerEvent = UiPointerEvent(PointerEventType.UPDATE, event.pointer, event.position.dx, event.position.dy);
+    final pointerEvent = UiPointerEvent(PointerEventType.UPDATE, event.pointer,
+        event.position.dx, event.position.dy);
     _world.onPointerEvent(pointerEvent);
   }
 
   void onPointerDown(PointerDownEvent event) {
-    final pointerEvent = UiPointerEvent(PointerEventType.START, event.pointer, event.position.dx, event.position.dy);
+    final pointerEvent = UiPointerEvent(PointerEventType.START, event.pointer,
+        event.position.dx, event.position.dy);
     _world.onPointerEvent(pointerEvent);
   }
 
   void onPointerUp(PointerUpEvent event) {
-    final pointerEvent = UiPointerEvent(PointerEventType.END, event.pointer, event.position.dx, event.position.dy);
+    final pointerEvent = UiPointerEvent(PointerEventType.END, event.pointer,
+        event.position.dx, event.position.dy);
     _world.onPointerEvent(pointerEvent);
   }
 }

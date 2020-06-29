@@ -2,7 +2,6 @@ import '../../engine/services/collision_detect_service.dart';
 import 'entity.dart';
 
 class Ground extends Entity {
-
   double _w;
   double _h;
   double _d;
@@ -24,6 +23,5 @@ class Ground extends Entity {
   double getH() => _h;
   double getD() => _d;
 
-  void onCollide(CollisionEvent event) {
-  }
+  void onCollide(CollisionEvent event) {}
 }

@@ -4,10 +4,9 @@ import '../../domain/entity/entity.dart';
 
 /// EntityとWorldの境界との位置調整を行うサービス
 class BoundaryAdjustmentService {
-
   void adjust(Rect3d baseRect, Entity entity) {
     Rect3d targetRect = entity.getRect();
-    if(baseRect.isContain(targetRect)) {
+    if (baseRect.isContain(targetRect)) {
       return;
     }
     Vector3d adjustment = baseRect.getOverflowAdjustment(targetRect);
@@ -15,5 +14,4 @@ class BoundaryAdjustmentService {
     adjustment.y = 0;
     entity.addAdjustment(adjustment);
   }
-
 }

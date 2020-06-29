@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:flame_action/engine/image/sprite.dart';
 
 class StubSprite extends Sprite {
-
   StubSprite(double x, double y, double z, double w, double h, double d) {
     this.x = x;
     this.y = y;
@@ -16,7 +15,5 @@ class StubSprite extends Sprite {
   }
 
   @override
-  void render(Canvas canvas, Camera camera) {
-  }
-
+  void render(Canvas canvas, Camera camera) {}
 }

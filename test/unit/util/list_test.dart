@@ -4,15 +4,13 @@ import 'package:flame_action/util/list.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-
   group('ZOrderedCollection', () {
-
     test('Forで1回ループ出来る', () {
       ZOrderedCollection collection = ZOrderedCollection();
       collection.add(Player(0, null, z: 1));
 
       int count = 0;
-      for(Entity e in collection) {
+      for (Entity e in collection) {
         expect(e.getZ(), 1);
         count++;
       }
@@ -26,17 +24,15 @@ void main() {
       collection.add(Player(0, null, z: 2));
 
       int count = 0;
-      for(Entity e in collection) {
+      for (Entity e in collection) {
         count++;
       }
       expect(collection.length, 2);
       expect(count, 2);
     });
-
   });
 
   group('ZOrderedListIterator', () {
-
     test('1つ取り出せる', () {
       Entity player = Player(0, null, z: 1);
       ZOrderedList list = ZOrderedList();
@@ -207,7 +203,6 @@ void main() {
     });
   });
 
-
   group('ZOrderedItem', () {
     test('1つ追加した後でリストの関連が崩れていないこと', () {
       ZOrderedItem item = ZOrderedItem(Player(0, null, z: 1), null);
@@ -268,7 +263,5 @@ void main() {
       expect(item.next.next.next.entity.getZ(), 4);
       expect(item.next.next.next.prev.entity.getZ(), 2);
     });
-
   });
-
 }
