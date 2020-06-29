@@ -34,7 +34,7 @@ abstract class SpriteString extends Entity {
     z += vz;
 
     CollisionEvent collisionEvent = CollisionEvent('collide', this);
-    context?.collisionDetectService?.detect(this, collisionEvent);
+    context?.collisionDetectService?.detect(context, this, collisionEvent);
   }
 
   @protected

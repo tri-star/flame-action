@@ -2,6 +2,7 @@ import 'package:flame_action/domain/entity/entity.dart';
 import 'package:flame_action/util/list.dart';
 
 import '../coordinates.dart';
+import '../world.dart';
 
 class CollisionEvent {
   String type;
@@ -26,7 +27,7 @@ class CollisionDetectService {
 
   CollisionDetectService(ZOrderedCollection entities) : _entities = entities;
 
-  void detect(Entity source, CollisionEvent event) {
+  void detect(WorldContext context, Entity source, CollisionEvent event) {
     Rect3d sourceRect = source.getRect();
     _entities.forEach((Entity entity) {
       if (!(entity.isCollidable())) {
@@ -37,7 +38,7 @@ class CollisionDetectService {
       }
 
       if (sourceRect.isIntersect(entity.getRect())) {
-        entity.onCollide(event);
+        entity.onCollide(context, event);
       }
     });
   }

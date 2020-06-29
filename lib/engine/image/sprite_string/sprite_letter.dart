@@ -39,7 +39,7 @@ class SpriteLetter extends Entity {
     z += vz;
 
     CollisionEvent collisionEvent = CollisionEvent('collide', this);
-    context?.collisionDetectService?.detect(this, collisionEvent);
+    context?.collisionDetectService?.detect(context, this, collisionEvent);
   }
 
   @override
@@ -65,5 +65,22 @@ class SpriteLetter extends Entity {
         ..y = y
         ..z = z + 5
     ];
+  }
+
+  void onCollide(WorldContext context, CollisionEvent event) {
+    super.onCollide(context, event);
+    if (event.type == 'collide') {
+      Rect3d sourceRect = event.source.getRect();
+      Rect3d ownRect = getRect();
+      if (event.source.getTags().contains("obstacle")) {
+        if (ownRect.getIntersectDimension(sourceRect) ==
+            IntersectDimension.BOTTOM) {
+          if (gravityFlag) {
+            vx *= bounceFactor;
+            vz *= bounceFactor;
+          }
+        }
+      }
+    }
   }
 }

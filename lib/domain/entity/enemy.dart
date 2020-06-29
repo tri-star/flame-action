@@ -1,5 +1,7 @@
 import 'package:flame_action/engine/image/sprite_resolver.dart';
+import 'package:flame_action/engine/image/sprite_string/pop_with_gravity_string.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
+import 'package:flame_action/engine/world.dart';
 
 import 'entity.dart';
 
@@ -16,13 +18,15 @@ class Enemy extends Entity {
   }
 
   @override
-  void onCollide(CollisionEvent event) {
-    super.onCollide(event);
+  void onCollide(WorldContext context, CollisionEvent event) {
+    super.onCollide(context, event);
     if (event.type == 'attack') {
       state = 'damage';
       vx += event.force?.x ?? 0;
       vy += event.force?.y ?? 0;
       y += vy;
+      Entity newEntity = PopWithGravityString(11, '1234', x, y, z + 5);
+      context.addEntity(newEntity);
     }
     if (event.type == 'collide' &&
         event.source.getTags().contains('obstacle')) {

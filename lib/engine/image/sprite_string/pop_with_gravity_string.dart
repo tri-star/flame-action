@@ -18,7 +18,8 @@ class PopWithGravityString extends SpriteString {
     int count = 0;
     message.split('').forEach((String letter) {
       SpriteLetter spriteLetter =
-          SpriteLetter(0, letter, x + (count * 10) + 1, y, z + count);
+          SpriteLetter(0, letter, x + (count * 10) + 2, y - 40, z);
+      spriteLetter.addForce(2, -8, 0);
       _letters.add(spriteLetter);
       count++;
     });

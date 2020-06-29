@@ -1,3 +1,4 @@
+import '../../engine/world.dart';
 import '../../engine/services/collision_detect_service.dart';
 import 'entity.dart';
 
@@ -23,5 +24,5 @@ class Ground extends Entity {
   double getH() => _h;
   double getD() => _d;
 
-  void onCollide(CollisionEvent event) {}
+  void onCollide(WorldContext context, CollisionEvent event) {}
 }

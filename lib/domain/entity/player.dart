@@ -86,20 +86,12 @@ class Player extends Entity implements JoystickListener {
   }
 
   @override
-  void onCollide(CollisionEvent event) {
-    super.onCollide(event);
-  }
-
-  @override
   void onAnimationEvent(WorldContext context, AnimationFrameEvent event) {
     double forceX = (dimension == Dimension.RIGHT) ? 3 : -3;
     CollisionEvent collisionEvent =
         CollisionEvent('attack', this, force: Vector3d(forceX, -18, 0));
-    context.collisionDetectService.detect(this, collisionEvent);
+    context.collisionDetectService.detect(context, this, collisionEvent);
     vy = -10;
     y += vy;
-
-    Entity newEntity = PopWithGravityString(11, '123', x, y, z);
-    context.addEntity(newEntity);
   }
 }

@@ -73,7 +73,7 @@ class Entity {
     });
 
     CollisionEvent collisionEvent = CollisionEvent('collide', this);
-    context?.collisionDetectService?.detect(this, collisionEvent);
+    context?.collisionDetectService?.detect(context, this, collisionEvent);
   }
 
   void updateState() {
@@ -148,11 +148,17 @@ class Entity {
     z += vector.z;
   }
 
+  void addForce(double x, double y, double z) {
+    vx += x;
+    vy += y;
+    vz += z;
+  }
+
   String getNextState(String currentState) {
     return 'neutral';
   }
 
-  void onCollide(CollisionEvent event) {
+  void onCollide(WorldContext context, CollisionEvent event) {
     if (event.type == 'collide') {
       Rect3d sourceRect = event.source.getRect();
       Rect3d ownRect = getRect();
@@ -161,7 +167,7 @@ class Entity {
         if (ownRect.getIntersectDimension(sourceRect) ==
             IntersectDimension.BOTTOM) {
           if (gravityFlag) {
-            vy = 0;
+            vy *= -(bounceFactor.abs());
           }
         }
         addAdjustment(adjustment);
