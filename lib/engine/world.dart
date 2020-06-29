@@ -17,8 +17,22 @@ import '../util/list.dart';
 class WorldContext {
   ZOrderedCollection entities;
   CollisionDetectService collisionDetectService;
+  List<Entity> _pendingEntities;
 
-  WorldContext(this.collisionDetectService);
+  WorldContext(this.collisionDetectService, this.entities):
+    _pendingEntities = List<Entity>();
+
+  void addEntity(Entity entity) {
+    _pendingEntities.add(entity);
+  }
+
+  List<Entity> getPendingEntities() {
+    return _pendingEntities;
+  }
+
+  void clearPendingEntities() {
+    _pendingEntities.clear();
+  }
 }
 
 
@@ -50,16 +64,16 @@ class World implements JoystickListener {
     _worldRect = Rect3d.fromSizeAndPosition(Size3d(worldW, worldH, worldD), Position3d(0,0,0)),
     _boundaryAdjustmentService = BoundaryAdjustmentService() {
       _collisionDetectService = CollisionDetectService(_entities);
-      _context = WorldContext(_collisionDetectService);
+      _context = WorldContext(_collisionDetectService, _entities);
     }
 
   void update(double dt) {
     //TODO: firstで判定しなくても動作するようにする
     if(_entities.first == null) {
-      _pendingEntities.forEach((entity) {
+      _context.getPendingEntities().forEach((entity) {
         _entities.add(entity);
       });
-      _pendingEntities.clear();
+      _context.clearPendingEntities();
       return;
     }
     _entities.forEach((entity) {
@@ -70,14 +84,15 @@ class World implements JoystickListener {
       entity.update(dt, _context);
     });
     _camera.update();
-    _pendingEntities.forEach((entity) {
+    _context.getPendingEntities().forEach((entity) {
       _entities.add(entity);
     });
-    _pendingEntities.clear();
+    _context.clearPendingEntities();
+    _entities.sync();
   }
 
   void addEntity(Entity entity) {
-    _pendingEntities.add(entity);
+    _context.addEntity(entity);
   }
 
   void createJoystick(double x, double y) {
@@ -132,7 +147,7 @@ class World implements JoystickListener {
 
 
   ZOrderedCollection get entities {
-    return _entities..sync();
+    return _entities;
   }
   
   List<Entity> get huds => _huds;
