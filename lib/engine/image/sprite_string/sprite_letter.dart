@@ -22,7 +22,7 @@ class SpriteLetter extends Entity {
     this.x = x;
     this.y = y;
     this.z = z;
-    this.bounceFactor = 0.6;
+    this.bounceFactor = 0.5;
     this.gravityFlag = true;
     this.collidableFlag = true;
     _font = SpriteFontRegistry().get(_fontName);
