@@ -160,6 +160,9 @@ class ZOrderedItem {
     ZOrderedItem newPrev = _prev.prev;
     _prev.setNext(_next);
     _prev.setPrev(this);
+    if(_next != null) {
+      _next.setPrev(_prev);
+    }
     _next = _prev;
     _prev = newPrev;
   }
