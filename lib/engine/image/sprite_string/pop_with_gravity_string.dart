@@ -12,6 +12,16 @@ class PopWithGravityString extends SpriteString {
   TimeoutTimer _timer;
   List<TimeoutTimer> _letterTimers;
 
+  static const double LETTER_SPEED = 0.08;
+  static const double LETTER_LIFETIME = 1.0;
+  static const double CHARACTER_WIDTH = 10;
+  static const double LETTER_SPACING = 2.0;
+  static const double OFFSET_Y = -40.0;
+  static const double FORCE_X = 2.0;
+  static const double FORCE_Y = -7;
+  static const double FORCE_Z = 0;
+  static const double BOUNCE_FACTOR = 0.5;
+
   PopWithGravityString(int id, String message, double x, double y, double z,
       {String fontName})
       : super(id, message, x, y, z, fontName: fontName) {
@@ -19,14 +29,14 @@ class PopWithGravityString extends SpriteString {
     _letterTimers = List<TimeoutTimer>();
     int count = 0;
     message.split('').forEach((String letter) {
-      SpriteLetter spriteLetter = SpriteLetter(
-          0, letter, x + (count * 10) + 2, y - 40, z,
-          gravityFlag: true, collidableFlag: true, bounceFactor: 0.5);
-      spriteLetter.addForce(2, -7, 0);
+      SpriteLetter spriteLetter = SpriteLetter(0, letter,
+          x + (count * CHARACTER_WIDTH) + LETTER_SPACING, y + OFFSET_Y, z,
+          gravityFlag: true, collidableFlag: true, bounceFactor: BOUNCE_FACTOR);
+      spriteLetter.addForce(FORCE_X, FORCE_Y, FORCE_Z);
       _letters.add(spriteLetter);
       count++;
     });
-    _timer = TimeoutTimer(0.08);
+    _timer = TimeoutTimer(LETTER_SPEED);
   }
 
   @override
@@ -35,7 +45,7 @@ class PopWithGravityString extends SpriteString {
     if (_timer.isDone() && current < _letters.length) {
       SpriteLetter entity = _letters[current];
       context.addEntity(entity);
-      _letterTimers.add(TimeoutTimer(1, callback: () {
+      _letterTimers.add(TimeoutTimer(LETTER_LIFETIME, callback: () {
         entity.dispose();
       }));
 
