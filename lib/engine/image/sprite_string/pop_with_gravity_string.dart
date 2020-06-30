@@ -17,8 +17,9 @@ class PopWithGravityString extends SpriteString {
     _letters = List<SpriteLetter>();
     int count = 0;
     message.split('').forEach((String letter) {
-      SpriteLetter spriteLetter =
-          SpriteLetter(0, letter, x + (count * 10) + 2, y, z);
+      SpriteLetter spriteLetter = SpriteLetter(
+          0, letter, x + (count * 10) + 2, y - 40, z,
+          gravityFlag: true, collidableFlag: true, bounceFactor: 0.5);
       spriteLetter.addForce(2, -7, 0);
       _letters.add(spriteLetter);
       count++;
@@ -40,11 +41,11 @@ class PopWithGravityString extends SpriteString {
   }
 
   @override
-  double getW() => 10;
+  double getW() => 1;
   @override
-  double getH() => 12;
+  double getH() => 1;
   @override
-  double getD() => 10;
+  double getD() => 1;
 
   @override
   Rect3d getRect() {

@@ -138,6 +138,10 @@ class Entity {
     z += distance;
   }
 
+  void enableGravity() {
+    gravityFlag = true;
+  }
+
   void disableGravity() {
     gravityFlag = false;
   }

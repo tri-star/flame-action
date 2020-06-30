@@ -15,16 +15,19 @@ class SpriteLetter extends Entity {
   SpriteFont _font;
 
   SpriteLetter(int id, String char, double x, double y, double z,
-      {String fontName})
+      {String fontName,
+      bool gravityFlag = false,
+      bool collidableFlag = false,
+      double bounceFactor = 0})
       : _char = char,
         _fontName = fontName ?? 'default' {
     this.id = id;
     this.x = x;
     this.y = y;
     this.z = z;
-    this.bounceFactor = 0.5;
-    this.gravityFlag = true;
-    this.collidableFlag = true;
+    this.bounceFactor = bounceFactor;
+    this.gravityFlag = gravityFlag;
+    this.collidableFlag = collidableFlag;
     _font = SpriteFontRegistry().get(_fontName);
   }
 
@@ -63,7 +66,7 @@ class SpriteLetter extends Entity {
       _font.getSprite(_char)
         ..x = x
         ..y = y
-        ..z = z + 5
+        ..z = z
     ];
   }
 
