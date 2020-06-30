@@ -263,5 +263,21 @@ void main() {
       expect(item.next.next.next.entity.getZ(), 4);
       expect(item.next.next.next.prev.entity.getZ(), 2);
     });
+
+    test('削除した場合でもリストが崩れないこと', () {
+      ZOrderedItem item = ZOrderedItem(Player(0, null, z: 1), null);
+      ZOrderedItem item2 = ZOrderedItem(Player(0, null, z: 2), null);
+      ZOrderedItem item3 = ZOrderedItem(Player(0, null, z: 3), null);
+      item.append(item2);
+      item2.append(item3);
+
+      item2.remove();
+      expect(item.entity.getZ(), 1, reason: 'itemが1ではありません');
+      expect(item.next.entity.getZ(), 3, reason: 'item.nextが3ではありません');
+      expect(item.next.prev.entity.getZ(), 1, reason: 'item3のprevが1ではありません');
+      expect(item.next.next, null, reason: 'item3のnextがnullではありません');
+      expect(item2.prev, null, reason: 'item2のprevがnullになっていません');
+      expect(item2.next, null, reason: 'item2のnextがnullになっていません');
+    });
   });
 }

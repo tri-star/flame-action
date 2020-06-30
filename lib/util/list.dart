@@ -1,5 +1,7 @@
 import '../domain/entity/entity.dart';
 
+/// TODO: パフォーマンス上の懸念からEntityのソート以外に削除判定と削除も行っているので、
+/// 名称を変える、utilから移動することを検討する
 class ZOrderedCollection extends Iterable<Entity> {
   ZOrderedList _list;
 
@@ -86,10 +88,18 @@ class ZOrderedList {
   }
 
   void sync() {
-    for (ZOrderedItem head = _list.next; head != null; head = head.next) {
+    ZOrderedItem head = _list;
+    while (head != null) {
+      if (head.isNeedRemove()) {
+        ZOrderedItem tempNext = head.next;
+        head.remove();
+        head = tempNext;
+        continue;
+      }
       if (head.isNeedSwap()) {
         _fixOrder(head);
       }
+      head = head.next;
     }
   }
 
@@ -104,6 +114,8 @@ class ZOrderedList {
       _list = item;
     }
   }
+
+  void _removeItem(ZOrderedItem item) {}
 }
 
 class ZOrderedItem {
@@ -158,6 +170,18 @@ class ZOrderedItem {
     _prev = newPrev;
   }
 
+  void remove() {
+    ZOrderedItem tempPrev = _prev;
+    if (_prev != null) {
+      _prev.setNext(_next);
+      _prev = null;
+    }
+    if (_next != null) {
+      _next.setPrev(tempPrev);
+      _next = null;
+    }
+  }
+
   void setNext(ZOrderedItem item) {
     _next = item;
   }
@@ -175,5 +199,9 @@ class ZOrderedItem {
       return false;
     }
     return _entity.getZ() < _prev.entity.getZ();
+  }
+
+  bool isNeedRemove() {
+    return _entity.isDisposed();
   }
 }
