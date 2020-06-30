@@ -158,6 +158,15 @@ class Entity {
     vz += z;
   }
 
+  /// Entityを削除可能な状態にする
+  void dispose() {
+    state = 'disposed';
+  }
+
+  bool isDisposed() {
+    return state == 'disposed';
+  }
+
   String getNextState(String currentState) {
     return 'neutral';
   }

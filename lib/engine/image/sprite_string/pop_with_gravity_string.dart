@@ -10,11 +10,13 @@ class PopWithGravityString extends SpriteString {
   List<SpriteLetter> _letters;
   int current = 0;
   TimeoutTimer _timer;
+  List<TimeoutTimer> _letterTimers;
 
   PopWithGravityString(int id, String message, double x, double y, double z,
       {String fontName})
       : super(id, message, x, y, z, fontName: fontName) {
     _letters = List<SpriteLetter>();
+    _letterTimers = List<TimeoutTimer>();
     int count = 0;
     message.split('').forEach((String letter) {
       SpriteLetter spriteLetter = SpriteLetter(
@@ -29,14 +31,27 @@ class PopWithGravityString extends SpriteString {
 
   @override
   void update(double dt, WorldContext context) {
-    if (current >= _letters.length) {
-      return;
-    }
     _timer.update();
-    if (_timer.isDone()) {
-      context.addEntity(_letters[current]);
+    if (_timer.isDone() && current < _letters.length) {
+      SpriteLetter entity = _letters[current];
+      context.addEntity(entity);
+      _letterTimers.add(TimeoutTimer(1, callback: () {
+        entity.dispose();
+      }));
+
       current++;
       _timer.reset();
+    }
+
+    bool allLetterDisposed = true;
+    _letterTimers.forEach((timer) {
+      timer.update();
+      if (!timer.isDone()) {
+        allLetterDisposed = false;
+      }
+    });
+    if (current >= _letters.length && allLetterDisposed) {
+      dispose();
     }
   }
 
