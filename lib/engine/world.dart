@@ -1,10 +1,7 @@
 import 'package:flame_action/domain/entity/entity.dart';
 import 'package:flame_action/domain/entity/joystick.dart';
-import 'package:flame_action/domain/entity/action_button.dart';
 import 'package:flame_action/engine/entity/base_entity_factory.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
-import 'package:flame_action/presentation/image/action_button_sprite_resolver.dart';
-import 'package:flame_action/presentation/image/joystick_sprite_resolver.dart';
 import 'package:flutter/painting.dart';
 
 import 'camera.dart';
@@ -105,9 +102,9 @@ class World implements JoystickListener {
     );
     _pointerEventHandler.addListener('world', this);
 
-    this._huds.add(JoyStick(3, JoyStickSpriteResolver(), x: x, y: y));
-    this._huds.add(ActionButton(3, ActionButtonSpriteResolver(),
-        x: _camera.w - 120, y: y));
+    this._huds.add(_context.entityFactory.create('joystick', x, y, 0));
+    this._huds.add(
+        _context.entityFactory.create('action_button', _camera.w - 120, y, 0));
   }
 
   void setBackground(Sprite _sprite) {
