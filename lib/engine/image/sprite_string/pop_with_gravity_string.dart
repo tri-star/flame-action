@@ -1,13 +1,13 @@
+import '../../../domain/entity/entity.dart';
 import '../../../engine/image/sprite_string.dart';
 import '../../../util/timer.dart';
 import '../../coordinates.dart';
 import '../../world.dart';
 import '../sprite.dart';
-import 'sprite_letter.dart';
 
 /// 飛び出す動作をしながら重力の影響を受けて表示される文字列
 class PopWithGravityString extends SpriteString {
-  List<SpriteLetter> _letters;
+  List<String> _letters;
   int current = 0;
   TimeoutTimer _timer;
   List<TimeoutTimer> _letterTimers;
@@ -25,17 +25,10 @@ class PopWithGravityString extends SpriteString {
   PopWithGravityString(int id, String message, double x, double y, double z,
       {String fontName})
       : super(id, message, x, y, z, fontName: fontName) {
-    _letters = List<SpriteLetter>();
+    assert(message != null && message != '');
+
+    _letters = message.split('');
     _letterTimers = List<TimeoutTimer>();
-    int count = 0;
-    message.split('').forEach((String letter) {
-      SpriteLetter spriteLetter = SpriteLetter(0, letter,
-          x + (count * CHARACTER_WIDTH) + LETTER_SPACING, y + OFFSET_Y, z,
-          gravityFlag: true, collidableFlag: true, bounceFactor: BOUNCE_FACTOR);
-      spriteLetter.addForce(FORCE_X, FORCE_Y, FORCE_Z);
-      _letters.add(spriteLetter);
-      count++;
-    });
     _timer = TimeoutTimer(LETTER_SPEED);
   }
 
@@ -43,7 +36,16 @@ class PopWithGravityString extends SpriteString {
   void update(double dt, WorldContext context) {
     _timer.update();
     if (_timer.isDone() && current < _letters.length) {
-      SpriteLetter entity = _letters[current];
+      Entity entity = context.entityFactory.create('sprite_letter',
+          x + (current * CHARACTER_WIDTH) + LETTER_SPACING, y + OFFSET_Y, z,
+          options: {
+            'letter': _letters[current],
+            'gravity_flag': true,
+            'collidable_flag': true,
+            'bounce_factor': BOUNCE_FACTOR
+          });
+      entity.addForce(FORCE_X, FORCE_Y, FORCE_Z);
+
       context.addEntity(entity);
       _letterTimers.add(TimeoutTimer(LETTER_LIFETIME, callback: () {
         entity.dispose();

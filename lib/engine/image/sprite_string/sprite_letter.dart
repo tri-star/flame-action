@@ -21,13 +21,14 @@ class SpriteLetter extends Entity {
       double bounceFactor = 0})
       : _char = char,
         _fontName = fontName ?? 'default' {
+    assert(char != null && char != '');
     this.id = id;
     this.x = x;
     this.y = y;
     this.z = z;
-    this.bounceFactor = bounceFactor;
-    this.gravityFlag = gravityFlag;
-    this.collidableFlag = collidableFlag;
+    this.bounceFactor = bounceFactor ?? 0;
+    this.gravityFlag = gravityFlag ?? false;
+    this.collidableFlag = collidableFlag ?? false;
     _font = SpriteFontRegistry().get(_fontName);
   }
 

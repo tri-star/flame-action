@@ -1,9 +1,7 @@
 import 'package:flame_action/domain/entity/entity.dart';
 import 'package:flame_action/domain/entity/joystick.dart';
-import 'package:flame_action/domain/entity/action_button.dart';
+import 'package:flame_action/engine/entity/base_entity_factory.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
-import 'package:flame_action/presentation/image/action_button_sprite_resolver.dart';
-import 'package:flame_action/presentation/image/joystick_sprite_resolver.dart';
 import 'package:flutter/painting.dart';
 
 import 'camera.dart';
@@ -17,8 +15,9 @@ class WorldContext {
   ZOrderedCollection entities;
   CollisionDetectService collisionDetectService;
   List<Entity> _pendingEntities;
+  BaseEntityFactory entityFactory;
 
-  WorldContext(this.collisionDetectService, this.entities)
+  WorldContext(this.collisionDetectService, this.entities, this.entityFactory)
       : _pendingEntities = List<Entity>();
 
   void addEntity(Entity entity) {
@@ -53,7 +52,7 @@ class World implements JoystickListener {
   int _randomSeed;
 
   World(double worldW, double worldH, double worldD, double cameraW,
-      double cameraH,
+      double cameraH, BaseEntityFactory entityFactory,
       {randomSeed: 0})
       : _randomSeed = randomSeed,
         _entities = ZOrderedCollection(),
@@ -64,7 +63,7 @@ class World implements JoystickListener {
             Size3d(worldW, worldH, worldD), Position3d(0, 0, 0)),
         _boundaryAdjustmentService = BoundaryAdjustmentService() {
     _collisionDetectService = CollisionDetectService(_entities);
-    _context = WorldContext(_collisionDetectService, _entities);
+    _context = WorldContext(_collisionDetectService, _entities, entityFactory);
   }
 
   void update(double dt) {
@@ -103,9 +102,9 @@ class World implements JoystickListener {
     );
     _pointerEventHandler.addListener('world', this);
 
-    this._huds.add(JoyStick(3, JoyStickSpriteResolver(), x: x, y: y));
-    this._huds.add(ActionButton(3, ActionButtonSpriteResolver(),
-        x: _camera.w - 120, y: y));
+    this._huds.add(_context.entityFactory.create('joystick', x, y, 0));
+    this._huds.add(
+        _context.entityFactory.create('action_button', _camera.w - 120, y, 0));
   }
 
   void setBackground(Sprite _sprite) {
