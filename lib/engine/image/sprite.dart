@@ -39,22 +39,37 @@ abstract class Sprite {
 
   Vector3d getOffsets() {
     double zOffset = 0;
-    switch(zAnchor) {
-      case ZAnchorPoint.FRONT: zOffset = 0; break;
-      case ZAnchorPoint.CENTER: zOffset = -(d / 2); break;
-      case ZAnchorPoint.REAR: zOffset = -d; break;
+    switch (zAnchor) {
+      case ZAnchorPoint.FRONT:
+        zOffset = 0;
+        break;
+      case ZAnchorPoint.CENTER:
+        zOffset = -(d / 2);
+        break;
+      case ZAnchorPoint.REAR:
+        zOffset = -d;
+        break;
     }
 
-    switch(anchor) {
-      case AnchorPoint.TOP_LEFT: return Vector3d(0, 0, zOffset);
-      case AnchorPoint.TOP_CENTER: return Vector3d(-(w / 2), 0, zOffset);
-      case AnchorPoint.TOP_RIGHT: return Vector3d(-w, 0, zOffset);
-      case AnchorPoint.MIDDLE_LEFT: return Vector3d(0, -(h / 2), zOffset);
-      case AnchorPoint.MIDDLE_CENTER: return Vector3d(-(w / 2), -(h / 2), zOffset);
-      case AnchorPoint.MIDDLE_RIGHT: return Vector3d(-w, -(h / 2), zOffset);
-      case AnchorPoint.BOTTOM_LEFT: return Vector3d(0, -h, zOffset);
-      case AnchorPoint.BOTTOM_CENTER: return Vector3d(-(w / 2), -h, zOffset);
-      case AnchorPoint.BOTTOM_RIGHT: return Vector3d(-w, -h, zOffset);
+    switch (anchor) {
+      case AnchorPoint.TOP_LEFT:
+        return Vector3d(0, 0, zOffset);
+      case AnchorPoint.TOP_CENTER:
+        return Vector3d(-(w / 2), 0, zOffset);
+      case AnchorPoint.TOP_RIGHT:
+        return Vector3d(-w, 0, zOffset);
+      case AnchorPoint.MIDDLE_LEFT:
+        return Vector3d(0, -(h / 2), zOffset);
+      case AnchorPoint.MIDDLE_CENTER:
+        return Vector3d(-(w / 2), -(h / 2), zOffset);
+      case AnchorPoint.MIDDLE_RIGHT:
+        return Vector3d(-w, -(h / 2), zOffset);
+      case AnchorPoint.BOTTOM_LEFT:
+        return Vector3d(0, -h, zOffset);
+      case AnchorPoint.BOTTOM_CENTER:
+        return Vector3d(-(w / 2), -h, zOffset);
+      case AnchorPoint.BOTTOM_RIGHT:
+        return Vector3d(-w, -h, zOffset);
     }
     throw new UnsupportedError('無効なAnchorPointが指定されました。: $anchor');
   }

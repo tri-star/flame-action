@@ -14,11 +14,9 @@ class SpriteContext {
 /// アニメーションに必要な情報を受け取り、
 /// 表示するべきスプライトを決定する
 abstract class SpriteResolver {
-
   Sprite resolve(SpriteContext context);
 
   Animation resolveAnimation(SpriteContext context);
 
   void update();
-
 }

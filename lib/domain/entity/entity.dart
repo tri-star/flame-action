@@ -1,4 +1,3 @@
-
 import 'package:flame_action/engine/coordinates.dart';
 import 'package:flame_action/engine/image/animation.dart';
 import 'package:flame_action/engine/image/sprite.dart';
@@ -8,15 +7,11 @@ import 'package:flutter/foundation.dart';
 
 import '../../engine/world.dart';
 
-enum Dimension {
-  LEFT,
-  RIGHT
-}
+enum Dimension { LEFT, RIGHT }
 
 /// キャラクターやパーティクル、障害物、アイテムなど
 /// ゲーム中に登場するオブジェクトのベースになるクラス
 class Entity {
-  
   /// エンティティを一意に特定するID
   @protected
   int id = 0;
@@ -63,8 +58,7 @@ class Entity {
   double bounceFactor = 0;
 
   void update(double dt, WorldContext context) {
-
-    if(gravityFlag) {
+    if (gravityFlag) {
       vy += 0.98;
     }
 
@@ -79,21 +73,22 @@ class Entity {
     });
 
     CollisionEvent collisionEvent = CollisionEvent('collide', this);
-    context?.collisionDetectService?.detect(this, collisionEvent);
+    context?.collisionDetectService?.detect(context, this, collisionEvent);
   }
 
   void updateState() {
-    if(animation?.isDone() ?? false) {
+    if (animation?.isDone() ?? false) {
       state = getNextState(state);
     }
   }
 
   void updateAnimation() {
-    if(spriteResolver == null) {
+    if (spriteResolver == null) {
       return;
     }
-    Animation newAnimation = spriteResolver.resolveAnimation(SpriteContext(state: state, dimension: dimension));
-    if(animation != newAnimation) {
+    Animation newAnimation = spriteResolver
+        .resolveAnimation(SpriteContext(state: state, dimension: dimension));
+    if (animation != newAnimation) {
       animation = newAnimation;
     }
   }
@@ -111,11 +106,11 @@ class Entity {
   bool isCollidable() => collidableFlag;
 
   List<Sprite> getSprites() {
-    if(animation == null) {
+    if (animation == null) {
       return [];
     }
     Sprite sprite = animation.getSprite();
-    if(sprite == null) {
+    if (sprite == null) {
       return [];
     }
     sprite
@@ -131,15 +126,20 @@ class Entity {
     double offsetX = animation?.getSprite()?.getOffsets()?.x ?? 0;
     double offsetY = animation?.getSprite()?.getOffsets()?.y ?? 0;
     double offsetZ = animation?.getSprite()?.getOffsets()?.z ?? 0;
-    return Rect3d(x + offsetX, y + offsetY, z + offsetZ, getW(), getH(), getD());
+    return Rect3d(
+        x + offsetX, y + offsetY, z + offsetZ, getW(), getH(), getD());
   }
 
   Position3d getPosition() {
-    return Position3d(x, y, z);    
+    return Position3d(x, y, z);
   }
 
   void addZ(double distance) {
     z += distance;
+  }
+
+  void enableGravity() {
+    gravityFlag = true;
   }
 
   void disableGravity() {
@@ -152,20 +152,34 @@ class Entity {
     z += vector.z;
   }
 
+  void addForce(double x, double y, double z) {
+    vx += x;
+    vy += y;
+    vz += z;
+  }
+
+  /// Entityを削除可能な状態にする
+  void dispose() {
+    state = 'disposed';
+  }
+
+  bool isDisposed() {
+    return state == 'disposed';
+  }
+
   String getNextState(String currentState) {
     return 'neutral';
   }
 
-  void onCollide(CollisionEvent event) {
-    if(event.type == 'collide') {
-
+  void onCollide(WorldContext context, CollisionEvent event) {
+    if (event.type == 'collide') {
       Rect3d sourceRect = event.source.getRect();
       Rect3d ownRect = getRect();
       Vector3d adjustment = ownRect.getIntersectAdjustment(sourceRect);
-      if(event.source.getTags().contains("obstacle")) {
-        if(ownRect.getIntersectDimension(sourceRect) == IntersectDimension.BOTTOM) {
-          if(gravityFlag) {
-            vy = 0;
+      if (event.source.getTags().contains("obstacle")) {
+        if (event.intersectDimension == IntersectDimension.BOTTOM) {
+          if (gravityFlag) {
+            vy *= -(bounceFactor.abs());
           }
         }
         addAdjustment(adjustment);
@@ -173,6 +187,5 @@ class Entity {
     }
   }
 
-  void onAnimationEvent(WorldContext context, AnimationFrameEvent event) {
-  }
+  void onAnimationEvent(WorldContext context, AnimationFrameEvent event) {}
 }

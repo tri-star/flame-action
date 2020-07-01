@@ -5,7 +5,6 @@ import 'package:flame_action/engine/joystick.dart';
 import 'entity.dart';
 
 class ActionButton extends Entity implements JoystickListener {
-
   ActionButton(int id, SpriteResolver spriteResolver, {double x, double y}) {
     this.id = id;
     this.x = x;
@@ -16,11 +15,11 @@ class ActionButton extends Entity implements JoystickListener {
 
   @override
   List<Sprite> getSprites() {
-    if(animation == null) {
+    if (animation == null) {
       return [];
     }
     Sprite sprite = animation.getSprite();
-    if(sprite == null) {
+    if (sprite == null) {
       return [];
     }
     sprite
@@ -30,12 +29,10 @@ class ActionButton extends Entity implements JoystickListener {
     return List<Sprite>.from([sprite]);
   }
 
-  void updateState() {
-  }
+  void updateState() {}
 
   @override
-  onJoystickMove(JoystickMoveEvent event) {
-  }
+  onJoystickMove(JoystickMoveEvent event) {}
 
   @override
   onJoystickAction(JoystickActionEvent event) {

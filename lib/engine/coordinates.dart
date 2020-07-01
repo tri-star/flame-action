@@ -1,5 +1,3 @@
-
-
 import 'dart:math';
 
 /// 物体の座標を表すオブジェクト
@@ -16,10 +14,7 @@ class Position3d {
 
   @override
   bool operator ==(other) {
-    return other is Position3d && 
-      x == other.x &&
-      y == other.y &&
-      z == other.z;
+    return other is Position3d && x == other.x && y == other.y && z == other.z;
   }
 }
 
@@ -32,9 +27,7 @@ class Vector3d {
   Vector3d(this.x, this.y, this.z);
 
   bool isEqual(Vector3d target) {
-    return x == target.x &&
-      y == target.y &&
-      z == target.z;
+    return x == target.x && y == target.y && z == target.z;
   }
 
   String toString() {
@@ -43,13 +36,9 @@ class Vector3d {
 
   @override
   bool operator ==(other) {
-    return other is Vector3d && 
-      x == other.x &&
-      y == other.y &&
-      z == other.z;
+    return other is Vector3d && x == other.x && y == other.y && z == other.z;
   }
 }
-
 
 /// 物体の大きさを表すオブジェクト
 class Size3d {
@@ -58,19 +47,12 @@ class Size3d {
   double d;
 
   Size3d(this.w, this.h, this.d);
-
 }
 
 /// 衝突の方向
-enum IntersectDimension {
-  BOTTOM,
-  TOP,
-  LEFT,
-  RIGHT
-}
+enum IntersectDimension { BOTTOM, TOP, LEFT, RIGHT }
 
 class Rect3d {
-
   double _x;
   double _y;
   double _z;
@@ -79,13 +61,13 @@ class Rect3d {
   double _h;
   double _d;
 
-  Rect3d(double x, double y, double z, double w, double h, double d):
-    _x = x,
-    _y = y,
-    _z = z,
-    _w = w,
-    _h = h,
-    _d = d;
+  Rect3d(double x, double y, double z, double w, double h, double d)
+      : _x = x,
+        _y = y,
+        _z = z,
+        _w = w,
+        _h = h,
+        _d = d;
 
   factory Rect3d.fromSizeAndPosition(Size3d size, Position3d position) {
     return Rect3d(position.x, position.y, position.z, size.w, size.h, size.d);
@@ -93,22 +75,22 @@ class Rect3d {
 
   /// 指定したオブジェクトが自分の中に収まっているかどうかを返す
   bool isContain(Rect3d target) {
-    if(target.x < _x) {
+    if (target.x < _x) {
       return false;
     }
-    if(target.y < _y) {
+    if (target.y < _y) {
       return false;
     }
-    if(target.x + target.w > _w + _x) {
+    if (target.x + target.w > _w + _x) {
       return false;
     }
-    if(target.y + target.h > _y + _h) {
+    if (target.y + target.h > _y + _h) {
       return false;
     }
-    if(target.z < _z) {
+    if (target.z < _z) {
       return false;
     }
-    if(target.z + target.d > _z + _d) {
+    if (target.z + target.d > _z + _d) {
       return false;
     }
 
@@ -117,22 +99,22 @@ class Rect3d {
 
   /// 指定したオブジェクトと衝突しているかを返す
   bool isIntersect(Rect3d target) {
-    if(right <= target.x) {
+    if (right <= target.x) {
       return false;
     }
-    if(_x >= target.right) {
+    if (_x >= target.right) {
       return false;
     }
-    if(bottom <= target.y) {
+    if (bottom <= target.y) {
       return false;
     }
-    if(_y >= target.bottom) {
+    if (_y >= target.bottom) {
       return false;
     }
-    if(rear <= target.z) {
+    if (rear <= target.z) {
       return false;
     }
-    if(z >= target.rear) {
+    if (z >= target.rear) {
       return false;
     }
     return true;
@@ -153,16 +135,16 @@ class Rect3d {
   /// 完全に重なっている場合などではあまり適切ではない値を返す可能性がある
   IntersectDimension getIntersectDimension(Rect3d target) {
     Rect3d intersection = getIntersection(target);
-    if(intersection.w > intersection.h && intersection.y >= (_h / 2)) {
+    if (intersection.w > intersection.h && intersection.y >= (_h / 2)) {
       return IntersectDimension.BOTTOM;
     }
-    if(intersection.w > intersection.h && intersection.y < (_h / 2)) {
+    if (intersection.w > intersection.h && intersection.y < (_h / 2)) {
       return IntersectDimension.TOP;
     }
-    if(intersection.h >= intersection.w && intersection.x >= (_w / 2)) {
+    if (intersection.h >= intersection.w && intersection.x >= (_w / 2)) {
       return IntersectDimension.RIGHT;
     }
-    if(intersection.h >= intersection.w && intersection.x < (_w / 2)) {
+    if (intersection.h >= intersection.w && intersection.x < (_w / 2)) {
       return IntersectDimension.LEFT;
     }
     return null;
@@ -173,7 +155,7 @@ class Rect3d {
   Vector3d getIntersectAdjustment(Rect3d target) {
     Rect3d intersection = getIntersection(target);
     IntersectDimension dimension = getIntersectDimension(target);
-    switch(dimension) {
+    switch (dimension) {
       case IntersectDimension.TOP:
         return Vector3d(0, intersection.h, 0);
       case IntersectDimension.LEFT:
@@ -186,28 +168,27 @@ class Rect3d {
     return Vector3d(0, 0, 0);
   }
 
-
   /// オブジェクトが自身の中に収まるために必要な移動量を返す
   Vector3d getOverflowAdjustment(Rect3d target) {
     double adjustX = 0;
     double adjustY = 0;
     double adjustZ = 0;
-    if(target.x < _x) {
+    if (target.x < _x) {
       adjustX = _x - target.x;
     }
-    if(target.y < _y) {
+    if (target.y < _y) {
       adjustY = _y - target.y;
     }
-    if(target.right > right) {
+    if (target.right > right) {
       adjustX = right - target.right;
     }
-    if(target.bottom > bottom) {
+    if (target.bottom > bottom) {
       adjustY = bottom - target.bottom;
     }
-    if(target.z < _z) {
+    if (target.z < _z) {
       adjustZ = _z - target.z;
     }
-    if(target.rear > rear) {
+    if (target.rear > rear) {
       adjustZ = rear - target.rear;
     }
     return Vector3d(adjustX, adjustY, adjustZ);
@@ -223,5 +204,4 @@ class Rect3d {
   double get right => _x + _w;
   double get bottom => _y + _h;
   double get rear => _z + _d;
-
 }
