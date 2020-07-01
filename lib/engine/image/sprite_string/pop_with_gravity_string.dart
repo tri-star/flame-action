@@ -1,9 +1,9 @@
+import '../../../domain/entity/entity.dart';
 import '../../../engine/image/sprite_string.dart';
 import '../../../util/timer.dart';
 import '../../coordinates.dart';
 import '../../world.dart';
 import '../sprite.dart';
-import 'sprite_letter.dart';
 
 /// 飛び出す動作をしながら重力の影響を受けて表示される文字列
 class PopWithGravityString extends SpriteString {
@@ -36,9 +36,14 @@ class PopWithGravityString extends SpriteString {
   void update(double dt, WorldContext context) {
     _timer.update();
     if (_timer.isDone() && current < _letters.length) {
-      SpriteLetter entity = SpriteLetter(0, _letters[current],
+      Entity entity = context.entityFactory.create('sprite_letter',
           x + (current * CHARACTER_WIDTH) + LETTER_SPACING, y + OFFSET_Y, z,
-          gravityFlag: true, collidableFlag: true, bounceFactor: BOUNCE_FACTOR);
+          options: {
+            'letter': _letters[current],
+            'gravity_flag': true,
+            'collidable_flag': true,
+            'bounce_factor': BOUNCE_FACTOR
+          });
       entity.addForce(FORCE_X, FORCE_Y, FORCE_Z);
 
       context.addEntity(entity);

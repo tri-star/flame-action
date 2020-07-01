@@ -21,6 +21,7 @@ class SpriteLetter extends Entity {
       double bounceFactor = 0})
       : _char = char,
         _fontName = fontName ?? 'default' {
+    assert(char != null && char != '');
     this.id = id;
     this.x = x;
     this.y = y;
