@@ -18,6 +18,10 @@ class Ground extends Entity {
     this.spriteResolver = null;
     this.collidableFlag = true;
     this.tags = ["obstacle"];
+
+    assert(w != null && w > 0);
+    assert(h != null && h > 0);
+    assert(d != null && d > 0);
   }
 
   double getW() => _w;

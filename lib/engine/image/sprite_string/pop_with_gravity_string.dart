@@ -25,6 +25,8 @@ class PopWithGravityString extends SpriteString {
   PopWithGravityString(int id, String message, double x, double y, double z,
       {String fontName})
       : super(id, message, x, y, z, fontName: fontName) {
+    assert(message != null && message != '');
+
     _letters = List<SpriteLetter>();
     _letterTimers = List<TimeoutTimer>();
     int count = 0;

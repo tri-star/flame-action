@@ -25,9 +25,9 @@ class SpriteLetter extends Entity {
     this.x = x;
     this.y = y;
     this.z = z;
-    this.bounceFactor = bounceFactor;
-    this.gravityFlag = gravityFlag;
-    this.collidableFlag = collidableFlag;
+    this.bounceFactor = bounceFactor ?? 0;
+    this.gravityFlag = gravityFlag ?? false;
+    this.collidableFlag = collidableFlag ?? false;
     _font = SpriteFontRegistry().get(_fontName);
   }
 
