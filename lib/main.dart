@@ -3,6 +3,7 @@ import 'package:flame_action/presentation/flame/flame_sprite_font.dart';
 import 'package:flutter/widgets.dart';
 
 import 'domain/entity/enemy.dart';
+import 'domain/entity/entity_factory.dart';
 import 'domain/entity/ground.dart';
 import 'domain/entity/player.dart';
 import 'engine/game_widget.dart';
@@ -12,11 +13,12 @@ import 'presentation/image/player_sprite_resolver.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   GameWidget gameWidget = GameWidget();
+  EntityFactory entityFactory = EntityFactory();
 
   double worldW = 2000;
   double worldH = 200;
   double worldD = 100;
-  await gameWidget.initialize(worldW, worldH, worldD);
+  await gameWidget.initialize(worldW, worldH, worldD, entityFactory);
 
   SpriteFontRegistry().register(
       'default',

@@ -5,6 +5,7 @@ import 'package:flame_action/domain/entity/entity.dart';
 import 'package:flame_action/presentation/flame/flame_sprite.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
+import 'entity/base_entity_factory.dart';
 import 'joystick.dart';
 import 'world.dart';
 
@@ -20,7 +21,8 @@ class GameWidget extends Game {
       : _deviceW = 0,
         _deviceH = 0;
 
-  Future<void> initialize(double worldW, double worldH, double worldD) async {
+  Future<void> initialize(double worldW, double worldH, double worldD,
+      BaseEntityFactory entityFactory) async {
     await Flame.util.setLandscape();
     await Flame.util.fullScreen();
     await Flame.util.initialDimensions();
@@ -28,7 +30,8 @@ class GameWidget extends Game {
     _deviceW = deviceSize.width;
     _deviceH = deviceSize.height;
 
-    _world = World(worldW, worldH, worldD, deviceSize.width, deviceSize.height);
+    _world = World(worldW, worldH, worldD, deviceSize.width, deviceSize.height,
+        entityFactory);
     _initialized = true;
   }
 
