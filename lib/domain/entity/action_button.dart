@@ -35,7 +35,7 @@ class ActionButton extends Entity implements JoystickListener {
   onJoystickMove(JoystickMoveEvent event) {}
 
   @override
-  onJoystickAction(JoystickActionEvent event) {
-    state = event.action == JoystickAction.ATTACK_DOWN ? 'pressed' : 'neutral';
+  onJoystickAction(InputActionEvent event) {
+    state = event.action == 'down' ? 'pressed' : 'neutral';
   }
 }
