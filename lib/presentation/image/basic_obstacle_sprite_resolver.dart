@@ -11,7 +11,7 @@ class BasicObstacleSpriteResolver extends SpriteResolver {
     _sprites = Map<String, Sprite>();
     _sprites['ash_tray'] = FlameSprite(Flame.Sprite('object_01.png'), d: 20)
       ..anchor = AnchorPoint.BOTTOM_CENTER;
-    _sprites['dust_box01'] = FlameSprite(Flame.Sprite('object_02.png'), d: 30)
+    _sprites['dust_box01'] = FlameSprite(Flame.Sprite('object_02.png'), d: 20)
       ..anchor = AnchorPoint.BOTTOM_CENTER;
   }
 
