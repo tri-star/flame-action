@@ -51,7 +51,7 @@ class SpriteLetter extends Entity {
   @override
   double getH() => _font.getH();
   @override
-  double getD() => 1;
+  double getD() => 10;
 
   @override
   Rect3d getRect() {
