@@ -180,7 +180,7 @@ main() {
       group('自分が相手よりも小さい', () {
         test('上から接触するケース_左右にはみ出していない', () {
           Rect3d self = Rect3d.fromSizeAndPosition(
-              Size3d(60, 100, 10), Position3d(0, 10, 0));
+              Size3d(60, 100, 20), Position3d(0, 10, 0));
           Rect3d target = Rect3d.fromSizeAndPosition(
               Size3d(600, 100, 100), Position3d(0, 100, 0));
           expect(self.getIntersectDimension(target), IntersectDimension.BOTTOM);
@@ -194,14 +194,14 @@ main() {
         });
         test('左から接触するケース', () {
           Rect3d self = Rect3d.fromSizeAndPosition(
-              Size3d(60, 100, 10), Position3d(50, 10, 0));
+              Size3d(60, 100, 20), Position3d(50, 10, 0));
           Rect3d target = Rect3d.fromSizeAndPosition(
               Size3d(100, 600, 100), Position3d(100, 0, 0));
           expect(self.getIntersectDimension(target), IntersectDimension.RIGHT);
         });
         test('右から接触するケース', () {
           Rect3d self = Rect3d.fromSizeAndPosition(
-              Size3d(60, 100, 10), Position3d(190, 10, 0));
+              Size3d(60, 100, 20), Position3d(190, 10, 0));
           Rect3d target = Rect3d.fromSizeAndPosition(
               Size3d(100, 600, 100), Position3d(100, 0, 0));
           expect(self.getIntersectDimension(target), IntersectDimension.LEFT);

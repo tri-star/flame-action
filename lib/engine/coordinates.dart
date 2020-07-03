@@ -50,7 +50,7 @@ class Size3d {
 }
 
 /// 衝突の方向
-enum IntersectDimension { BOTTOM, TOP, LEFT, RIGHT }
+enum IntersectDimension { BOTTOM, TOP, LEFT, RIGHT, REAR, FRONT }
 
 class Rect3d {
   double _x;
@@ -135,17 +135,29 @@ class Rect3d {
   /// 完全に重なっている場合などではあまり適切ではない値を返す可能性がある
   IntersectDimension getIntersectDimension(Rect3d target) {
     Rect3d intersection = getIntersection(target);
-    if (intersection.w > intersection.h && intersection.y >= (_h / 2)) {
-      return IntersectDimension.BOTTOM;
+
+    if (intersection.d < intersection.w && intersection.d < intersection.h) {
+      if (intersection.z >= (_d / 2)) {
+        return IntersectDimension.FRONT;
+      } else {
+        return IntersectDimension.REAR;
+      }
     }
-    if (intersection.w > intersection.h && intersection.y < (_h / 2)) {
-      return IntersectDimension.TOP;
+
+    if (intersection.w < intersection.d && intersection.w < intersection.h) {
+      if (intersection.x >= (_w / 2)) {
+        return IntersectDimension.RIGHT;
+      } else {
+        return IntersectDimension.LEFT;
+      }
     }
-    if (intersection.h >= intersection.w && intersection.x >= (_w / 2)) {
-      return IntersectDimension.RIGHT;
-    }
-    if (intersection.h >= intersection.w && intersection.x < (_w / 2)) {
-      return IntersectDimension.LEFT;
+
+    if (intersection.h < intersection.w && intersection.h < intersection.d) {
+      if (intersection.y >= (_h / 2)) {
+        return IntersectDimension.BOTTOM;
+      } else {
+        return IntersectDimension.TOP;
+      }
     }
     return null;
   }
@@ -164,6 +176,10 @@ class Rect3d {
         return Vector3d(-intersection.w, 0, 0);
       case IntersectDimension.BOTTOM:
         return Vector3d(0, -intersection.h, 0);
+      case IntersectDimension.FRONT:
+        return Vector3d(0, 0, -intersection.d);
+      case IntersectDimension.REAR:
+        return Vector3d(0, 0, intersection.d);
     }
     return Vector3d(0, 0, 0);
   }
