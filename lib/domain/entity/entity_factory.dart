@@ -4,9 +4,11 @@ import 'package:flame_action/presentation/image/action_button_sprite_resolver.da
 import 'package:flame_action/presentation/image/enemy_sprite_resolver.dart';
 import 'package:flame_action/presentation/image/joystick_sprite_resolver.dart';
 
+import '../../domain/entity/basic_obstacle.dart';
 import '../../domain/entity/entity.dart';
 import '../../domain/entity/player.dart';
 import '../../engine/entity/base_entity_factory.dart';
+import '../../presentation/image/basic_obstacle_sprite_resolver.dart';
 import '../../presentation/image/player_sprite_resolver.dart';
 import 'action_button.dart';
 import 'enemy.dart';
@@ -23,6 +25,12 @@ class EntityFactory extends BaseEntityFactory {
         return Player(newId, PlayerSpriteResolver(), x: x, y: y, z: z);
       case 'enemy01':
         return Enemy(newId, EnemySpriteResolver(), x: x, y: y, z: z);
+      case 'ash_tray':
+        return BasicObstacle(newId, 'ash_tray', BasicObstacleSpriteResolver(),
+            x: x, y: y, z: z);
+      case 'dust_box01':
+        return BasicObstacle(newId, 'dust_box01', BasicObstacleSpriteResolver(),
+            x: x, y: y, z: z);
       case 'ground':
         return Ground(newId,
             x: x,
