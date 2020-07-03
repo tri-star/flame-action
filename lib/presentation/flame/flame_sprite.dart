@@ -53,14 +53,18 @@ class FlameSprite extends Sprite {
     _flameSprite.renderPosition(canvas, Position(localX, localY),
         overridePaint: paint);
 /*
-    canvas.drawRect(Rect.fromLTWH(localX, localY - anchorOffset.z, w, h), paint
-    ..style=PaintingStyle.stroke
-    ..strokeWidth=1
-    ..color=Colors.greenAccent);
-    canvas.drawRect(Rect.fromLTWH(localX, localY + anchorOffset.z, w, h), paint
-    ..style=PaintingStyle.stroke
-    ..strokeWidth=1
-    ..color=Colors.greenAccent);
+    canvas.drawRect(
+        Rect.fromLTWH(localX, localY - anchorOffset.z, w, h),
+        paint
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 1
+          ..color = Colors.greenAccent);
+    canvas.drawRect(
+        Rect.fromLTWH(localX, localY + anchorOffset.z, w, h),
+        paint
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 1
+          ..color = Colors.greenAccent);
 */
   }
 }
