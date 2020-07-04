@@ -5,7 +5,7 @@ import 'package:flame/sprite.dart' as Flame;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import '../../domain/entity/entity.dart';
+import '../../engine/entity/entity.dart';
 import '../../engine/camera.dart';
 import '../../engine/coordinates.dart';
 import '../../engine/image/sprite.dart';
@@ -14,17 +14,22 @@ class FlameSprite extends Sprite {
   Flame.Sprite _flameSprite;
 
   FlameSprite(Flame.Sprite flameSprite,
-      {double x, double y, double z, double d, Dimension dimension})
+      {double x,
+      double y,
+      double z,
+      double w,
+      double h,
+      double d,
+      Dimension dimension})
       : _flameSprite = flameSprite {
     this.x = x ?? 0;
     this.y = y ?? 0;
     this.z = z ?? 0;
+    this.w = w ?? 1;
+    this.h = h ?? 1;
     this.d = d ?? 1;
     this.dimension = dimension;
   }
-
-  double get w => _flameSprite.loaded() ? _flameSprite.size?.x : 0;
-  double get h => _flameSprite.loaded() ? _flameSprite.size?.y : 0;
 
   void render(Canvas canvas, Camera camera) {
     Paint paint = Paint();

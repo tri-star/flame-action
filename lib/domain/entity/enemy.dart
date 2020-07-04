@@ -2,7 +2,7 @@ import 'package:flame_action/engine/image/sprite_resolver.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
 import 'package:flame_action/engine/world.dart';
 
-import 'entity.dart';
+import '../../engine/entity/entity.dart';
 
 class Enemy extends Entity {
   Enemy(int id, SpriteResolver spriteResolver, {double x, double y, double z}) {
@@ -20,7 +20,7 @@ class Enemy extends Entity {
   void onCollide(WorldContext context, CollisionEvent event) {
     super.onCollide(context, event);
     if (event.type == 'attack') {
-      state = 'damage';
+      setState('damage');
       vx += event.force?.x ?? 0;
       vy += event.force?.y ?? 0;
       y += vy;

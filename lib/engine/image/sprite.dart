@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import '../camera.dart';
-import '../../domain/entity/entity.dart';
+import '../entity/entity.dart';
 import '../coordinates.dart';
 
 enum AnchorPoint {

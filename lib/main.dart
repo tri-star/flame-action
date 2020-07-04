@@ -2,7 +2,7 @@ import 'package:flame_action/engine/image/sprite_font.dart';
 import 'package:flame_action/presentation/flame/flame_sprite_font.dart';
 import 'package:flutter/widgets.dart';
 
-import 'domain/entity/entity.dart';
+import 'engine/entity/entity.dart';
 import 'domain/entity/entity_factory.dart';
 import 'engine/game_widget.dart';
 
@@ -29,8 +29,10 @@ void main() async {
   gameWidget.addEntity(entityFactory.create('dust_box01', 850, worldH, 60));
   gameWidget.addEntity(entityFactory.create('ground', 0, worldH, 0,
       options: {'w': worldW, 'h': worldH, 'd': worldD}));
+  gameWidget.addHud(entityFactory.create('joystick', 90, 320, 0));
+  gameWidget.addHud(entityFactory.create(
+      'action_button', gameWidget.getDeviceWidth() - 90, 320, 0));
 
-  gameWidget.createJoystick(90, 320);
   gameWidget.setCameraFocus(player);
 
   runApp(gameWidget.getWidget());

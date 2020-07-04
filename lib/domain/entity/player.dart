@@ -1,13 +1,13 @@
 import 'package:flame_action/engine/coordinates.dart';
 import 'package:flame_action/engine/image/animation.dart';
 import 'package:flame_action/engine/image/sprite_resolver.dart';
-import 'package:flame_action/engine/joystick.dart';
+import 'package:flame_action/engine/input_event.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
 
 import '../../engine/world.dart';
-import 'entity.dart';
+import '../../engine/entity/entity.dart';
 
-class Player extends Entity implements JoystickListener {
+class Player extends Entity implements GameInputListener {
   Player(int id, SpriteResolver spriteResolver,
       {double x, double y, double z}) {
     this.id = id;
@@ -20,7 +20,7 @@ class Player extends Entity implements JoystickListener {
   }
 
   @override
-  onJoystickMove(JoystickMoveEvent event) {
+  onInputMove(InputMoveEvent event) {
     if (event.distanceX < -1) {
       if (changeState('walk')) {
         vx = -2;
@@ -37,28 +37,25 @@ class Player extends Entity implements JoystickListener {
     if (event.distanceY < -1) {
       if (changeState('walk')) {
         vz = -1;
-        state = 'walk';
       }
     } else if (event.distanceY > 1) {
       if (changeState('walk')) {
         vz = 1;
-        state = 'walk';
       }
     } else {
       vz = 0;
     }
     if (event.distanceX == 0 && event.distanceY == 0) {
-      if (changeState('walk')) {
+      if (changeState('neutral')) {
         vx = 0;
         vz = 0;
-        state = 'neutral';
       }
     }
   }
 
   @override
-  onJoystickAction(InputActionEvent event) {
-    if (event.action == InputAction.ATTACK && event.state == 'down') {
+  onInputAction(InputActionEvent event) {
+    if (event.action == InputAction.ATTACK) {
       if (changeState('attack')) {
         vx = 0;
         vz = 0;
@@ -77,10 +74,13 @@ class Player extends Entity implements JoystickListener {
         break;
       case 'attack':
         break;
-      case 'newtral':
+      case 'neutral':
+        if (state == 'attack') {
+          return false;
+        }
         break;
     }
-    state = newState;
+    setState(newState);
     return true;
   }
 

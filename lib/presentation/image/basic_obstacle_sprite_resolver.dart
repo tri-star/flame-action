@@ -1,30 +1,35 @@
-import 'package:flame/sprite.dart' as Flame;
 import 'package:flame_action/engine/image/sprite.dart';
 import 'package:flame_action/engine/image/animation.dart';
 import 'package:flame_action/engine/image/sprite_resolver.dart';
-import 'package:flame_action/presentation/flame/flame_sprite.dart';
+import 'package:flame_action/presentation/flame/flame_animation.dart';
 
 class BasicObstacleSpriteResolver extends SpriteResolver {
-  Map<String, Sprite> _sprites;
+  static Map<String, Animation> _animations;
+  String _name;
 
-  BasicObstacleSpriteResolver() {
-    _sprites = Map<String, Sprite>();
-    _sprites['ash_tray'] = FlameSprite(Flame.Sprite('object_01.png'), d: 20)
-      ..anchor = AnchorPoint.BOTTOM_CENTER;
-    _sprites['dust_box01'] = FlameSprite(Flame.Sprite('object_02.png'), d: 20)
-      ..anchor = AnchorPoint.BOTTOM_CENTER;
+  BasicObstacleSpriteResolver(String name) {
+    _name = name;
+    if (_animations == null) {
+      _animations = Map<String, Animation>();
+      _animations['ash_tray'] = FlameAnimation(AnimationDefinition(
+          'object_01.png', 40, 50, 20, 1, 1, 0.1,
+          anchorPoint: AnchorPoint.BOTTOM_CENTER));
+      _animations['dust_box01'] = FlameAnimation(AnimationDefinition(
+          'object_02.png', 40, 60, 20, 1, 1, 0.1,
+          anchorPoint: AnchorPoint.BOTTOM_CENTER));
+    }
   }
 
   @override
   Sprite resolve(SpriteContext context) {
-    return _sprites[context.state];
+    return null;
+  }
+
+  @override
+  Animation resolveAnimation(SpriteContext context) {
+    return _animations[_name] ?? null;
   }
 
   @override
   void update() {}
-
-  @override
-  Animation resolveAnimation(SpriteContext context) {
-    return null;
-  }
 }

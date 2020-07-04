@@ -1,36 +1,33 @@
-import 'package:flame/sprite.dart' as Flame;
+import 'package:flame_action/presentation/flame/flame_animation.dart';
 import '../../engine/image/animation.dart';
 import '../../engine/image/sprite.dart';
 import '../../engine/image/sprite_resolver.dart';
-import '../flame/flame_sprite.dart';
 
 class JoyStickSpriteResolver extends SpriteResolver {
-  FlameSprite _baseSprite;
-  FlameSprite _knobSprite;
+  Map<String, Animation> _animations;
 
   JoyStickSpriteResolver() {
-    _baseSprite = FlameSprite(Flame.Sprite('joystick_base.png'))
-      ..anchor = AnchorPoint.MIDDLE_CENTER;
-    _knobSprite = FlameSprite(Flame.Sprite('joystick_knob.png'))
-      ..anchor = AnchorPoint.MIDDLE_CENTER;
+    _animations = Map<String, FlameAnimation>();
+    _animations['base'] = FlameAnimation(AnimationDefinition(
+        'joystick_base.png', 140, 140, 1, 1, 1, 0.1,
+        anchorPoint: AnchorPoint.MIDDLE_CENTER));
+    _animations['knob'] = FlameAnimation(AnimationDefinition(
+        'joystick_knob.png', 60, 60, 1, 1, 1, 0.1,
+        anchorPoint: AnchorPoint.MIDDLE_CENTER));
   }
 
   @override
   Sprite resolve(SpriteContext context) {
-    switch (context.state) {
-      case 'base':
-        return _baseSprite;
-      case 'knob':
-        return _knobSprite;
-    }
-    throw new UnsupportedError('無効な状態が指定されました: ${context.state}');
+    return null;
   }
 
   @override
-  void update() {}
+  Animation resolveAnimation(SpriteContext context) {
+    return _animations[context.state] ?? null;
+  }
 
   @override
-  Animation resolveAnimation(SpriteContext context) {
-    return null;
+  void update() {
+    return;
   }
 }

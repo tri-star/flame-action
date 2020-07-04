@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import '../../domain/entity/entity.dart';
+import '../entity/entity.dart';
 import '../services/collision_detect_service.dart';
 import '../world.dart';
 import 'sprite.dart';

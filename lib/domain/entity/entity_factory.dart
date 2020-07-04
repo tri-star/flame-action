@@ -5,15 +5,15 @@ import 'package:flame_action/presentation/image/enemy_sprite_resolver.dart';
 import 'package:flame_action/presentation/image/joystick_sprite_resolver.dart';
 
 import '../../domain/entity/basic_obstacle.dart';
-import '../../domain/entity/entity.dart';
+import '../../engine/entity/entity.dart';
 import '../../domain/entity/player.dart';
 import '../../engine/entity/base_entity_factory.dart';
+import '../../engine/entity/joystick.dart';
 import '../../presentation/image/basic_obstacle_sprite_resolver.dart';
 import '../../presentation/image/player_sprite_resolver.dart';
 import 'action_button.dart';
 import 'enemy.dart';
 import 'ground.dart';
-import 'joystick.dart';
 
 class EntityFactory extends BaseEntityFactory {
   @override
@@ -26,10 +26,12 @@ class EntityFactory extends BaseEntityFactory {
       case 'enemy01':
         return Enemy(newId, EnemySpriteResolver(), x: x, y: y, z: z);
       case 'ash_tray':
-        return BasicObstacle(newId, 'ash_tray', BasicObstacleSpriteResolver(),
+        return BasicObstacle(
+            newId, 'ash_tray', BasicObstacleSpriteResolver('ash_tray'),
             x: x, y: y, z: z);
       case 'dust_box01':
-        return BasicObstacle(newId, 'dust_box01', BasicObstacleSpriteResolver(),
+        return BasicObstacle(
+            newId, 'dust_box01', BasicObstacleSpriteResolver('dust_box01'),
             x: x, y: y, z: z);
       case 'ground':
         return Ground(newId,

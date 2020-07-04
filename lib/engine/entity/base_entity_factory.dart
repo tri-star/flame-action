@@ -1,4 +1,4 @@
-import '../../domain/entity/entity.dart';
+import 'entity.dart';
 
 /// Entityの生成を担うオブジェクト
 abstract class BaseEntityFactory {

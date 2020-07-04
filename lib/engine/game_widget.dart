@@ -1,12 +1,12 @@
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/sprite.dart';
-import 'package:flame_action/domain/entity/entity.dart';
+import 'package:flame_action/engine/entity/entity.dart';
 import 'package:flame_action/presentation/flame/flame_sprite.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 import 'entity/base_entity_factory.dart';
-import 'joystick.dart';
+import 'input_event.dart';
 import 'world.dart';
 
 /// ユーザーからの入力を受け付け、GameModelに伝える
@@ -44,8 +44,8 @@ class GameWidget extends Game {
     _world.addEntity(entity);
   }
 
-  void createJoystick(double x, double y) {
-    _world.createJoystick(x, y);
+  void addHud(Entity entity) {
+    _world.addHud(entity);
   }
 
   void setCameraFocus(Entity entity) {
