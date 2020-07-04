@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'world.dart';
+
 enum PointerEventType { START, UPDATE, END }
 
 /// UIから伝達される移動関連のイベント情報
@@ -11,6 +13,11 @@ class UiPointerEvent {
   double y;
 
   UiPointerEvent(this.type, this.pointerId, this.x, this.y);
+}
+
+/// UIからのイベントを受け付けるオブジェクト用のインターフェース
+abstract class PointerEventListener {
+  void onPointerEvent(WorldContext context, UiPointerEvent event);
 }
 
 enum JoystickDirection {
