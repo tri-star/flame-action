@@ -38,5 +38,5 @@ class JoyStick extends Entity implements JoystickListener {
   }
 
   @override
-  onJoystickAction(JoystickActionEvent event) {}
+  onJoystickAction(InputActionEvent event) {}
 }

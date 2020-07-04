@@ -1,5 +1,4 @@
 import 'package:flame_action/domain/entity/entity.dart';
-import 'package:flame_action/domain/entity/joystick.dart';
 import 'package:flame_action/engine/entity/base_entity_factory.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
 import 'package:flutter/painting.dart';
@@ -132,7 +131,7 @@ class World implements JoystickListener {
   }
 
   @override
-  onJoystickAction(JoystickActionEvent event) {
+  onJoystickAction(InputActionEvent event) {
     _entities.forEach((entity) {
       if (entity is JoystickListener) {
         (entity as JoystickListener).onJoystickAction(event);

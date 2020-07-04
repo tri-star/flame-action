@@ -25,10 +25,7 @@ enum JoystickDirection {
   DOWN_RIGHT,
 }
 
-enum JoystickAction {
-  ATTACK_DOWN,
-  ATTACK_UP,
-}
+enum InputAction { ATTACK }
 
 /// ゲーム向けに伝搬される移動関連のイベント
 class JoystickMoveEvent {
@@ -39,15 +36,16 @@ class JoystickMoveEvent {
 }
 
 /// ゲーム向けに伝搬される移動関連のイベント
-class JoystickActionEvent {
-  JoystickAction action;
-  JoystickActionEvent(this.action);
+class InputActionEvent {
+  InputAction action;
+  String state;
+  InputActionEvent(this.action, this.state);
 }
 
 /// Joystickのイベントを受け取るオブジェクト用のインターフェース
 abstract class JoystickListener {
   onJoystickMove(JoystickMoveEvent event);
-  onJoystickAction(JoystickActionEvent event);
+  onJoystickAction(InputActionEvent event);
 }
 
 /// UIからの入力イベントを判定し、
@@ -107,13 +105,12 @@ class PointerEventHandler {
     _actionButtonPointerId = event.pointerId;
     switch (event.type) {
       case PointerEventType.START:
-        JoystickActionEvent gameEvent =
-            JoystickActionEvent(JoystickAction.ATTACK_DOWN);
+        InputActionEvent gameEvent =
+            InputActionEvent(InputAction.ATTACK, 'down');
         _notifyActionEventToListeners(gameEvent);
         break;
       case PointerEventType.END:
-        JoystickActionEvent gameEvent =
-            JoystickActionEvent(JoystickAction.ATTACK_UP);
+        InputActionEvent gameEvent = InputActionEvent(InputAction.ATTACK, 'up');
         _notifyActionEventToListeners(gameEvent);
         break;
       default:
@@ -126,7 +123,7 @@ class PointerEventHandler {
     });
   }
 
-  void _notifyActionEventToListeners(JoystickActionEvent event) {
+  void _notifyActionEventToListeners(InputActionEvent event) {
     _listeners.forEach((key, listener) {
       listener.onJoystickAction(event);
     });

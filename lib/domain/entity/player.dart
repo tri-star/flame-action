@@ -57,8 +57,8 @@ class Player extends Entity implements JoystickListener {
   }
 
   @override
-  onJoystickAction(JoystickActionEvent event) {
-    if (event.action == JoystickAction.ATTACK_DOWN) {
+  onJoystickAction(InputActionEvent event) {
+    if (event.action == InputAction.ATTACK && event.state == 'down') {
       if (changeState('attack')) {
         vx = 0;
         vz = 0;
