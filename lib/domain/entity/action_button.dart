@@ -32,10 +32,10 @@ class ActionButton extends Entity implements GameInputListener {
   void updateState() {}
 
   @override
-  onJoystickMove(JoystickMoveEvent event) {}
+  onInputMove(JoystickMoveEvent event) {}
 
   @override
-  onJoystickAction(InputActionEvent event) {
+  onInputAction(InputActionEvent event) {
     state = event.state == 'down' ? 'pressed' : 'neutral';
   }
 }

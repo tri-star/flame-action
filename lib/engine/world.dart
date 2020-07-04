@@ -117,29 +117,29 @@ class World implements GameInputListener {
 
   /// UIからのイベントをJoystickのイベントに変換した結果を受け取る
   @override
-  onJoystickMove(JoystickMoveEvent event) {
+  onInputMove(JoystickMoveEvent event) {
     _entities.forEach((entity) {
       if (entity is GameInputListener) {
-        (entity as GameInputListener).onJoystickMove(event);
+        (entity as GameInputListener).onInputMove(event);
       }
     });
     _huds.forEach((entity) {
       if (entity is GameInputListener) {
-        (entity as GameInputListener).onJoystickMove(event);
+        (entity as GameInputListener).onInputMove(event);
       }
     });
   }
 
   @override
-  onJoystickAction(InputActionEvent event) {
+  onInputAction(InputActionEvent event) {
     _entities.forEach((entity) {
       if (entity is GameInputListener) {
-        (entity as GameInputListener).onJoystickAction(event);
+        (entity as GameInputListener).onInputAction(event);
       }
     });
     _huds.forEach((entity) {
       if (entity is GameInputListener) {
-        (entity as GameInputListener).onJoystickAction(event);
+        (entity as GameInputListener).onInputAction(event);
       }
     });
   }

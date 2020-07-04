@@ -44,8 +44,8 @@ class InputActionEvent {
 
 /// Joystickのイベントを受け取るオブジェクト用のインターフェース
 abstract class GameInputListener {
-  onJoystickMove(JoystickMoveEvent event);
-  onJoystickAction(InputActionEvent event);
+  onInputMove(JoystickMoveEvent event);
+  onInputAction(InputActionEvent event);
 }
 
 /// UIからの入力イベントを判定し、
@@ -119,13 +119,13 @@ class PointerEventHandler {
 
   void _notifyMoveEventToListeners(JoystickMoveEvent event) {
     _listeners.forEach((key, listener) {
-      listener.onJoystickMove(event);
+      listener.onInputMove(event);
     });
   }
 
   void _notifyActionEventToListeners(InputActionEvent event) {
     _listeners.forEach((key, listener) {
-      listener.onJoystickAction(event);
+      listener.onInputAction(event);
     });
   }
 
