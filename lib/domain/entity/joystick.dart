@@ -5,7 +5,7 @@ import 'package:flame_action/engine/joystick.dart';
 import '../../engine/world.dart';
 import 'entity.dart';
 
-class JoyStick extends Entity implements JoystickListener {
+class JoyStick extends Entity implements GameInputListener {
   Sprite _baseSprite;
   Sprite _knobSprite;
 

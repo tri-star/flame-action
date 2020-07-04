@@ -43,7 +43,7 @@ class InputActionEvent {
 }
 
 /// Joystickのイベントを受け取るオブジェクト用のインターフェース
-abstract class JoystickListener {
+abstract class GameInputListener {
   onJoystickMove(JoystickMoveEvent event);
   onJoystickAction(InputActionEvent event);
 }
@@ -58,16 +58,16 @@ class PointerEventHandler {
 
   Rect _joystickPosition;
   Rect _actionButtonPosition;
-  Map<String, JoystickListener> _listeners;
+  Map<String, GameInputListener> _listeners;
 
   PointerEventHandler(Rect joyStickPosition, Rect actionButtonPosition)
       : _joystickPosition = joyStickPosition,
         _actionButtonPosition = actionButtonPosition,
-        _listeners = Map<String, JoystickListener>(),
+        _listeners = Map<String, GameInputListener>(),
         _actionButtonPointerId = 0,
         _isStarted = false;
 
-  addListener(String key, JoystickListener listener) {
+  addListener(String key, GameInputListener listener) {
     _listeners[key] = listener;
   }
 

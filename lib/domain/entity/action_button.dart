@@ -4,7 +4,7 @@ import 'package:flame_action/engine/joystick.dart';
 
 import 'entity.dart';
 
-class ActionButton extends Entity implements JoystickListener {
+class ActionButton extends Entity implements GameInputListener {
   ActionButton(int id, SpriteResolver spriteResolver, {double x, double y}) {
     this.id = id;
     this.x = x;
@@ -36,6 +36,6 @@ class ActionButton extends Entity implements JoystickListener {
 
   @override
   onJoystickAction(InputActionEvent event) {
-    state = event.action == 'down' ? 'pressed' : 'neutral';
+    state = event.state == 'down' ? 'pressed' : 'neutral';
   }
 }

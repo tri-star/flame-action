@@ -36,7 +36,7 @@ class WorldContext {
 /// ユーザーの入力などをデバイスに依存しない形で受け付ける
 /// World単位でスローモーションにしたり高速化するなど
 /// 時間軸を変更することが可能で、Worldはゲーム内に複数存在する可能性がある
-class World implements JoystickListener {
+class World implements GameInputListener {
   Sprite background;
   ZOrderedCollection _entities;
   List<Entity> _pendingEntities;
@@ -119,13 +119,13 @@ class World implements JoystickListener {
   @override
   onJoystickMove(JoystickMoveEvent event) {
     _entities.forEach((entity) {
-      if (entity is JoystickListener) {
-        (entity as JoystickListener).onJoystickMove(event);
+      if (entity is GameInputListener) {
+        (entity as GameInputListener).onJoystickMove(event);
       }
     });
     _huds.forEach((entity) {
-      if (entity is JoystickListener) {
-        (entity as JoystickListener).onJoystickMove(event);
+      if (entity is GameInputListener) {
+        (entity as GameInputListener).onJoystickMove(event);
       }
     });
   }
@@ -133,13 +133,13 @@ class World implements JoystickListener {
   @override
   onJoystickAction(InputActionEvent event) {
     _entities.forEach((entity) {
-      if (entity is JoystickListener) {
-        (entity as JoystickListener).onJoystickAction(event);
+      if (entity is GameInputListener) {
+        (entity as GameInputListener).onJoystickAction(event);
       }
     });
     _huds.forEach((entity) {
-      if (entity is JoystickListener) {
-        (entity as JoystickListener).onJoystickAction(event);
+      if (entity is GameInputListener) {
+        (entity as GameInputListener).onJoystickAction(event);
       }
     });
   }

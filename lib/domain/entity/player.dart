@@ -7,7 +7,7 @@ import 'package:flame_action/engine/services/collision_detect_service.dart';
 import '../../engine/world.dart';
 import 'entity.dart';
 
-class Player extends Entity implements JoystickListener {
+class Player extends Entity implements GameInputListener {
   Player(int id, SpriteResolver spriteResolver,
       {double x, double y, double z}) {
     this.id = id;
