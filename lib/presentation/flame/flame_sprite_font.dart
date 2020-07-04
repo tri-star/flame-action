@@ -29,7 +29,7 @@ class FlameSpriteFont extends SpriteFont {
   @override
   Sprite getSprite(String char) {
     int offset = char.codeUnitAt(0) - '0'.codeUnitAt(0);
-    return FlameSprite(_spriteSheet.getSprite(0, offset))
+    return FlameSprite(_spriteSheet.getSprite(0, offset), w: w, h: h)
       ..anchor = AnchorPoint.BOTTOM_LEFT;
   }
 

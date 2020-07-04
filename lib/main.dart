@@ -29,8 +29,10 @@ void main() async {
   gameWidget.addEntity(entityFactory.create('dust_box01', 850, worldH, 60));
   gameWidget.addEntity(entityFactory.create('ground', 0, worldH, 0,
       options: {'w': worldW, 'h': worldH, 'd': worldD}));
+  gameWidget.addHud(entityFactory.create('joystick', 90, 320, 0));
+  gameWidget.addHud(entityFactory.create(
+      'action_button', gameWidget.getDeviceWidth() - 90, 320, 0));
 
-  gameWidget.createJoystick(90, 320);
   gameWidget.setCameraFocus(player);
 
   runApp(gameWidget.getWidget());

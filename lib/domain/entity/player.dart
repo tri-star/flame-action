@@ -37,21 +37,18 @@ class Player extends Entity implements GameInputListener {
     if (event.distanceY < -1) {
       if (changeState('walk')) {
         vz = -1;
-        state = 'walk';
       }
     } else if (event.distanceY > 1) {
       if (changeState('walk')) {
         vz = 1;
-        state = 'walk';
       }
     } else {
       vz = 0;
     }
     if (event.distanceX == 0 && event.distanceY == 0) {
-      if (changeState('walk')) {
+      if (changeState('neutral')) {
         vx = 0;
         vz = 0;
-        state = 'neutral';
       }
     }
   }
@@ -77,10 +74,13 @@ class Player extends Entity implements GameInputListener {
         break;
       case 'attack':
         break;
-      case 'newtral':
+      case 'neutral':
+        if (state == 'attack') {
+          return false;
+        }
         break;
     }
-    state = newState;
+    setState(newState);
     return true;
   }
 

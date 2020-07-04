@@ -44,8 +44,8 @@ class GameWidget extends Game {
     _world.addEntity(entity);
   }
 
-  void createJoystick(double x, double y) {
-    _world.createJoystick(x, y);
+  void addHud(Entity entity) {
+    _world.addHud(entity);
   }
 
   void setCameraFocus(Entity entity) {

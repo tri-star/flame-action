@@ -19,7 +19,7 @@ class ActionButton extends Entity
     this.z = 0;
     this.spriteResolver = spriteResolver;
     this._pointerId = 0;
-    this._buttonPosition = Rect.fromLTWH(x, y, getW(), getH());
+    this._buttonPosition = getRenderRect();
   }
 
   @override
@@ -44,7 +44,7 @@ class ActionButton extends Entity
   @override
   void onPointerEvent(WorldContext context, UiPointerEvent event) {
     if (event.pointerId != _pointerId &&
-        !_buttonPosition.contains(Offset(x, y))) {
+        !_buttonPosition.contains(Offset(event.x, event.y))) {
       return;
     }
 
@@ -53,10 +53,10 @@ class ActionButton extends Entity
       case PointerEventType.START:
         InputActionEvent gameEvent = InputActionEvent(InputAction.ATTACK);
         context.inputEventService.notifyActionEvent(gameEvent);
-        state = 'pressed';
+        setState('pressed');
         break;
       case PointerEventType.END:
-        state = 'up';
+        setState('neutral');
         break;
       default:
     }

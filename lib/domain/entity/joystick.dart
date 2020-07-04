@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:flame_action/engine/image/animation.dart';
 import 'package:flame_action/engine/image/sprite.dart';
 import 'package:flame_action/engine/image/sprite_resolver.dart';
 import 'package:flame_action/engine/joystick.dart';
@@ -21,14 +22,28 @@ class JoyStick extends Entity
     this.y = y;
     this.z = 0;
     this.spriteResolver = spriteResolver;
-    this._baseSprite = spriteResolver.resolve(SpriteContext(state: 'base'));
-    this._knobSprite = spriteResolver.resolve(SpriteContext(state: 'knob'));
+    this._baseSprite = spriteResolver
+        .resolveAnimation(SpriteContext(state: 'base'))
+        .getSprite();
+    this._knobSprite = spriteResolver
+        .resolveAnimation(SpriteContext(state: 'knob'))
+        .getSprite();
     _baseSprite.x = x;
     _baseSprite.y = y;
     _knobSprite.x = x;
     _knobSprite.y = y;
     _isStarted = false;
-    _joystickPosition = Rect.fromLTWH(x, y, getW(), getH());
+    _joystickPosition = getRenderRect();
+  }
+
+  @override
+  double getW() {
+    return _baseSprite.w;
+  }
+
+  @override
+  double getH() {
+    return _baseSprite.h;
   }
 
   @override
@@ -37,6 +52,10 @@ class JoyStick extends Entity
   @override
   List<Sprite> getSprites() {
     return List<Sprite>.from([_baseSprite, _knobSprite]);
+  }
+
+  Animation getAnimation() {
+    return spriteResolver.resolveAnimation(SpriteContext(state: 'base'));
   }
 
   /// UIからの入力イベントをゲーム用のInputMoveEventに変換して、各Entityに通知する

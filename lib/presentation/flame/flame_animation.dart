@@ -52,7 +52,10 @@ class FlameAnimation extends Animation {
     _animation.update(0.016);
 
     if (currentIndex != _animation.currentIndex || currentSprite == null) {
-      currentSprite = FlameSprite(_animation.getSprite(), d: definition.depth);
+      currentSprite = FlameSprite(_animation.getSprite(),
+          w: definition.width.toDouble(),
+          h: definition.height.toDouble(),
+          d: definition.depth);
       currentSprite.anchor = definition.anchorPoint;
       currentIndex = _animation.currentIndex;
 

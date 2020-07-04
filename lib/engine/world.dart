@@ -1,7 +1,6 @@
 import 'package:flame_action/domain/entity/entity.dart';
 import 'package:flame_action/engine/entity/base_entity_factory.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
-import 'package:flutter/painting.dart';
 
 import 'camera.dart';
 import 'coordinates.dart';
@@ -66,7 +65,7 @@ class World implements GameInputListener {
             Size3d(worldW, worldH, worldD), Position3d(0, 0, 0)),
         _boundaryAdjustmentService = BoundaryAdjustmentService() {
     _collisionDetectService = CollisionDetectService(_entities);
-    _inputEventService = InputEventService(_entities);
+    _inputEventService = InputEventService(_entities, _huds);
     _context = WorldContext(
         _collisionDetectService, _entities, entityFactory, _inputEventService);
   }
@@ -99,17 +98,8 @@ class World implements GameInputListener {
     _context.addEntity(entity);
   }
 
-  void createJoystick(double x, double y) {
-    // 横幅/縦幅またはRectの情報をEntityやSpriteから取得する
-    _pointerEventHandler = PointerEventHandler(
-      Rect.fromLTWH(x - 70.0, y - 70.0, 140, 140),
-      Rect.fromLTWH((_camera.w - 120) - 30, y - 30.0, 60, 60),
-    );
-    _pointerEventHandler.addListener('world', this);
-
-    this._huds.add(_context.entityFactory.create('joystick', x, y, 0));
-    this._huds.add(
-        _context.entityFactory.create('action_button', _camera.w - 120, y, 0));
+  void addHud(Entity entity) {
+    _huds.add(entity);
   }
 
   void setBackground(Sprite _sprite) {
@@ -118,7 +108,19 @@ class World implements GameInputListener {
 
   /// 画面からのポインタに関するイベントを受け取る
   void onPointerEvent(UiPointerEvent uiPointerEvent) {
-    _pointerEventHandler.handle(uiPointerEvent);
+    //_pointerEventHandler.handle(uiPointerEvent);
+    _huds.forEach((entity) {
+      if (entity is PointerEventListener) {
+        (entity as PointerEventListener)
+            .onPointerEvent(_context, uiPointerEvent);
+      }
+    });
+    _entities.forEach((entity) {
+      if (entity is PointerEventListener) {
+        (entity as PointerEventListener)
+            .onPointerEvent(_context, uiPointerEvent);
+      }
+    });
   }
 
   /// UIからのイベントをJoystickのイベントに変換した結果を受け取る

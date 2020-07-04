@@ -20,7 +20,7 @@ class Enemy extends Entity {
   void onCollide(WorldContext context, CollisionEvent event) {
     super.onCollide(context, event);
     if (event.type == 'attack') {
-      state = 'damage';
+      setState('damage');
       vx += event.force?.x ?? 0;
       vy += event.force?.y ?? 0;
       y += vy;

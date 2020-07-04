@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flame_action/engine/coordinates.dart';
 import 'package:flame_action/engine/image/animation.dart';
 import 'package:flame_action/engine/image/sprite.dart';
@@ -67,7 +69,6 @@ class Entity {
     z += vz;
 
     updateState();
-    updateAnimation();
     animation?.update(animationEventCallback: (AnimationFrameEvent event) {
       onAnimationEvent(context, event);
     });
@@ -76,40 +77,45 @@ class Entity {
     context?.collisionDetectService?.detect(context, this, collisionEvent);
   }
 
+  void setState(String newState) {
+    state = newState;
+    animation = spriteResolver
+        .resolveAnimation(SpriteContext(state: state, dimension: dimension));
+  }
+
   void updateState() {
-    if (animation?.isDone() ?? false) {
-      state = getNextState(state);
+    if (getAnimation()?.isDone() ?? false) {
+      setState(getNextState(state));
     }
   }
 
-  void updateAnimation() {
-    if (spriteResolver == null) {
-      return;
+  @protected
+  Animation getAnimation() {
+    if (animation == null) {
+      animation = spriteResolver
+          ?.resolveAnimation(SpriteContext(state: state, dimension: dimension));
     }
-    Animation newAnimation = spriteResolver
-        .resolveAnimation(SpriteContext(state: state, dimension: dimension));
-    if (animation != newAnimation) {
-      animation = newAnimation;
-    }
+    return animation;
   }
 
   int getId() => id;
   double getX() => x;
   double getY() => y;
   double getZ() => z;
-  double getW() => animation?.getSprite()?.w ?? 0;
-  double getH() => animation?.getSprite()?.h ?? 0;
-  double getD() => animation?.getSprite()?.d ?? 0;
+  double getW() => getAnimation()?.getSprite()?.w ?? 0;
+  double getH() => getAnimation()?.getSprite()?.h ?? 0;
+  double getD() => getAnimation()?.getSprite()?.d ?? 0;
   List<String> getTags() => tags;
   Dimension getDimension() => dimension;
   bool haveGravity() => gravityFlag;
   bool isCollidable() => collidableFlag;
 
   List<Sprite> getSprites() {
-    if (animation == null) {
+    Animation currentAnimation = getAnimation();
+    if (currentAnimation == null) {
       return [];
     }
-    Sprite sprite = animation.getSprite();
+    Sprite sprite = currentAnimation?.getSprite();
     if (sprite == null) {
       return [];
     }
@@ -123,11 +129,22 @@ class Entity {
   }
 
   Rect3d getRect() {
-    double offsetX = animation?.getSprite()?.getOffsets()?.x ?? 0;
-    double offsetY = animation?.getSprite()?.getOffsets()?.y ?? 0;
-    double offsetZ = animation?.getSprite()?.getOffsets()?.z ?? 0;
+    Animation currentAnimation = getAnimation();
+    double offsetX = currentAnimation?.getSprite()?.getOffsets()?.x ?? 0;
+    double offsetY = currentAnimation?.getSprite()?.getOffsets()?.y ?? 0;
+    double offsetZ = currentAnimation?.getSprite()?.getOffsets()?.z ?? 0;
     return Rect3d(
         x + offsetX, y + offsetY, z + offsetZ, getW(), getH(), getD());
+  }
+
+  /// 描画用に2次元に変換した矩形を返す
+  Rect getRenderRect() {
+    Animation currentAnimation = getAnimation();
+    double offsetX = currentAnimation?.getSprite()?.getOffsets()?.x ?? 0;
+    double offsetY = currentAnimation?.getSprite()?.getOffsets()?.y ?? 0;
+    double offsetZ = currentAnimation?.getSprite()?.getOffsets()?.z ?? 0;
+    return Rect.fromLTWH(
+        x + offsetX, (y + offsetY) + (z + offsetZ), getW(), getH());
   }
 
   Position3d getPosition() {
