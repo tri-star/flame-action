@@ -1,4 +1,4 @@
-import '../domain/entity/entity.dart';
+import '../engine/entity/entity.dart';
 
 /// TODO: パフォーマンス上の懸念からEntityのソート以外に削除判定と削除も行っているので、
 /// 名称を変える、utilから移動することを検討する

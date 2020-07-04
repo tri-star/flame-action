@@ -5,7 +5,7 @@ import 'package:flame_action/presentation/image/enemy_sprite_resolver.dart';
 import 'package:flame_action/presentation/image/joystick_sprite_resolver.dart';
 
 import '../../domain/entity/basic_obstacle.dart';
-import '../../domain/entity/entity.dart';
+import '../../engine/entity/entity.dart';
 import '../../domain/entity/player.dart';
 import '../../engine/entity/base_entity_factory.dart';
 import '../../engine/entity/joystick.dart';

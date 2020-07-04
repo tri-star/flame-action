@@ -1,5 +1,5 @@
+import '../entity/entity.dart';
 import '../input_event.dart';
-import '../../domain/entity/entity.dart';
 import '../../util/list.dart';
 
 /// ゲーム用に変換済のInputイベントを各Entityに通知するサービス

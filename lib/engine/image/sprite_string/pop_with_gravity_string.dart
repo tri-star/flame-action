@@ -1,7 +1,7 @@
-import '../../../domain/entity/entity.dart';
 import '../../../engine/image/sprite_string.dart';
 import '../../../util/timer.dart';
 import '../../coordinates.dart';
+import '../../entity/entity.dart';
 import '../../world.dart';
 import '../sprite.dart';
 

@@ -1,4 +1,4 @@
-import 'package:flame_action/domain/entity/entity.dart';
+import 'package:flame_action/engine/entity/entity.dart';
 import 'package:flame_action/engine/entity/base_entity_factory.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
 

@@ -5,7 +5,7 @@ import 'package:flame_action/engine/input_event.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
 
 import '../../engine/world.dart';
-import 'entity.dart';
+import '../../engine/entity/entity.dart';
 
 class Player extends Entity implements GameInputListener {
   Player(int id, SpriteResolver spriteResolver,

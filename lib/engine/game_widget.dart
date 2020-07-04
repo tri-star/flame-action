@@ -1,7 +1,7 @@
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/sprite.dart';
-import 'package:flame_action/domain/entity/entity.dart';
+import 'package:flame_action/engine/entity/entity.dart';
 import 'package:flame_action/presentation/flame/flame_sprite.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';

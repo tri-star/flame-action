@@ -1,4 +1,4 @@
-import '../domain/entity/entity.dart';
+import 'entity/entity.dart';
 
 class Camera {
   double _x;

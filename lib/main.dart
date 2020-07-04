@@ -2,7 +2,7 @@ import 'package:flame_action/engine/image/sprite_font.dart';
 import 'package:flame_action/presentation/flame/flame_sprite_font.dart';
 import 'package:flutter/widgets.dart';
 
-import 'domain/entity/entity.dart';
+import 'engine/entity/entity.dart';
 import 'domain/entity/entity_factory.dart';
 import 'engine/game_widget.dart';
 

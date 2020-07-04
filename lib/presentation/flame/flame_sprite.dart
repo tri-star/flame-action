@@ -5,7 +5,7 @@ import 'package:flame/sprite.dart' as Flame;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import '../../domain/entity/entity.dart';
+import '../../engine/entity/entity.dart';
 import '../../engine/camera.dart';
 import '../../engine/coordinates.dart';
 import '../../engine/image/sprite.dart';

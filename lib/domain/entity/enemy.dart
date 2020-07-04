@@ -2,7 +2,7 @@ import 'package:flame_action/engine/image/sprite_resolver.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
 import 'package:flame_action/engine/world.dart';
 
-import 'entity.dart';
+import '../../engine/entity/entity.dart';
 
 class Enemy extends Entity {
   Enemy(int id, SpriteResolver spriteResolver, {double x, double y, double z}) {

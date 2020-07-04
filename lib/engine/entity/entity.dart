@@ -7,7 +7,7 @@ import 'package:flame_action/engine/image/sprite_resolver.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../engine/world.dart';
+import '../world.dart';
 
 enum Dimension { LEFT, RIGHT }
 

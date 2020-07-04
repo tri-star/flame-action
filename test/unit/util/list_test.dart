@@ -1,4 +1,4 @@
-import 'package:flame_action/domain/entity/entity.dart';
+import 'package:flame_action/engine/entity/entity.dart';
 import 'package:flame_action/domain/entity/player.dart';
 import 'package:flame_action/util/list.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -1,6 +1,6 @@
 import 'package:flame_action/engine/image/sprite_font.dart';
 
-import '../../../domain/entity/entity.dart';
+import '../../entity/entity.dart';
 import '../../coordinates.dart';
 import '../../services/collision_detect_service.dart';
 import '../../world.dart';
