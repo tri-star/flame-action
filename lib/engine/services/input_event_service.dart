@@ -1,4 +1,4 @@
-import '../joystick.dart';
+import '../input_event.dart';
 import '../../domain/entity/entity.dart';
 import '../../util/list.dart';
 

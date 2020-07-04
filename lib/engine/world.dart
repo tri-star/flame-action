@@ -5,7 +5,7 @@ import 'package:flame_action/engine/services/collision_detect_service.dart';
 import 'camera.dart';
 import 'coordinates.dart';
 import 'image/sprite.dart';
-import 'joystick.dart';
+import 'input_event.dart';
 import 'services/boundary_adjustment_service.dart';
 import '../util/list.dart';
 import 'services/input_event_service.dart';

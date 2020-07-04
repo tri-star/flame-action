@@ -1,7 +1,7 @@
 import 'package:flame_action/engine/coordinates.dart';
 import 'package:flame_action/engine/image/animation.dart';
 import 'package:flame_action/engine/image/sprite_resolver.dart';
-import 'package:flame_action/engine/joystick.dart';
+import 'package:flame_action/engine/input_event.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
 
 import '../../engine/world.dart';

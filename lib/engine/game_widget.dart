@@ -6,7 +6,7 @@ import 'package:flame_action/presentation/flame/flame_sprite.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 import 'entity/base_entity_factory.dart';
-import 'joystick.dart';
+import 'input_event.dart';
 import 'world.dart';
 
 /// ユーザーからの入力を受け付け、GameModelに伝える
