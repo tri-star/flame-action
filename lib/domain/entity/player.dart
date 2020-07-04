@@ -58,7 +58,7 @@ class Player extends Entity implements GameInputListener {
 
   @override
   onInputAction(InputActionEvent event) {
-    if (event.action == InputAction.ATTACK && event.state == 'down') {
+    if (event.action == InputAction.ATTACK) {
       if (changeState('attack')) {
         vx = 0;
         vz = 0;

@@ -45,8 +45,7 @@ class InputMoveEvent {
 /// ゲーム向けに伝搬される移動関連のイベント
 class InputActionEvent {
   InputAction action;
-  String state;
-  InputActionEvent(this.action, this.state);
+  InputActionEvent(this.action);
 }
 
 /// Joystickのイベントを受け取るオブジェクト用のインターフェース
@@ -111,13 +110,10 @@ class PointerEventHandler {
     _actionButtonPointerId = event.pointerId;
     switch (event.type) {
       case PointerEventType.START:
-        InputActionEvent gameEvent =
-            InputActionEvent(InputAction.ATTACK, 'down');
+        InputActionEvent gameEvent = InputActionEvent(InputAction.ATTACK);
         _notifyActionEventToListeners(gameEvent);
         break;
       case PointerEventType.END:
-        InputActionEvent gameEvent = InputActionEvent(InputAction.ATTACK, 'up');
-        _notifyActionEventToListeners(gameEvent);
         break;
       default:
     }

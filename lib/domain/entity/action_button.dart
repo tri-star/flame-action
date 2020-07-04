@@ -51,13 +51,12 @@ class ActionButton extends Entity
     _pointerId = event.pointerId;
     switch (event.type) {
       case PointerEventType.START:
-        InputActionEvent gameEvent =
-            InputActionEvent(InputAction.ATTACK, 'down');
+        InputActionEvent gameEvent = InputActionEvent(InputAction.ATTACK);
         context.inputEventService.notifyActionEvent(gameEvent);
+        state = 'pressed';
         break;
       case PointerEventType.END:
-        InputActionEvent gameEvent = InputActionEvent(InputAction.ATTACK, 'up');
-        context.inputEventService.notifyActionEvent(gameEvent);
+        state = 'up';
         break;
       default:
     }
@@ -67,7 +66,5 @@ class ActionButton extends Entity
   onInputMove(InputMoveEvent event) {}
 
   @override
-  onInputAction(InputActionEvent event) {
-    state = event.state == 'down' ? 'pressed' : 'neutral';
-  }
+  onInputAction(InputActionEvent event) {}
 }
