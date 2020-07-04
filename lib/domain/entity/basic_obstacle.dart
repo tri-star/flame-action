@@ -19,7 +19,6 @@ class BasicObstacle extends Entity {
     this.spriteResolver = spriteResolver;
     this.collidableFlag = true;
     this.tags = ["obstacle"];
-    this.setState(_type);
   }
 
   @override
