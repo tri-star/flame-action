@@ -9,14 +9,17 @@ import 'image/sprite.dart';
 import 'joystick.dart';
 import 'services/boundary_adjustment_service.dart';
 import '../util/list.dart';
+import 'services/input_event_service.dart';
 
 class WorldContext {
   ZOrderedCollection entities;
   CollisionDetectService collisionDetectService;
+  InputEventService inputEventService;
   List<Entity> _pendingEntities;
   BaseEntityFactory entityFactory;
 
-  WorldContext(this.collisionDetectService, this.entities, this.entityFactory)
+  WorldContext(this.collisionDetectService, this.entities, this.entityFactory,
+      this.inputEventService)
       : _pendingEntities = List<Entity>();
 
   void addEntity(Entity entity) {
@@ -44,6 +47,7 @@ class World implements GameInputListener {
   PointerEventHandler _pointerEventHandler;
   BoundaryAdjustmentService _boundaryAdjustmentService;
   CollisionDetectService _collisionDetectService;
+  InputEventService _inputEventService;
   WorldContext _context;
   Rect3d _worldRect;
   Camera _camera;
@@ -62,7 +66,9 @@ class World implements GameInputListener {
             Size3d(worldW, worldH, worldD), Position3d(0, 0, 0)),
         _boundaryAdjustmentService = BoundaryAdjustmentService() {
     _collisionDetectService = CollisionDetectService(_entities);
-    _context = WorldContext(_collisionDetectService, _entities, entityFactory);
+    _inputEventService = InputEventService(_entities);
+    _context = WorldContext(
+        _collisionDetectService, _entities, entityFactory, _inputEventService);
   }
 
   void update(double dt) {
