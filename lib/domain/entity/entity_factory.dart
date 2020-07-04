@@ -8,12 +8,12 @@ import '../../domain/entity/basic_obstacle.dart';
 import '../../domain/entity/entity.dart';
 import '../../domain/entity/player.dart';
 import '../../engine/entity/base_entity_factory.dart';
+import '../../engine/entity/joystick.dart';
 import '../../presentation/image/basic_obstacle_sprite_resolver.dart';
 import '../../presentation/image/player_sprite_resolver.dart';
 import 'action_button.dart';
 import 'enemy.dart';
 import 'ground.dart';
-import 'joystick.dart';
 
 class EntityFactory extends BaseEntityFactory {
   @override

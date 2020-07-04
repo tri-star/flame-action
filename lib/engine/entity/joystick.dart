@@ -6,8 +6,8 @@ import 'package:flame_action/engine/image/sprite.dart';
 import 'package:flame_action/engine/image/sprite_resolver.dart';
 import 'package:flame_action/engine/input_event.dart';
 
-import '../../engine/world.dart';
-import 'entity.dart';
+import '../world.dart';
+import '../../domain/entity/entity.dart';
 
 class JoyStick extends Entity
     implements GameInputListener, PointerEventListener {
