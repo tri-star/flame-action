@@ -17,7 +17,7 @@ void main() {
 
     setUp(() {
       entities = ZOrderedCollection();
-      service = InputEventService(entities);
+      service = InputEventService(entities, []);
       context = WorldContextUtil.create(entities: entities);
     });
 

@@ -18,7 +18,7 @@ class WorldContextUtil {
       collisionDetectService = new CollisionDetectService(entities);
     }
     if (inputEventService == null) {
-      inputEventService = new InputEventService(entities);
+      inputEventService = new InputEventService(entities, []);
     }
     if (entityFactory == null) {
       entityFactory = EntityFactory();
