@@ -16,4 +16,14 @@ class InputEventService {
       (entity as GameInputListener).onInputMove(event);
     });
   }
+
+  /// アクション系のイベント(ゲーム用に変換済のもの)を各Entityに通知する。
+  void notifyActionEvent(InputActionEvent event) {
+    _entities.forEach((entity) {
+      if (!(entity is GameInputListener)) {
+        return;
+      }
+      (entity as GameInputListener).onInputAction(event);
+    });
+  }
 }
