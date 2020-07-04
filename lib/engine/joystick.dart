@@ -28,11 +28,11 @@ enum JoystickDirection {
 enum InputAction { ATTACK }
 
 /// ゲーム向けに伝搬される移動関連のイベント
-class JoystickMoveEvent {
+class InputMoveEvent {
   double distanceX;
   double distanceY;
 
-  JoystickMoveEvent({this.distanceX, this.distanceY});
+  InputMoveEvent({this.distanceX, this.distanceY});
 }
 
 /// ゲーム向けに伝搬される移動関連のイベント
@@ -44,7 +44,7 @@ class InputActionEvent {
 
 /// Joystickのイベントを受け取るオブジェクト用のインターフェース
 abstract class GameInputListener {
-  onInputMove(JoystickMoveEvent event);
+  onInputMove(InputMoveEvent event);
   onInputAction(InputActionEvent event);
 }
 
@@ -87,14 +87,13 @@ class PointerEventHandler {
         break;
       case PointerEventType.END:
         _isStarted = false;
-        JoystickMoveEvent gameEvent =
-            JoystickMoveEvent(distanceX: 0, distanceY: 0);
+        InputMoveEvent gameEvent = InputMoveEvent(distanceX: 0, distanceY: 0);
         _notifyMoveEventToListeners(gameEvent);
         break;
 
       case PointerEventType.UPDATE:
         if (_isStarted) {
-          JoystickMoveEvent gameEvent = _getMoveEvent(event.x, event.y);
+          InputMoveEvent gameEvent = _getMoveEvent(event.x, event.y);
           _notifyMoveEventToListeners(gameEvent);
         }
         break;
@@ -117,7 +116,7 @@ class PointerEventHandler {
     }
   }
 
-  void _notifyMoveEventToListeners(JoystickMoveEvent event) {
+  void _notifyMoveEventToListeners(InputMoveEvent event) {
     _listeners.forEach((key, listener) {
       listener.onInputMove(event);
     });
@@ -138,7 +137,7 @@ class PointerEventHandler {
         _actionButtonPosition.contains(Offset(x, y));
   }
 
-  JoystickMoveEvent _getMoveEvent(double x, double y) {
+  InputMoveEvent _getMoveEvent(double x, double y) {
     double radAngle =
         atan2(y - _joystickPosition.center.dy, x - _joystickPosition.center.dx);
     double radius = _joystickPosition.width / 2;
@@ -156,6 +155,6 @@ class PointerEventHandler {
       distanceY = 0;
     }
 
-    return JoystickMoveEvent(distanceX: distanceX, distanceY: distanceY);
+    return InputMoveEvent(distanceX: distanceX, distanceY: distanceY);
   }
 }

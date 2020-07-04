@@ -32,7 +32,7 @@ class JoyStick extends Entity implements GameInputListener {
   }
 
   @override
-  onInputMove(JoystickMoveEvent event) {
+  onInputMove(InputMoveEvent event) {
     _knobSprite.x = _baseSprite.x + event.distanceX;
     _knobSprite.y = _baseSprite.y + event.distanceY;
   }

@@ -32,7 +32,7 @@ class ActionButton extends Entity implements GameInputListener {
   void updateState() {}
 
   @override
-  onInputMove(JoystickMoveEvent event) {}
+  onInputMove(InputMoveEvent event) {}
 
   @override
   onInputAction(InputActionEvent event) {

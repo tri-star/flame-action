@@ -20,7 +20,7 @@ class Player extends Entity implements GameInputListener {
   }
 
   @override
-  onInputMove(JoystickMoveEvent event) {
+  onInputMove(InputMoveEvent event) {
     if (event.distanceX < -1) {
       if (changeState('walk')) {
         vx = -2;
