@@ -38,12 +38,10 @@ class WorldContext {
 /// ユーザーの入力などをデバイスに依存しない形で受け付ける
 /// World単位でスローモーションにしたり高速化するなど
 /// 時間軸を変更することが可能で、Worldはゲーム内に複数存在する可能性がある
-class World implements GameInputListener {
+class World {
   Sprite background;
   ZOrderedCollection _entities;
-  List<Entity> _pendingEntities;
   List<Entity> _huds;
-  PointerEventHandler _pointerEventHandler;
   BoundaryAdjustmentService _boundaryAdjustmentService;
   CollisionDetectService _collisionDetectService;
   InputEventService _inputEventService;
@@ -58,7 +56,6 @@ class World implements GameInputListener {
       {randomSeed: 0})
       : _randomSeed = randomSeed,
         _entities = ZOrderedCollection(),
-        _pendingEntities = [],
         _huds = List<Entity>(),
         _camera = Camera(cameraW, cameraH, worldW, worldH + worldD),
         _worldRect = Rect3d.fromSizeAndPosition(
@@ -119,35 +116,6 @@ class World implements GameInputListener {
       if (entity is PointerEventListener) {
         (entity as PointerEventListener)
             .onPointerEvent(_context, uiPointerEvent);
-      }
-    });
-  }
-
-  /// UIからのイベントをJoystickのイベントに変換した結果を受け取る
-  @override
-  onInputMove(InputMoveEvent event) {
-    _entities.forEach((entity) {
-      if (entity is GameInputListener) {
-        (entity as GameInputListener).onInputMove(event);
-      }
-    });
-    _huds.forEach((entity) {
-      if (entity is GameInputListener) {
-        (entity as GameInputListener).onInputMove(event);
-      }
-    });
-  }
-
-  @override
-  onInputAction(InputActionEvent event) {
-    _entities.forEach((entity) {
-      if (entity is GameInputListener) {
-        (entity as GameInputListener).onInputAction(event);
-      }
-    });
-    _huds.forEach((entity) {
-      if (entity is GameInputListener) {
-        (entity as GameInputListener).onInputAction(event);
       }
     });
   }
