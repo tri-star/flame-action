@@ -12,7 +12,7 @@ class StatusCard extends Entity with DirectRendering {
   Entity _target;
   double _opacity;
 
-  final double CARD_OPACITYT = 80;
+  final double CARD_OPACITYT = 0.8;
 
   StatusCard(int id, Entity target, {double x, double y}) {
     assert(target != null);
@@ -28,7 +28,7 @@ class StatusCard extends Entity with DirectRendering {
   @override
   void update(double dt, WorldContext context) {
     if (state == 'fade-in' && _opacity < 100) {
-      _opacity += 3;
+      _opacity += 2;
       if (_opacity >= 100) {
         state = 'neutral';
         _opacity = 100;
@@ -38,7 +38,7 @@ class StatusCard extends Entity with DirectRendering {
       state = 'fade-out';
     }
     if (state == 'fade-out' && _opacity > 0) {
-      _opacity -= 3;
+      _opacity -= 2;
       if (_opacity <= 0) {
         dispose();
       }
@@ -52,17 +52,15 @@ class StatusCard extends Entity with DirectRendering {
 
   @override
   void renderDirect(Canvas canvas, Camera camera) {
-    canvas.drawRect(
-        Rect.fromLTWH(x, y, getW(), getH()),
-        Paint()
-          ..color =
-              Color.fromRGBO(80, 80, 80, (_opacity * CARD_OPACITYT) / 100));
+    double cardOpacity = ((_opacity / 100) * CARD_OPACITYT);
+    canvas.drawRect(Rect.fromLTWH(x, y, getW(), getH()),
+        Paint()..color = Color.fromRGBO(80, 80, 80, cardOpacity));
 
     canvas.drawRect(Rect.fromLTWH(x + 5, y + 5, getW() - 10, 10),
-        Paint()..color = Color.fromRGBO(255, 0, 0, 1));
+        Paint()..color = Color.fromRGBO(255, 0, 0, cardOpacity));
 
     double rate = (_target as FightingUnit).getRestHpRate();
     canvas.drawRect(Rect.fromLTWH(x + 5, y + 5, (getW() - 10) * rate, 10),
-        Paint()..color = Color.fromRGBO(0, 255, 0, 1));
+        Paint()..color = Color.fromRGBO(0, 255, 0, cardOpacity));
   }
 }
