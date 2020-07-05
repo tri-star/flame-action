@@ -27,6 +27,8 @@ void main() async {
   gameWidget.addEntity(entityFactory.create('enemy01', 600, worldH, 50));
   gameWidget.addEntity(entityFactory.create('ash_tray', 400, worldH, 50));
   gameWidget.addEntity(entityFactory.create('dust_box01', 850, worldH, 60));
+  gameWidget.addEntity(
+      entityFactory.create('fire_distinguisher_01', 1050, worldH, 80));
   gameWidget.addEntity(entityFactory.create('ground', 0, worldH, 0,
       options: {'w': worldW, 'h': worldH, 'd': worldD}));
   gameWidget.addHud(entityFactory.create('joystick', 90, 320, 0));

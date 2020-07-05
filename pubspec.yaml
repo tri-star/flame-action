@@ -55,6 +55,7 @@ flutter:
     - assets/images/damage_number.png
     - assets/images/object_01.png
     - assets/images/object_02.png
+    - assets/images/object_03.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

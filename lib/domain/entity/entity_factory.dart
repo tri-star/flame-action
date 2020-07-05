@@ -33,6 +33,10 @@ class EntityFactory extends BaseEntityFactory {
         return BasicObstacle(
             newId, 'dust_box01', BasicObstacleSpriteResolver('dust_box01'),
             x: x, y: y, z: z);
+      case 'fire_distinguisher_01':
+        return BasicObstacle(newId, 'fire_distinguisher_01',
+            BasicObstacleSpriteResolver('fire_distinguisher_01'),
+            x: x, y: y, z: z);
       case 'ground':
         return Ground(newId,
             x: x,
