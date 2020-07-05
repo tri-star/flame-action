@@ -1,7 +1,7 @@
 import 'package:flame_action/engine/image/sprite.dart';
 import 'package:flame_action/engine/image/animation.dart';
 import 'package:flame_action/engine/image/sprite_resolver.dart';
-import 'package:flame_action/presentation/stub/stub_animation.dart';
+import 'stub_animation.dart';
 
 class StubSpriteResolver extends SpriteResolver {
   double x = 0;

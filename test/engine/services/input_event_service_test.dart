@@ -3,7 +3,7 @@ import 'package:flame_action/domain/entity/player.dart';
 import 'package:flame_action/engine/input_event.dart';
 import 'package:flame_action/engine/services/input_event_service.dart';
 import 'package:flame_action/engine/world.dart';
-import 'package:flame_action/presentation/image/stub_sprite_resolver.dart';
+import 'package:flame_action/engine/presentation/stub/stub_sprite_resolver.dart';
 import 'package:flame_action/util/list.dart';
 import 'package:flutter_test/flutter_test.dart';
 
