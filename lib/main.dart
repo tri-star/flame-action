@@ -27,7 +27,7 @@ void main() async {
   gameWidget.addEntity(player);
   gameWidget.addEntity(enemy);
   gameWidget.addEntity(entityFactory.create('ash_tray', 400, worldH, 50));
-  gameWidget.addEntity(entityFactory.create('dust_box01', 850, worldH, 60));
+  gameWidget.addEntity(entityFactory.create('dust_box01', 850, worldH, 20));
   gameWidget.addEntity(
       entityFactory.create('fire_distinguisher_01', 1050, worldH, 80));
   gameWidget.addEntity(entityFactory.create('ground', 0, worldH, 0,
@@ -40,7 +40,7 @@ void main() async {
   gameWidget.addHud(entityFactory
       .create('status_card', 10, 10, 0, options: {'target': player}));
   gameWidget.addHud(entityFactory
-      .create('status_card', 130, 10, 0, options: {'target': enemy}));
+      .create('status_card', 170, 10, 0, options: {'target': enemy}));
 
   gameWidget.setCameraFocus(player);
 
