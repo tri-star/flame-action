@@ -1,3 +1,6 @@
+import 'dart:math';
+import 'dart:ui';
+
 import 'package:flame_action/engine/entity/entity.dart';
 import 'package:flame_action/engine/entity/base_entity_factory.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
@@ -106,16 +109,31 @@ class World {
   /// 画面からのポインタに関するイベントを受け取る
   void onPointerEvent(UiPointerEvent uiPointerEvent) {
     //_pointerEventHandler.handle(uiPointerEvent);
+    Offset point = Offset(uiPointerEvent.x, uiPointerEvent.y);
+    bool capturedEvent;
+
     _huds.forEach((entity) {
-      if (entity is PointerEventListener) {
-        (entity as PointerEventListener)
-            .onPointerEvent(_context, uiPointerEvent);
+      capturedEvent = entity is CapturePointerEvent &&
+              (entity as CapturePointerEvent)
+                  ?.isCapturedPointer(uiPointerEvent) ??
+          false;
+      if (capturedEvent || entity.getRenderRect().contains(point)) {
+        if (entity is PointerEventListener) {
+          (entity as PointerEventListener)
+              .onPointerEvent(_context, uiPointerEvent);
+        }
       }
     });
     _entities.forEach((entity) {
-      if (entity is PointerEventListener) {
-        (entity as PointerEventListener)
-            .onPointerEvent(_context, uiPointerEvent);
+      capturedEvent = entity is CapturePointerEvent &&
+              (entity as CapturePointerEvent)
+                  ?.isCapturedPointer(uiPointerEvent) ??
+          false;
+      if (capturedEvent || entity.getRenderRect().contains(point)) {
+        if (entity is PointerEventListener) {
+          (entity as PointerEventListener)
+              .onPointerEvent(_context, uiPointerEvent);
+        }
       }
     });
   }

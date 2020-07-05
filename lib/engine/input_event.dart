@@ -50,3 +50,20 @@ abstract class GameInputListener {
   onInputMove(InputMoveEvent event);
   onInputAction(InputActionEvent event);
 }
+
+/// ポインタのキャプチャに対応するためのmixin
+mixin CapturePointerEvent {
+  int _pointerId = 0;
+
+  void capturePointer(UiPointerEvent event) {
+    _pointerId = event.pointerId;
+  }
+
+  void releasePointer() {
+    _pointerId = 0;
+  }
+
+  bool isCapturedPointer(UiPointerEvent event) {
+    return _pointerId == event.pointerId;
+  }
+}

@@ -8,18 +8,14 @@ import 'package:flame_action/engine/world.dart';
 import '../../engine/entity/entity.dart';
 
 class ActionButton extends Entity
+    with CapturePointerEvent
     implements GameInputListener, PointerEventListener {
-  int _pointerId;
-  Rect _buttonPosition;
-
   ActionButton(int id, SpriteResolver spriteResolver, {double x, double y}) {
     this.id = id;
     this.x = x;
     this.y = y;
     this.z = 0;
     this.spriteResolver = spriteResolver;
-    this._pointerId = 0;
-    this._buttonPosition = getRenderRect();
   }
 
   @override
@@ -43,14 +39,9 @@ class ActionButton extends Entity
   /// UIイベントを受け取り、ゲーム用のイベントに変換して各Entityへの通知を行う
   @override
   void onPointerEvent(WorldContext context, UiPointerEvent event) {
-    if (event.pointerId != _pointerId &&
-        !_buttonPosition.contains(Offset(event.x, event.y))) {
-      return;
-    }
-
-    _pointerId = event.pointerId;
     switch (event.type) {
       case PointerEventType.START:
+        capturePointer(event);
         InputActionEvent gameEvent = InputActionEvent(InputAction.ATTACK);
         context.inputEventService.notifyActionEvent(gameEvent);
         setState('pressed');
