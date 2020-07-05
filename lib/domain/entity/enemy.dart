@@ -1,11 +1,13 @@
+import 'package:flame_action/engine/entity/figting_unit.dart';
 import 'package:flame_action/engine/image/sprite_resolver.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
 import 'package:flame_action/engine/world.dart';
 
 import '../../engine/entity/entity.dart';
 
-class Enemy extends Entity {
-  Enemy(int id, SpriteResolver spriteResolver, {double x, double y, double z}) {
+class Enemy extends Entity with FightingUnit {
+  Enemy(int id, SpriteResolver spriteResolver, double maxHp,
+      {double x, double y, double z}) {
     this.id = id;
     this.x = x;
     this.y = y;
@@ -14,6 +16,8 @@ class Enemy extends Entity {
     this.dimension = Dimension.LEFT;
     this.gravityFlag = true;
     this.collidableFlag = true;
+    this.maxHp = maxHp;
+    this.hp = maxHp;
   }
 
   @override
@@ -27,6 +31,7 @@ class Enemy extends Entity {
       Entity newEntity = context.entityFactory.create(
           'pop_with_gravity_string', x, y, z + 5,
           options: {'message': '1234'});
+      damage(1234);
       context.addEntity(newEntity);
     }
     if (event.type == 'collide' &&

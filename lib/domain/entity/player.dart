@@ -6,8 +6,9 @@ import 'package:flame_action/engine/services/collision_detect_service.dart';
 
 import '../../engine/world.dart';
 import '../../engine/entity/entity.dart';
+import '../../engine/entity/figting_unit.dart';
 
-class Player extends Entity implements GameInputListener {
+class Player extends Entity with FightingUnit implements GameInputListener {
   Player(int id, SpriteResolver spriteResolver,
       {double x, double y, double z}) {
     this.id = id;
@@ -17,6 +18,8 @@ class Player extends Entity implements GameInputListener {
     this.spriteResolver = spriteResolver;
     this.gravityFlag = true;
     this.collidableFlag = true;
+    this.hp = 100000;
+    this.maxHp = 100000;
   }
 
   @override
