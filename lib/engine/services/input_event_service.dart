@@ -5,9 +5,9 @@ import '../../util/list.dart';
 /// ゲーム用に変換済のInputイベントを各Entityに通知するサービス
 class InputEventService {
   ZOrderedCollection _entities;
-  List<Entity> _huds;
+  ZOrderedCollection _huds;
 
-  InputEventService(ZOrderedCollection entities, List<Entity> huds)
+  InputEventService(ZOrderedCollection entities, ZOrderedCollection huds)
       : _entities = entities,
         _huds = huds;
 

@@ -43,7 +43,7 @@ class WorldContext {
 class World {
   Sprite background;
   ZOrderedCollection _entities;
-  List<Entity> _huds;
+  ZOrderedCollection _huds;
   BoundaryAdjustmentService _boundaryAdjustmentService;
   CollisionDetectService _collisionDetectService;
   InputEventService _inputEventService;
@@ -58,7 +58,7 @@ class World {
       {randomSeed: 0})
       : _randomSeed = randomSeed,
         _entities = ZOrderedCollection(),
-        _huds = List<Entity>(),
+        _huds = ZOrderedCollection(),
         _camera = Camera(cameraW, cameraH, worldW, worldH + worldD),
         _worldRect = Rect3d.fromSizeAndPosition(
             Size3d(worldW, worldH, worldD), Position3d(0, 0, 0)),
@@ -91,6 +91,7 @@ class World {
     });
     _context.clearPendingEntities();
     _entities.sync();
+    _huds.sync();
   }
 
   void addEntity(Entity entity) {
@@ -141,6 +142,6 @@ class World {
     return _entities;
   }
 
-  List<Entity> get huds => _huds;
+  ZOrderedCollection get huds => _huds;
   Camera get camera => _camera;
 }
