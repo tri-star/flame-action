@@ -22,9 +22,10 @@ void main() async {
           type: SpriteFontType.NUMBER));
 
   Entity player = entityFactory.create('player', 10, worldH, 40);
+  Entity enemy = entityFactory.create('enemy01', 600, worldH, 50);
   gameWidget.setBackground('background01.png');
   gameWidget.addEntity(player);
-  gameWidget.addEntity(entityFactory.create('enemy01', 600, worldH, 50));
+  gameWidget.addEntity(enemy);
   gameWidget.addEntity(entityFactory.create('ash_tray', 400, worldH, 50));
   gameWidget.addEntity(entityFactory.create('dust_box01', 850, worldH, 60));
   gameWidget.addEntity(
@@ -34,6 +35,12 @@ void main() async {
   gameWidget.addHud(entityFactory.create('joystick', 90, 320, 0));
   gameWidget.addHud(entityFactory.create(
       'action_button', gameWidget.getDeviceWidth() - 90, 320, 0));
+  gameWidget.addHud(entityFactory
+      .create('status_card', 10, 10, 0, options: {'target': player}));
+  gameWidget.addHud(entityFactory
+      .create('status_card', 10, 10, 0, options: {'target': player}));
+  gameWidget.addHud(entityFactory
+      .create('status_card', 130, 10, 0, options: {'target': enemy}));
 
   gameWidget.setCameraFocus(player);
 

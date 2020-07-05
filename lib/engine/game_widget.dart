@@ -5,6 +5,7 @@ import 'package:flame_action/engine/entity/entity.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 import 'entity/base_entity_factory.dart';
+import 'entity/direct_rendering.dart';
 import 'presentation/flame/flame_sprite.dart';
 import 'input_event.dart';
 import 'world.dart';
@@ -87,6 +88,11 @@ class GameWidget extends Game {
       });
     });
     _world.huds.forEach((entity) {
+      if (entity is DirectRendering) {
+        (entity as DirectRendering).renderDirect(canvas, _world.camera);
+        return;
+      }
+
       entity.getSprites().forEach((sprite) {
         sprite.render(canvas, null);
       });
