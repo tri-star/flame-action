@@ -25,7 +25,7 @@ class EntityFactory extends BaseEntityFactory {
       case 'player':
         return Player(newId, PlayerSpriteResolver(), x: x, y: y, z: z);
       case 'enemy01':
-        return Enemy(newId, EnemySpriteResolver(), 3000, x: x, y: y, z: z);
+        return Enemy(newId, EnemySpriteResolver(), 4000, x: x, y: y, z: z);
       case 'status_card':
         return StatusCard(newId, options['target'], x: x, y: y);
       case 'ash_tray':

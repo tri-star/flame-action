@@ -20,6 +20,25 @@ class Enemy extends Entity with FightingUnit {
     this.hp = maxHp;
   }
 
+  void update(double dt, WorldContext context) {
+    super.update(dt, context);
+
+    if (state != 'dead' && isDead()) {
+      disableGravity();
+      collidableFlag = false;
+      setState('dead');
+    }
+  }
+
+  @override
+  String getNextState(String currentState) {
+    switch (currentState) {
+      case 'dead':
+        return 'disposed';
+    }
+    return 'neutral';
+  }
+
   @override
   void onCollide(WorldContext context, CollisionEvent event) {
     super.onCollide(context, event);
