@@ -1,7 +1,7 @@
 import 'package:flame_action/engine/image/animation.dart';
-import 'package:flame_action/presentation/flame/flame_animation.dart';
 import '../../engine/image/sprite.dart';
 import '../../engine/image/sprite_resolver.dart';
+import '../../engine/presentation/flame/flame_animation.dart';
 
 class EnemySpriteResolver extends SpriteResolver {
   Map<String, AnimationDefinition> _definitions;

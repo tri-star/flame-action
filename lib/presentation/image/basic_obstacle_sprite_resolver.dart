@@ -1,7 +1,7 @@
 import 'package:flame_action/engine/image/sprite.dart';
 import 'package:flame_action/engine/image/animation.dart';
 import 'package:flame_action/engine/image/sprite_resolver.dart';
-import 'package:flame_action/presentation/flame/flame_animation.dart';
+import '../../engine/presentation/flame/flame_animation.dart';
 
 class BasicObstacleSpriteResolver extends SpriteResolver {
   static Map<String, Animation> _animations;

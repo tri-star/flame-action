@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flame/spritesheet.dart';
 
-import '../../engine/image/sprite.dart';
-import '../../engine/image/sprite_font.dart';
+import '../../image/sprite.dart';
+import '../../image/sprite_font.dart';
 import 'flame_sprite.dart';
 
 class FlameSpriteFont extends SpriteFont {

@@ -5,10 +5,10 @@ import 'package:flame/sprite.dart' as Flame;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import '../../engine/entity/entity.dart';
-import '../../engine/camera.dart';
-import '../../engine/coordinates.dart';
-import '../../engine/image/sprite.dart';
+import '../../entity/entity.dart';
+import '../../camera.dart';
+import '../../coordinates.dart';
+import '../../image/sprite.dart';
 
 class FlameSprite extends Sprite {
   Flame.Sprite _flameSprite;

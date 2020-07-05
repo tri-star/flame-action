@@ -3,8 +3,8 @@ import 'package:flame/spritesheet.dart';
 import 'package:flame_action/engine/image/sprite.dart';
 import 'package:flame_action/util/timer.dart';
 
-import '../../engine/image/animation.dart';
-import '../../presentation/flame/flame_sprite.dart';
+import '../../image/animation.dart';
+import 'flame_sprite.dart';
 
 class FlameAnimation extends Animation {
   static Map<String, SpriteSheet> _spriteSheetCache;
