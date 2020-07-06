@@ -3,6 +3,7 @@ import 'package:flame_action/engine/image/sprite_string/sprite_letter.dart';
 import 'package:flame_action/presentation/image/action_button_sprite_resolver.dart';
 import 'package:flame_action/presentation/image/enemy_sprite_resolver.dart';
 import 'package:flame_action/presentation/image/joystick_sprite_resolver.dart';
+import 'package:flame_action/presentation/renderer/status_card_renderer.dart';
 
 import '../../domain/entity/basic_obstacle.dart';
 import '../../engine/entity/entity.dart';
@@ -27,7 +28,8 @@ class EntityFactory extends BaseEntityFactory {
       case 'enemy01':
         return Enemy(newId, EnemySpriteResolver(), 4000, x: x, y: y, z: z);
       case 'status_card':
-        return StatusCard(newId, options['target'], x: x, y: y);
+        return StatusCard(newId, options['target'], StatusCardRenderer(),
+            x: x, y: y);
       case 'ash_tray':
         return BasicObstacle(
             newId, 'ash_tray', BasicObstacleSpriteResolver('ash_tray'),
