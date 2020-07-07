@@ -9,6 +9,9 @@ class StatusCard extends Entity with DirectRendering {
   Entity _target;
   double _opacity;
 
+  double _targetX;
+  double _targetY;
+
   Renderer _renderer;
 
   StatusCard(int id, Entity target, Renderer renderer, {double x, double y}) {
@@ -18,14 +21,19 @@ class StatusCard extends Entity with DirectRendering {
     this.spriteResolver = spriteResolver;
     this.x = x;
     this.y = y;
+    this._targetX = x;
+    this._targetY = y;
     this._target = target;
     this._opacity = 0;
     this.state = 'fade-in';
     this._renderer = renderer;
+    this.tags = ['status-card'];
   }
 
   @override
   void update(double dt, WorldContext context) {
+    x = _targetX;
+    y = _targetY;
     if (state == 'fade-in' && _opacity < 100) {
       _opacity += 1;
       if (_opacity >= 100) {
@@ -51,6 +59,11 @@ class StatusCard extends Entity with DirectRendering {
 
   Entity getTarget() => _target;
   double getOpacity() => _opacity;
+
+  void setTargetPosition(double x, double y) {
+    _targetX = x;
+    _targetY = y;
+  }
 
   @override
   Renderer getRenderer() => _renderer;

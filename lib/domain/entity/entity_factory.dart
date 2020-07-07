@@ -16,6 +16,7 @@ import 'action_button.dart';
 import 'enemy.dart';
 import 'ground.dart';
 import 'ui/status_card.dart';
+import 'ui/status_card_organizer.dart';
 
 class EntityFactory extends BaseEntityFactory {
   @override
@@ -30,6 +31,8 @@ class EntityFactory extends BaseEntityFactory {
       case 'status_card':
         return StatusCard(newId, options['target'], StatusCardRenderer(),
             x: x, y: y);
+      case 'status_card_organizer':
+        return StatusCardOrganizer(newId);
       case 'ash_tray':
         return BasicObstacle(newId, key, BasicObstacleSpriteResolver(key),
             x: x, y: y, z: z);

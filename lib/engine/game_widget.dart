@@ -49,6 +49,10 @@ class GameWidget extends Game {
     _world.addHud(entity);
   }
 
+  void addUnit(Entity entity) {
+    _world.addUnit(entity);
+  }
+
   void setCameraFocus(Entity entity) {
     _world.camera.followEntity(entity);
   }
