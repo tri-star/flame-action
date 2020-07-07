@@ -9,10 +9,14 @@ class WorldContextUtil {
   static WorldContext create(
       {CollisionDetectService collisionDetectService,
       ZOrderedCollection entities,
+      ZOrderedCollection huds,
       BaseEntityFactory entityFactory,
       InputEventService inputEventService}) {
     if (entities == null) {
       entities = ZOrderedCollection();
+    }
+    if (huds == null) {
+      huds = ZOrderedCollection();
     }
     if (collisionDetectService == null) {
       collisionDetectService = new CollisionDetectService(entities);
@@ -23,7 +27,7 @@ class WorldContextUtil {
     if (entityFactory == null) {
       entityFactory = EntityFactory();
     }
-    return WorldContext(
-        collisionDetectService, entities, entityFactory, inputEventService);
+    return WorldContext(collisionDetectService, entities, huds, entityFactory,
+        inputEventService);
   }
 }
