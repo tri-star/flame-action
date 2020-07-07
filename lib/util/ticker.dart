@@ -4,13 +4,15 @@ import 'package:flutter/cupertino.dart';
 class Ticker {
   double _delta;
 
+  static final double TICK_INTERVAL = 0.016;
+
   Ticker() : _delta = 0;
 
   void tick(double dt, VoidCallback callback) {
     _delta += dt;
-    while (_delta >= 0.016) {
+    while (_delta >= TICK_INTERVAL) {
       callback();
-      _delta -= 0.016;
+      _delta -= TICK_INTERVAL;
     }
   }
 }

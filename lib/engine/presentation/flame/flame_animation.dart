@@ -1,6 +1,7 @@
 import 'package:flame/animation.dart' as Flame;
 import 'package:flame/spritesheet.dart';
 import 'package:flame_action/engine/image/sprite.dart';
+import 'package:flame_action/util/ticker.dart';
 import 'package:flame_action/util/timer.dart';
 
 import '../../image/animation.dart';
@@ -48,8 +49,7 @@ class FlameAnimation extends Animation {
 
   @override
   void update({AnimationEventCallback animationEventCallback}) {
-    //TODO: 1tick分として正確な値を渡すようにする
-    _animation.update(0.016);
+    _animation.update(Ticker.TICK_INTERVAL);
 
     if (currentIndex != _animation.currentIndex || currentSprite == null) {
       currentSprite = FlameSprite(_animation.getSprite(),

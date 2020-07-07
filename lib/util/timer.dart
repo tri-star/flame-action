@@ -1,3 +1,4 @@
+import 'package:flame_action/util/ticker.dart';
 import 'package:flutter/cupertino.dart';
 
 class TimeoutTimer {
@@ -22,8 +23,7 @@ class TimeoutTimer {
       return;
     }
 
-    //TODO: 1フレームの正式な値で更新する(定数など)
-    _current += 0.016;
+    _current += Ticker.TICK_INTERVAL;
 
     if (isDone() && !_finished) {
       _finished = true;
