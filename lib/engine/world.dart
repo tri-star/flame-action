@@ -14,25 +14,42 @@ import 'services/input_event_service.dart';
 
 class WorldContext {
   ZOrderedCollection entities;
+  ZOrderedCollection huds;
   CollisionDetectService collisionDetectService;
   InputEventService inputEventService;
   List<Entity> _pendingEntities;
+  List<Entity> _pendingHuds;
   BaseEntityFactory entityFactory;
 
-  WorldContext(this.collisionDetectService, this.entities, this.entityFactory,
-      this.inputEventService)
-      : _pendingEntities = List<Entity>();
+  WorldContext(this.collisionDetectService, this.entities, this.huds,
+      this.entityFactory, this.inputEventService)
+      : _pendingEntities = List<Entity>(),
+        _pendingHuds = List<Entity>();
 
   void addEntity(Entity entity) {
     _pendingEntities.add(entity);
+  }
+
+  void addUnit(Entity entity) {
+    _pendingEntities.add(entity);
+    _pendingHuds.add(entityFactory
+        .create('status_card', 0, 0, 0, options: {'target': entity}));
   }
 
   List<Entity> getPendingEntities() {
     return _pendingEntities;
   }
 
+  List<Entity> getPendingHuds() {
+    return _pendingHuds;
+  }
+
   void clearPendingEntities() {
     _pendingEntities.clear();
+  }
+
+  void clearPendingHuds() {
+    _pendingHuds.clear();
   }
 }
 
@@ -65,8 +82,8 @@ class World {
         _boundaryAdjustmentService = BoundaryAdjustmentService() {
     _collisionDetectService = CollisionDetectService(_entities);
     _inputEventService = InputEventService(_entities, _huds);
-    _context = WorldContext(
-        _collisionDetectService, _entities, entityFactory, _inputEventService);
+    _context = WorldContext(_collisionDetectService, _entities, _huds,
+        entityFactory, _inputEventService);
   }
 
   void update(double dt) {
@@ -89,7 +106,11 @@ class World {
     _context.getPendingEntities().forEach((entity) {
       _entities.add(entity);
     });
+    _context.getPendingHuds().forEach((entity) {
+      _huds.add(entity);
+    });
     _context.clearPendingEntities();
+    _context.clearPendingHuds();
     _entities.sync();
     _huds.sync();
   }
@@ -100,6 +121,10 @@ class World {
 
   void addHud(Entity entity) {
     _huds.add(entity);
+  }
+
+  void addUnit(Entity entity) {
+    _context.addUnit(entity);
   }
 
   void setBackground(Sprite _sprite) {

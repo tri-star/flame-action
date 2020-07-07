@@ -49,6 +49,10 @@ class GameWidget extends Game {
     _world.addHud(entity);
   }
 
+  void addUnit(Entity entity) {
+    _world.addUnit(entity);
+  }
+
   void setCameraFocus(Entity entity) {
     _world.camera.followEntity(entity);
   }
@@ -89,7 +93,9 @@ class GameWidget extends Game {
     });
     _world.huds.forEach((entity) {
       if (entity is DirectRendering) {
-        (entity as DirectRendering).renderDirect(canvas, _world.camera);
+        (entity as DirectRendering)
+            .getRenderer()
+            .render(canvas, _world.camera, entity);
         return;
       }
 

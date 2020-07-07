@@ -7,8 +7,16 @@ class Ground extends Entity {
   double _h;
   double _d;
 
-  Ground(int id, {double x, double y, double z, double w, double h, double d}) {
+  Ground(int id,
+      {String entityName,
+      double x,
+      double y,
+      double z,
+      double w,
+      double h,
+      double d}) {
     this.id = id;
+    this.entityName = entityName ?? 'ground';
     this.x = x;
     this.y = y;
     this.z = z;

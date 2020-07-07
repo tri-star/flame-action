@@ -5,14 +5,13 @@ import '../../engine/services/collision_detect_service.dart';
 import '../../engine/entity/entity.dart';
 
 class BasicObstacle extends Entity {
-  String _type;
   Sprite _sprite;
 
-  BasicObstacle(int id, String type, SpriteResolver spriteResolver,
+  BasicObstacle(int id, String entityName, SpriteResolver spriteResolver,
       {double x, double y, double z}) {
-    assert(type != null && type != '');
+    assert(entityName != null && entityName != '');
     this.id = id;
-    this._type = type;
+    this.entityName = entityName;
     this.x = x;
     this.y = y;
     this.z = z;

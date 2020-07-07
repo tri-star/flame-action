@@ -1,8 +1,6 @@
-import 'dart:ui';
-
-import '../camera.dart';
+import '../presentation/renderer.dart';
 
 /// Canvasに直接レンダリングするEntityが実装する
 mixin DirectRendering {
-  void renderDirect(Canvas canvas, Camera camera);
+  Renderer getRenderer();
 }

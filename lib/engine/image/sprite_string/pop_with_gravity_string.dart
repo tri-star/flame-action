@@ -22,9 +22,10 @@ class PopWithGravityString extends SpriteString {
   static const double FORCE_Z = 0;
   static const double BOUNCE_FACTOR = 0.5;
 
-  PopWithGravityString(int id, String message, double x, double y, double z,
+  PopWithGravityString(
+      int id, String entityName, String message, double x, double y, double z,
       {String fontName})
-      : super(id, message, x, y, z, fontName: fontName) {
+      : super(id, entityName, message, x, y, z, fontName: fontName) {
     assert(message != null && message != '');
 
     _letters = message.split('');

@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flame/position.dart';
 import 'package:flame/sprite.dart' as Flame;
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import '../../entity/entity.dart';
@@ -32,7 +31,7 @@ class FlameSprite extends Sprite {
   }
 
   void render(Canvas canvas, Camera camera) {
-    Paint paint = Paint();
+    Paint paint = this.paint ?? Paint();
     Vector3d anchorOffset = getOffsets();
     double localX = x + anchorOffset.x;
     double localY = y + anchorOffset.y + z;
