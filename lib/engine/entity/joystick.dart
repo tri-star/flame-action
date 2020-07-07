@@ -46,7 +46,7 @@ class JoyStick extends Entity
   }
 
   @override
-  void update(double dt, WorldContext context) {}
+  void update(WorldContext context) {}
 
   @override
   List<Sprite> getSprites() {

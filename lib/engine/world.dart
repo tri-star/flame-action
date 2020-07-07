@@ -10,6 +10,7 @@ import 'image/sprite.dart';
 import 'input_event.dart';
 import 'services/boundary_adjustment_service.dart';
 import '../util/list.dart';
+import '../util/ticker.dart';
 import 'services/input_event_service.dart';
 
 class WorldContext {
@@ -67,6 +68,7 @@ class World {
   WorldContext _context;
   Rect3d _worldRect;
   Camera _camera;
+  Ticker _ticker;
 
   int _randomSeed;
 
@@ -77,6 +79,7 @@ class World {
         _entities = ZOrderedCollection(),
         _huds = ZOrderedCollection(),
         _camera = Camera(cameraW, cameraH, worldW, worldH + worldD),
+        _ticker = Ticker(),
         _worldRect = Rect3d.fromSizeAndPosition(
             Size3d(worldW, worldH, worldD), Position3d(0, 0, 0)),
         _boundaryAdjustmentService = BoundaryAdjustmentService() {
@@ -95,24 +98,27 @@ class World {
       _context.clearPendingEntities();
       return;
     }
-    _entities.forEach((entity) {
-      entity.update(dt, _context);
-      _boundaryAdjustmentService.adjust(_worldRect, entity);
+
+    _ticker.tick(dt, () {
+      _entities.forEach((entity) {
+        entity.update(_context);
+        _boundaryAdjustmentService.adjust(_worldRect, entity);
+      });
+      _huds.forEach((entity) {
+        entity.update(_context);
+      });
+      _camera.update();
+      _context.getPendingEntities().forEach((entity) {
+        _entities.add(entity);
+      });
+      _context.getPendingHuds().forEach((entity) {
+        _huds.add(entity);
+      });
+      _context.clearPendingEntities();
+      _context.clearPendingHuds();
+      _entities.sync();
+      _huds.sync();
     });
-    _huds.forEach((entity) {
-      entity.update(dt, _context);
-    });
-    _camera.update();
-    _context.getPendingEntities().forEach((entity) {
-      _entities.add(entity);
-    });
-    _context.getPendingHuds().forEach((entity) {
-      _huds.add(entity);
-    });
-    _context.clearPendingEntities();
-    _context.clearPendingHuds();
-    _entities.sync();
-    _huds.sync();
   }
 
   void addEntity(Entity entity) {

@@ -21,8 +21,8 @@ class Enemy extends Entity with FightingUnit {
     this.hp = maxHp;
   }
 
-  void update(double dt, WorldContext context) {
-    super.update(dt, context);
+  void update(WorldContext context) {
+    super.update(context);
 
     if (state != 'dead' && isDead()) {
       disableGravity();

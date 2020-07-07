@@ -35,7 +35,7 @@ class SpriteLetter extends Entity {
   }
 
   @override
-  void update(double dt, WorldContext context) {
+  void update(WorldContext context) {
     if (gravityFlag) {
       vy += 0.98;
     }

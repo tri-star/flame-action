@@ -30,7 +30,7 @@ void main() {
 
         InputMoveEvent event = InputMoveEvent(distanceX: 10, distanceY: -10);
         service.notifyMoveEvent(event);
-        entity.update(0.016, context);
+        entity.update(context);
 
         expect(entity.getX(), 2, reason: 'PlayerのX軸方向の移動量(=2)に応じた距離を移動していません');
         expect(entity.getZ(), -1, reason: 'PlayerのZ軸方向の移動量(=1)に応じた距離を移動していません');

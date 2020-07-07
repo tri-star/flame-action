@@ -31,7 +31,7 @@ class StatusCard extends Entity with DirectRendering {
   }
 
   @override
-  void update(double dt, WorldContext context) {
+  void update(WorldContext context) {
     x = _targetX;
     y = _targetY;
     if (state == 'fade-in' && _opacity < 100) {
