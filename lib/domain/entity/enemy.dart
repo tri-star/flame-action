@@ -6,12 +6,13 @@ import 'package:flame_action/engine/world.dart';
 import '../../engine/entity/entity.dart';
 
 class Enemy extends Entity with FightingUnit {
-  Enemy(int id, SpriteResolver spriteResolver, double maxHp,
+  Enemy(int id, String entityName, SpriteResolver spriteResolver, double maxHp,
       {double x, double y, double z}) {
     this.id = id;
     this.x = x;
     this.y = y;
     this.z = z;
+    this.entityName = entityName;
     this.spriteResolver = spriteResolver;
     this.dimension = Dimension.LEFT;
     this.gravityFlag = true;

@@ -14,7 +14,8 @@ class SpriteLetter extends Entity {
 
   SpriteFont _font;
 
-  SpriteLetter(int id, String char, double x, double y, double z,
+  SpriteLetter(
+      int id, String entityName, String char, double x, double y, double z,
       {String fontName,
       bool gravityFlag = false,
       bool collidableFlag = false,
@@ -23,6 +24,7 @@ class SpriteLetter extends Entity {
         _fontName = fontName ?? 'default' {
     assert(char != null && char != '');
     this.id = id;
+    this.entityName;
     this.x = x;
     this.y = y;
     this.z = z;

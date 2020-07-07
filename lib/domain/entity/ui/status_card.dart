@@ -14,6 +14,7 @@ class StatusCard extends Entity with DirectRendering {
   StatusCard(int id, Entity target, Renderer renderer, {double x, double y}) {
     assert(target != null);
     this.id = id;
+    this.entityName = 'status_card';
     this.spriteResolver = spriteResolver;
     this.x = x;
     this.y = y;

@@ -18,6 +18,11 @@ class Entity {
   @protected
   int id = 0;
 
+  /// エンティティの種類を特定する名前。
+  /// (EntityFactoryで生成時に指定するキー名)
+  @protected
+  String entityName = '';
+
   @protected
   double x = 0;
   @protected
@@ -102,6 +107,7 @@ class Entity {
   }
 
   int getId() => id;
+  String getEntityName() => entityName;
   double getX() => x;
   double getY() => y;
   double getZ() => z;

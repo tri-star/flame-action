@@ -15,8 +15,10 @@ class JoyStick extends Entity
   Sprite _baseSprite;
   Sprite _knobSprite;
 
-  JoyStick(int id, SpriteResolver spriteResolver, {double x, double y}) {
+  JoyStick(int id, SpriteResolver spriteResolver,
+      {String entityName, double x, double y}) {
     this.id = id;
+    this.entityName = entityName ?? 'joystick';
     this.x = x;
     this.y = y;
     this.z = 0;

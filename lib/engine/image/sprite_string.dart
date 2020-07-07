@@ -15,9 +15,11 @@ abstract class SpriteString extends Entity {
 
   int _length;
 
-  SpriteString(int id, this.message, double x, double y, double z,
+  SpriteString(
+      int id, String entityName, this.message, double x, double y, double z,
       {this.fontName}) {
     this.id = id;
+    this.entityName = entityName;
     this.x = x;
     this.y = y;
     this.z = z;

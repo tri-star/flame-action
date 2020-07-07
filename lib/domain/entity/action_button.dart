@@ -8,8 +8,10 @@ import '../../engine/entity/entity.dart';
 class ActionButton extends Entity
     with CapturePointerEvent
     implements GameInputListener, PointerEventListener {
-  ActionButton(int id, SpriteResolver spriteResolver, {double x, double y}) {
+  ActionButton(int id, String entityName, SpriteResolver spriteResolver,
+      {double x, double y}) {
     this.id = id;
+    this.entityName = entityName;
     this.x = x;
     this.y = y;
     this.z = 0;

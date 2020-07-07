@@ -10,8 +10,9 @@ import '../../engine/entity/figting_unit.dart';
 
 class Player extends Entity with FightingUnit implements GameInputListener {
   Player(int id, SpriteResolver spriteResolver,
-      {double x, double y, double z}) {
+      {String entityName, double x, double y, double z}) {
     this.id = id;
+    this.entityName = entityName ?? 'player';
     this.x = x;
     this.y = y;
     this.z = z;

@@ -26,21 +26,18 @@ class EntityFactory extends BaseEntityFactory {
       case 'player':
         return Player(newId, PlayerSpriteResolver(), x: x, y: y, z: z);
       case 'enemy01':
-        return Enemy(newId, EnemySpriteResolver(), 4000, x: x, y: y, z: z);
+        return Enemy(newId, key, EnemySpriteResolver(), 4000, x: x, y: y, z: z);
       case 'status_card':
         return StatusCard(newId, options['target'], StatusCardRenderer(),
             x: x, y: y);
       case 'ash_tray':
-        return BasicObstacle(
-            newId, 'ash_tray', BasicObstacleSpriteResolver('ash_tray'),
+        return BasicObstacle(newId, key, BasicObstacleSpriteResolver(key),
             x: x, y: y, z: z);
       case 'dust_box01':
-        return BasicObstacle(
-            newId, 'dust_box01', BasicObstacleSpriteResolver('dust_box01'),
+        return BasicObstacle(newId, key, BasicObstacleSpriteResolver(key),
             x: x, y: y, z: z);
       case 'fire_distinguisher_01':
-        return BasicObstacle(newId, 'fire_distinguisher_01',
-            BasicObstacleSpriteResolver('fire_distinguisher_01'),
+        return BasicObstacle(newId, key, BasicObstacleSpriteResolver(key),
             x: x, y: y, z: z);
       case 'ground':
         return Ground(newId,
@@ -54,11 +51,12 @@ class EntityFactory extends BaseEntityFactory {
       case 'joystick':
         return JoyStick(newId, JoyStickSpriteResolver(), x: x, y: y);
       case 'action_button':
-        return ActionButton(newId, ActionButtonSpriteResolver(), x: x, y: y);
+        return ActionButton(newId, key, ActionButtonSpriteResolver(),
+            x: x, y: y);
       case 'pop_with_gravity_string':
-        return PopWithGravityString(newId, options['message'], x, y, z);
+        return PopWithGravityString(newId, key, options['message'], x, y, z);
       case 'sprite_letter':
-        return SpriteLetter(newId, options['letter'], x, y, z,
+        return SpriteLetter(newId, key, options['letter'], x, y, z,
             fontName: options['font_name'],
             gravityFlag: options['gravity_flag'],
             collidableFlag: options['collidable_flag'],
