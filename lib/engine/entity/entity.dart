@@ -79,6 +79,9 @@ class Entity {
 
   void setState(String newState) {
     state = newState;
+    if (state == 'disposed') {
+      return;
+    }
     animation = spriteResolver
         .resolveAnimation(SpriteContext(state: state, dimension: dimension));
   }
