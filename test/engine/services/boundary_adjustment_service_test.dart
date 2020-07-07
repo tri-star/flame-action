@@ -54,7 +54,7 @@ void main() {
         Rect3d worldRect =
             Rect3d.fromSizeAndPosition(worldSize, Position3d(0, 0, 0));
 
-        player.update(0.16, null);
+        player.update(null);
         service.adjust(worldRect, player);
         expect(player.getPosition(), expectedPosition);
       });

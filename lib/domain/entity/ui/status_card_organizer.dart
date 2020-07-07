@@ -20,7 +20,7 @@ class StatusCardOrganizer extends Entity {
   }
 
   @override
-  void update(double dt, WorldContext context) {
+  void update(WorldContext context) {
     context.huds.forEach((entity) {
       if ((entity is StatusCard) && !_cards.containsKey(entity.getId())) {
         _cards[entity.getId()] = CardPosition(entity, 0);

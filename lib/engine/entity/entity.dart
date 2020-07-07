@@ -64,7 +64,7 @@ class Entity {
   @protected
   double bounceFactor = 0;
 
-  void update(double dt, WorldContext context) {
+  void update(WorldContext context) {
     if (gravityFlag) {
       vy += 0.98;
     }

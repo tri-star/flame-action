@@ -34,7 +34,7 @@ class PopWithGravityString extends SpriteString {
   }
 
   @override
-  void update(double dt, WorldContext context) {
+  void update(WorldContext context) {
     _timer.update();
     if (_timer.isDone() && current < _letters.length) {
       Entity entity = context.entityFactory.create('sprite_letter',
