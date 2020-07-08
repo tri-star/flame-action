@@ -3,7 +3,7 @@ import 'package:flame_action/engine/image/sprite_resolver.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
 import 'package:flame_action/engine/world.dart';
 
-import '../../engine/entity/entity.dart';
+import '../engine/entity/entity.dart';
 
 class Enemy extends Entity with FightingUnit {
   Enemy(int id, String entityName, SpriteResolver spriteResolver, double maxHp,

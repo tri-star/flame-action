@@ -5,16 +5,16 @@ import 'package:flame_action/presentation/image/enemy_sprite_resolver.dart';
 import 'package:flame_action/presentation/image/joystick_sprite_resolver.dart';
 import 'package:flame_action/presentation/renderer/status_card_renderer.dart';
 
-import '../../domain/entity/basic_obstacle.dart';
-import '../../engine/entity/entity.dart';
-import '../../domain/entity/player.dart';
-import '../../engine/entity/base_entity_factory.dart';
-import '../../engine/entity/joystick.dart';
-import '../../presentation/image/basic_obstacle_sprite_resolver.dart';
-import '../../presentation/image/player_sprite_resolver.dart';
+import '../engine/entity/entity.dart';
+import '../engine/entity/base_entity_factory.dart';
+import '../engine/entity/joystick.dart';
+import '../presentation/image/basic_obstacle_sprite_resolver.dart';
+import '../presentation/image/player_sprite_resolver.dart';
+import 'basic_obstacle.dart';
 import 'action_button.dart';
 import 'enemy.dart';
 import 'ground.dart';
+import 'player.dart';
 import 'ui/status_card.dart';
 import 'ui/status_card_organizer.dart';
 

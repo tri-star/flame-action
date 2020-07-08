@@ -1,8 +1,8 @@
-import '../../engine/image/sprite.dart';
-import '../../engine/image/sprite_resolver.dart';
-import '../../engine/world.dart';
-import '../../engine/services/collision_detect_service.dart';
-import '../../engine/entity/entity.dart';
+import '../engine/image/sprite.dart';
+import '../engine/image/sprite_resolver.dart';
+import '../engine/world.dart';
+import '../engine/services/collision_detect_service.dart';
+import '../engine/entity/entity.dart';
 
 class BasicObstacle extends Entity {
   Sprite _sprite;

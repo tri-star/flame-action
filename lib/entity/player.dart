@@ -4,9 +4,9 @@ import 'package:flame_action/engine/image/sprite_resolver.dart';
 import 'package:flame_action/engine/input_event.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
 
-import '../../engine/world.dart';
-import '../../engine/entity/entity.dart';
-import '../../engine/entity/figting_unit.dart';
+import '../engine/world.dart';
+import '../engine/entity/entity.dart';
+import '../engine/entity/figting_unit.dart';
 
 class Player extends Entity with FightingUnit implements GameInputListener {
   Player(int id, SpriteResolver spriteResolver,

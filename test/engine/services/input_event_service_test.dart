@@ -1,5 +1,5 @@
 import 'package:flame_action/engine/entity/entity.dart';
-import 'package:flame_action/domain/entity/player.dart';
+import 'package:flame_action/entity/player.dart';
 import 'package:flame_action/engine/input_event.dart';
 import 'package:flame_action/engine/services/input_event_service.dart';
 import 'package:flame_action/engine/world.dart';

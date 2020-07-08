@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 import 'engine/entity/entity.dart';
 import 'engine/presentation/flame/flame_sprite_font.dart';
-import 'domain/entity/entity_factory.dart';
+import 'entity/entity_factory.dart';
 import 'engine/game_widget.dart';
 
 void main() async {
