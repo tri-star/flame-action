@@ -21,6 +21,7 @@ class Player extends Entity with FightingUnit implements GameInputListener {
     this.collidableFlag = true;
     this.hp = 100000;
     this.maxHp = 100000;
+    this.tags = ['player'];
   }
 
   @override

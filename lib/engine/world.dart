@@ -8,6 +8,8 @@ import 'camera.dart';
 import 'coordinates.dart';
 import 'image/sprite.dart';
 import 'input_event.dart';
+import 'random/native_random_generator.dart';
+import 'random/random_generator.dart';
 import 'services/boundary_adjustment_service.dart';
 import '../util/list.dart';
 import '../util/ticker.dart';
@@ -20,12 +22,15 @@ class WorldContext {
   InputEventService inputEventService;
   List<Entity> _pendingEntities;
   List<Entity> _pendingHuds;
+  Map<String, Entity> _taggedEntities;
   BaseEntityFactory entityFactory;
+  RandomGenerator randomGenerator;
 
   WorldContext(this.collisionDetectService, this.entities, this.huds,
-      this.entityFactory, this.inputEventService)
+      this.entityFactory, this.inputEventService, this.randomGenerator)
       : _pendingEntities = List<Entity>(),
-        _pendingHuds = List<Entity>();
+        _pendingHuds = List<Entity>(),
+        _taggedEntities = Map<String, Entity>();
 
   void addEntity(Entity entity) {
     _pendingEntities.add(entity);
@@ -35,6 +40,24 @@ class WorldContext {
     _pendingEntities.add(entity);
     _pendingHuds.add(entityFactory
         .create('status_card', 0, 0, 0, options: {'target': entity}));
+  }
+
+  Entity findTaggedFirst(String tag, {bool useCache = false}) {
+    if (useCache && _taggedEntities.containsKey(tag)) {
+      return _taggedEntities[tag];
+    }
+    _taggedEntities[tag] = null;
+    entities.forEach((entity) {
+      if (entity.getTags().contains(tag)) {
+        _taggedEntities[tag] = entity;
+        return;
+      }
+    });
+    if (_taggedEntities[tag] == null) {
+      _taggedEntities.remove(tag);
+      return null;
+    }
+    return _taggedEntities[tag];
   }
 
   List<Entity> getPendingEntities() {
@@ -69,24 +92,26 @@ class World {
   Rect3d _worldRect;
   Camera _camera;
   Ticker _ticker;
+  RandomGenerator _randomGenerator;
 
   int _randomSeed;
 
   World(double worldW, double worldH, double worldD, double cameraW,
       double cameraH, BaseEntityFactory entityFactory,
-      {randomSeed: 0})
-      : _randomSeed = randomSeed,
-        _entities = ZOrderedCollection(),
+      {randomSeed})
+      : _entities = ZOrderedCollection(),
         _huds = ZOrderedCollection(),
         _camera = Camera(cameraW, cameraH, worldW, worldH + worldD),
         _ticker = Ticker(),
         _worldRect = Rect3d.fromSizeAndPosition(
             Size3d(worldW, worldH, worldD), Position3d(0, 0, 0)),
         _boundaryAdjustmentService = BoundaryAdjustmentService() {
+    _randomSeed = randomSeed ?? DateTime.now().microsecondsSinceEpoch;
+    _randomGenerator = NativeRandomGenerator(_randomSeed);
     _collisionDetectService = CollisionDetectService(_entities);
     _inputEventService = InputEventService(_entities, _huds);
     _context = WorldContext(_collisionDetectService, _entities, _huds,
-        entityFactory, _inputEventService);
+        entityFactory, _inputEventService, _randomGenerator);
   }
 
   void update(double dt) {

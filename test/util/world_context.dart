@@ -1,3 +1,5 @@
+import 'package:flame_action/engine/random/native_random_generator.dart';
+import 'package:flame_action/engine/random/random_generator.dart';
 import 'package:flame_action/entity/entity_factory.dart';
 import 'package:flame_action/engine/entity/base_entity_factory.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
@@ -11,7 +13,8 @@ class WorldContextUtil {
       ZOrderedCollection entities,
       ZOrderedCollection huds,
       BaseEntityFactory entityFactory,
-      InputEventService inputEventService}) {
+      InputEventService inputEventService,
+      RandomGenerator randomGenerator}) {
     if (entities == null) {
       entities = ZOrderedCollection();
     }
@@ -27,7 +30,10 @@ class WorldContextUtil {
     if (entityFactory == null) {
       entityFactory = EntityFactory();
     }
+    if (randomGenerator == null) {
+      randomGenerator = NativeRandomGenerator(null);
+    }
     return WorldContext(collisionDetectService, entities, huds, entityFactory,
-        inputEventService);
+        inputEventService, randomGenerator);
   }
 }
