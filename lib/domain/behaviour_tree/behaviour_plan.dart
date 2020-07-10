@@ -10,4 +10,6 @@ abstract class BehaviourPlan {
 
   /// プランを実行する
   void execute(WorldContext context, Entity entity);
+
+  bool isDone();
 }
