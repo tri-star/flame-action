@@ -42,7 +42,7 @@ class BehaviourNode {
   BehaviourNode(
       {this.name = '',
       this.condition,
-      this.weight = 10,
+      this.weight = 1,
       List<BehaviourNode> nodes,
       this.plan})
       : children = nodes ?? List<BehaviourNode>();
