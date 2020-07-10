@@ -70,6 +70,7 @@ class Player extends Entity with FightingUnit implements GameInputListener {
 
   /// 状態を変更出来るか確認したうえで状態の変更を行う。
   /// 変更できたかどうかを戻り値で返す。
+  @override
   bool changeState(String newState) {
     switch (newState) {
       case 'walk':

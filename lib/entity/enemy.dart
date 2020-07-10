@@ -31,6 +31,28 @@ class Enemy extends Entity with FightingUnit {
     }
   }
 
+  /// 状態を変更出来るか確認したうえで状態の変更を行う。
+  /// 変更できたかどうかを戻り値で返す。
+  @override
+  bool changeState(String newState) {
+    switch (newState) {
+      case 'walk':
+        if (state == 'attack') {
+          return false;
+        }
+        break;
+      case 'attack':
+        break;
+      case 'neutral':
+        if (state == 'attack') {
+          return false;
+        }
+        break;
+    }
+    setState(newState);
+    return true;
+  }
+
   @override
   String getNextState(String currentState) {
     switch (currentState) {

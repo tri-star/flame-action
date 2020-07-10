@@ -82,6 +82,13 @@ class Entity {
     context?.collisionDetectService?.detect(context, this, collisionEvent);
   }
 
+  /// 状態が変更可能か確認してから変更を行う。
+  /// 変更できなかった場合はfalseを返す。
+  bool changeState(String newState) {
+    setState(newState);
+    return true;
+  }
+
   void setState(String newState) {
     state = newState;
     if (state == 'disposed') {
@@ -183,6 +190,20 @@ class Entity {
     vy += y;
     vz += z;
   }
+
+  void setForce({double x, double y, double z}) {
+    if (x != null) {
+      vx = x;
+    }
+    if (y != null) {
+      vy = y;
+    }
+    if (z != null) {
+      vz = z;
+    }
+  }
+
+  void setDimension(Dimension newDimension) => dimension = newDimension;
 
   /// Entityを削除可能な状態にする
   void dispose() {
