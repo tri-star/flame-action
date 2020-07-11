@@ -50,6 +50,7 @@ flutter:
     - assets/images/enemy01_state_normal.png
     - assets/images/enemy01_state_damage.png
     - assets/images/enemy01_state_walk.png
+    - assets/images/enemy01_state_attack.png
     - assets/images/joystick_base.png
     - assets/images/joystick_knob.png
     - assets/images/action-button.png
@@ -58,6 +59,7 @@ flutter:
     - assets/images/object_01.png
     - assets/images/object_02.png
     - assets/images/object_03.png
+    - assets/images/sling_ball.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
