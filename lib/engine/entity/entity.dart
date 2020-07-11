@@ -5,6 +5,7 @@ import 'package:flame_action/engine/image/animation.dart';
 import 'package:flame_action/engine/image/sprite.dart';
 import 'package:flame_action/engine/image/sprite_resolver.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
+import 'package:flame_action/util/coordinates.dart';
 import 'package:flutter/foundation.dart';
 
 import '../world.dart';
@@ -125,6 +126,11 @@ class Entity {
   Dimension getDimension() => dimension;
   bool haveGravity() => gravityFlag;
   bool isCollidable() => collidableFlag;
+  bool isOverwrappedZ(Rect3d targetRect) {
+    Rect3d rect = getRect();
+    return CoordinateUtil.isLineOverwrapped(
+        rect.z, rect.d, targetRect.z, targetRect.d);
+  }
 
   List<Sprite> getSprites() {
     Animation currentAnimation = getAnimation();
@@ -200,6 +206,18 @@ class Entity {
     }
     if (z != null) {
       vz = z;
+    }
+  }
+
+  void setLocation({double x, double y, double z}) {
+    if(x != null) {
+      this.x = x;
+    }
+    if(y != null) {
+      this.y = y;
+    }
+    if(z != null) {
+      this.z = z;
     }
   }
 

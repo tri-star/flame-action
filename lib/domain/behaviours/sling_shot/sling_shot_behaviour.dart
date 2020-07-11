@@ -1,49 +1,31 @@
-import 'package:flame_action/engine/world.dart';
-
-import 'package:flame_action/engine/entity/entity.dart';
-
+import '../../behaviours/conditions/player_conditions.dart';
 import '../../behaviour_tree/behaviour_node.dart';
 import '../../behaviour_tree/behaviour_tree_builder.dart';
+import 'sling_shot_plan.dart';
 
 /// パチンコ小僧の思考ルーチン
 class SlingShotBehaviourBuilder extends BehaviourTreeBuilder {
   @override
   BehaviourNode build() {
-    return RootBehaviourNode(
-        [SlingShotBehaviourGlimming(), SlingShotBehaviourAttack()]);
+    return RootBehaviourNode([
+      BehaviourNode(
+          name: 'ニタニタ笑う', weight: 1, plan: SlingShotBehaviourPlanGlimming()),
+      BehaviourNode(
+          name: 'プレイヤーが接近',
+          condition: BehaviourConditionPlayerXIsLessThan(distance: 200),
+          weight: 3,
+          nodes: [
+            BehaviourNode(
+              name: '距離を取る',
+              weight: 1,
+              plan: SlingShotBehaviourPlanKeepDistance(300),
+            ),
+            BehaviourNode(
+              name: 'プレイヤーを狙う',
+              weight: 3,
+              plan: SlingShotBehaviourPlanTargetting(),
+            ),
+          ])
+    ]);
   }
-}
-
-class SlingShotBehaviourGlimming extends BehaviourNode {
-  @override
-  String get name => 'ニタニタ笑う';
-
-  @override
-  String get description => '一定距離以内にプレイヤーがいない場合';
-
-  @override
-  bool isSatisfied(WorldContext context, Entity entity) {
-    Entity player = context.findTaggedFirst('player', useCache: true);
-    return (player.getX() - entity.getX()).abs() > 200;
-  }
-
-  @override
-  int get weight => 40;
-}
-
-class SlingShotBehaviourAttack extends BehaviourNode {
-  @override
-  String get name => '攻撃モード';
-
-  @override
-  String get description => '一定距離以内にプレイヤーがいる場合';
-
-  @override
-  bool isSatisfied(WorldContext context, Entity entity) {
-    Entity player = context.findTaggedFirst('player', useCache: true);
-    return (player.getX() - entity.getX()).abs() <= 200;
-  }
-
-  @override
-  int get weight => 60;
 }

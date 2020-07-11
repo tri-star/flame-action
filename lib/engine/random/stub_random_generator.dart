@@ -10,7 +10,7 @@ class StubRandomGenerator extends RandomGenerator {
   @override
   int getIntBetween(int min, int max) {
     int value = _nextNumbers.removeAt(0);
-    assert(value != null);
+    assert(value != null, '');
     return value;
   }
 }

@@ -11,9 +11,9 @@ class BehaviourExecutor {
   BehaviourExecutor(BehaviourNode tree) : _tree = tree;
 
   BehaviourPlan decidePlan(WorldContext context, Entity entity) {
-    BehaviourNode cursor;
+    BehaviourNode cursor = _tree;
     int limitter = 100;
-    while (limitter-- < 0) {
+    while (limitter-- > 0) {
       if (cursor.havePlan()) {
         return cursor.getPlan();
       }
