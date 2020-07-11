@@ -22,6 +22,12 @@ class SlingShotBehaviourPlanGlimming extends BehaviourPlan {
   String get name => 'ニタニタ笑う';
 
   @override
+  void init() {
+    _state = STATE_INITIAL;
+    _timer = null;
+  }
+
+  @override
   void execute(WorldContext context, Entity entity) {
     switch (_state) {
       case STATE_INITIAL:
@@ -64,6 +70,12 @@ class SlingShotBehaviourPlanKeepDistance extends BehaviourPlan {
   String get name => '距離を取る';
 
   @override
+  void init() {
+    _state = STATE_INITIAL;
+    _timer = null;
+  }
+
+  @override
   void execute(WorldContext context, Entity entity) {
     switch (_state) {
       case STATE_INITIAL:
@@ -79,6 +91,12 @@ class SlingShotBehaviourPlanKeepDistance extends BehaviourPlan {
         bool isFarEnough = (player.getX() - entity.getX()).abs() > _distance;
         if (_timer.isDone() || isFarEnough) {
           _state = STATE_DONE;
+          if (isPlayerStatesLeft(entity, player)) {
+            WalkCommand(entity, x: -2).execute();
+          } else {
+            WalkCommand(entity, x: 2).execute();
+          }
+
           return;
         }
 
@@ -118,6 +136,12 @@ class SlingShotBehaviourPlanTargetting extends BehaviourPlan {
 
   @override
   String get name => 'プレイヤーを狙う';
+
+  @override
+  void init() {
+    _state = STATE_INITIAL;
+    _timer = null;
+  }
 
   @override
   void execute(WorldContext context, Entity entity) {

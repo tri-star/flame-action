@@ -15,7 +15,7 @@ class BehaviourExecutor {
     int limitter = 100;
     while (limitter-- > 0) {
       if (cursor.havePlan()) {
-        return cursor.getPlan();
+        return cursor.getPlan()..init();
       }
       cursor = cursor.getSatisfiedNode(context, entity);
       assert(cursor != null);

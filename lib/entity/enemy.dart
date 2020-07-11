@@ -1,3 +1,7 @@
+import 'package:flame_action/domain/behaviour_tree/behaviour_executor.dart';
+import 'package:flame_action/domain/behaviour_tree/behaviour_node.dart';
+import 'package:flame_action/domain/behaviour_tree/behaviour_plan.dart';
+import 'package:flame_action/domain/behaviour_tree/behaviour_tree_builder.dart';
 import 'package:flame_action/engine/entity/figting_unit.dart';
 import 'package:flame_action/engine/image/sprite_resolver.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
@@ -6,7 +10,13 @@ import 'package:flame_action/engine/world.dart';
 import '../engine/entity/entity.dart';
 
 class Enemy extends Entity with FightingUnit {
-  Enemy(int id, String entityName, SpriteResolver spriteResolver, double maxHp,
+  BehaviourTreeBuilder _behaviourTreeBuilder;
+  BehaviourNode _behaviourTree;
+  BehaviourExecutor _behaviourExecutor;
+  BehaviourPlan _behaviourPlan;
+
+  Enemy(int id, String entityName, SpriteResolver spriteResolver,
+      BehaviourTreeBuilder behaviourTreeBuilder, double maxHp,
       {double x, double y, double z}) {
     this.id = id;
     this.x = x;
@@ -14,6 +24,11 @@ class Enemy extends Entity with FightingUnit {
     this.z = z;
     this.entityName = entityName;
     this.spriteResolver = spriteResolver;
+    this._behaviourTreeBuilder = behaviourTreeBuilder;
+    this._behaviourTree = this._behaviourTreeBuilder?.build();
+    if (this._behaviourTree != null) {
+      this._behaviourExecutor = BehaviourExecutor(this._behaviourTree);
+    }
     this.dimension = Dimension.LEFT;
     this.gravityFlag = true;
     this.collidableFlag = true;
@@ -23,6 +38,11 @@ class Enemy extends Entity with FightingUnit {
 
   void update(WorldContext context) {
     super.update(context);
+
+    if (_behaviourPlan == null || _behaviourPlan.isDone()) {
+      _behaviourPlan = _behaviourExecutor?.decidePlan(context, this);
+    }
+    _behaviourPlan?.execute(context, this);
 
     if (state != 'dead' && isDead()) {
       disableGravity();
@@ -38,6 +58,9 @@ class Enemy extends Entity with FightingUnit {
     switch (newState) {
       case 'walk':
         if (state == 'attack') {
+          return false;
+        }
+        if (state == 'damage') {
           return false;
         }
         break;

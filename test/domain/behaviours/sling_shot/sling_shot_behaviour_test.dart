@@ -36,7 +36,8 @@ void main() {
       StubSpriteResolver stubSpriteResolver =
           StubSpriteResolver(w: 60, h: 100, d: 20);
       player = Player(0, stubSpriteResolver, x: 0, y: 0, z: 0);
-      enemy = Enemy(1, 'enemy', stubSpriteResolver, 100, x: 0, y: 0, z: 0);
+      enemy =
+          Enemy(1, 'enemy', stubSpriteResolver, null, 100, x: 0, y: 0, z: 0);
       context = createContext(player, enemy);
     });
 

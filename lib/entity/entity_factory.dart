@@ -1,3 +1,4 @@
+import 'package:flame_action/domain/behaviours/sling_shot/sling_shot_behaviour.dart';
 import 'package:flame_action/engine/image/sprite_string/pop_with_gravity_string.dart';
 import 'package:flame_action/engine/image/sprite_string/sprite_letter.dart';
 import 'package:flame_action/presentation/image/action_button_sprite_resolver.dart';
@@ -27,7 +28,9 @@ class EntityFactory extends BaseEntityFactory {
       case 'player':
         return Player(newId, PlayerSpriteResolver(), x: x, y: y, z: z);
       case 'enemy01':
-        return Enemy(newId, key, EnemySpriteResolver(), 4000, x: x, y: y, z: z);
+        return Enemy(newId, key, EnemySpriteResolver(),
+            SlingShotBehaviourBuilder(), 4000,
+            x: x, y: y, z: z);
       case 'status_card':
         return StatusCard(newId, options['target'], StatusCardRenderer(),
             x: x, y: y);

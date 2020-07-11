@@ -89,8 +89,8 @@ class BehaviourNode {
 
     BehaviourNode selectedNode;
     nodes.forEach((node) {
-      if (randomValue > weightSum &&
-          randomValue <= (weightSum + node.getWeight())) {
+      if (randomValue >= weightSum &&
+          randomValue < (weightSum + node.getWeight())) {
         selectedNode = node;
       }
       weightSum += node.getWeight();

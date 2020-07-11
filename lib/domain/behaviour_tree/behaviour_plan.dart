@@ -8,6 +8,8 @@ abstract class BehaviourPlan {
   /// プランの名前。デバッグ用
   String get name;
 
+  void init();
+
   /// プランを実行する
   void execute(WorldContext context, Entity entity);
 
