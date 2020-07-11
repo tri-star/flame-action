@@ -90,6 +90,8 @@ class Entity {
     return true;
   }
 
+  String getState() => state;
+
   void setState(String newState) {
     state = newState;
     if (state == 'disposed') {
@@ -210,13 +212,13 @@ class Entity {
   }
 
   void setLocation({double x, double y, double z}) {
-    if(x != null) {
+    if (x != null) {
       this.x = x;
     }
-    if(y != null) {
+    if (y != null) {
       this.y = y;
     }
-    if(z != null) {
+    if (z != null) {
       this.z = z;
     }
   }

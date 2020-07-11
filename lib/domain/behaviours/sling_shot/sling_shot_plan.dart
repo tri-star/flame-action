@@ -13,7 +13,7 @@ class SlingShotBehaviourPlanGlimming extends BehaviourPlan {
   static const int STATE_GRIMMING = 1;
   static const int STATE_DONE = 2;
 
-  int _state;
+  int _state = STATE_INITIAL;
   TimeoutTimer _timer;
 
   SlingShotBehaviourPlanGlimming();
@@ -30,14 +30,16 @@ class SlingShotBehaviourPlanGlimming extends BehaviourPlan {
         MakeNeutralCommand(entity).execute();
         break;
       case STATE_GRIMMING:
+        _timer.update();
         if (_timer.isDone()) {
           _state = STATE_DONE;
         }
         break;
       case STATE_DONE:
         break;
+      default:
+        throw new UnsupportedError('無効な状態です: $_state');
     }
-    throw new UnsupportedError('無効な状態です: $_state');
   }
 
   @override
@@ -52,7 +54,7 @@ class SlingShotBehaviourPlanKeepDistance extends BehaviourPlan {
   static const int STATE_MOVING = 1;
   static const int STATE_DONE = 2;
 
-  int _state = STATE_MOVING;
+  int _state = STATE_INITIAL;
   TimeoutTimer _timer;
   double _distance;
 
@@ -71,6 +73,7 @@ class SlingShotBehaviourPlanKeepDistance extends BehaviourPlan {
         _state = STATE_MOVING;
         break;
       case STATE_MOVING:
+        _timer.update();
         Entity player = context.findTaggedFirst('player', useCache: true);
 
         bool isFarEnough = (player.getX() - entity.getX()).abs() > _distance;
@@ -88,8 +91,9 @@ class SlingShotBehaviourPlanKeepDistance extends BehaviourPlan {
         break;
       case STATE_DONE:
         break;
+      default:
+        throw new UnsupportedError('無効な状態です: $_state');
     }
-    throw new UnsupportedError('無効な状態です: $_state');
   }
 
   bool isPlayerStatesLeft(Entity self, Entity player) =>
@@ -107,7 +111,7 @@ class SlingShotBehaviourPlanTargetting extends BehaviourPlan {
   static const int STATE_MOVING = 1;
   static const int STATE_DONE = 2;
 
-  int _state = STATE_MOVING;
+  int _state = STATE_INITIAL;
   TimeoutTimer _timer;
 
   SlingShotBehaviourPlanTargetting();
@@ -125,6 +129,7 @@ class SlingShotBehaviourPlanTargetting extends BehaviourPlan {
         _state = STATE_MOVING;
         break;
       case STATE_MOVING:
+        _timer.update();
         Entity player = context.findTaggedFirst('player', useCache: true);
 
         if (_timer.isDone() || entity.isOverwrappedZ(player.getRect())) {
@@ -141,8 +146,9 @@ class SlingShotBehaviourPlanTargetting extends BehaviourPlan {
         break;
       case STATE_DONE:
         break;
+      default:
+        throw new UnsupportedError('無効な状態です: $_state');
     }
-    throw new UnsupportedError('無効な状態です: $_state');
   }
 
   bool isPlayerStatesAbove(Entity self, Entity player) =>

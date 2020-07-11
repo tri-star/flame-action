@@ -13,6 +13,9 @@ class EnemySpriteResolver extends SpriteResolver {
     _definitions['neutral'] = AnimationDefinition(
         'enemy01_state_normal.png', 80, 100, 20, 2, 1, 0.2,
         anchorPoint: AnchorPoint.BOTTOM_CENTER);
+    _definitions['walk'] = AnimationDefinition(
+        'enemy01_state_normal.png', 80, 100, 20, 2, 1, 0.2,
+        anchorPoint: AnchorPoint.BOTTOM_CENTER, loop: true);
     _definitions['damage'] = AnimationDefinition(
         'enemy01_state_damage.png', 80, 100, 20, 1, 1, 0.08,
         anchorPoint: AnchorPoint.BOTTOM_CENTER, loop: false, afterWait: 1);
