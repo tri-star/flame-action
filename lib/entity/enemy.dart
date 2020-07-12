@@ -2,7 +2,9 @@ import 'package:flame_action/domain/behaviour_tree/behaviour_executor.dart';
 import 'package:flame_action/domain/behaviour_tree/behaviour_node.dart';
 import 'package:flame_action/domain/behaviour_tree/behaviour_plan.dart';
 import 'package:flame_action/domain/behaviour_tree/behaviour_tree_builder.dart';
+import 'package:flame_action/engine/coordinates.dart';
 import 'package:flame_action/engine/entity/figting_unit.dart';
+import 'package:flame_action/engine/image/animation.dart';
 import 'package:flame_action/engine/image/sprite_resolver.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
 import 'package:flame_action/engine/world.dart';
@@ -104,6 +106,16 @@ class Enemy extends Entity with FightingUnit {
       if (state == 'damage') {
         vx = 0;
       }
+    }
+  }
+
+  @override
+  void onAnimationEvent(WorldContext context, AnimationFrameEvent event) {
+    if (event.type == 'attack') {
+      double forceX = (dimension == Dimension.RIGHT) ? 5 : -5;
+      Entity bullet = context.entityFactory.create('sling_ball', x, y - 60, z);
+      bullet.addForce(forceX, 0, 0);
+      context.addEntity(bullet);
     }
   }
 }

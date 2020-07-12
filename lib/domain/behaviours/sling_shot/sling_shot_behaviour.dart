@@ -42,7 +42,11 @@ class SlingShotBehaviourBuilder extends BehaviourTreeBuilder {
             weight: 3,
             plan: SlingShotBehaviourPlanTargetting(),
           ),
-          // 攻撃する
+          BehaviourNode(
+            name: '攻撃する',
+            weight: 2,
+            plan: SlingShotBehaviourPlanAttack(),
+          ),
         ],
       ),
       BehaviourNode(

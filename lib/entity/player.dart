@@ -77,6 +77,9 @@ class Player extends Entity with FightingUnit implements GameInputListener {
         if (state == 'attack') {
           return false;
         }
+        if (state == 'damage') {
+          return false;
+        }
         break;
       case 'attack':
         break;
@@ -88,6 +91,17 @@ class Player extends Entity with FightingUnit implements GameInputListener {
     }
     setState(newState);
     return true;
+  }
+
+  @override
+  void onCollide(WorldContext context, CollisionEvent event) {
+    super.onCollide(context, event);
+    if (event.type == 'collide' &&
+        event.source.getTags().contains('obstacle')) {
+      if (state == 'damage') {
+        vx = 0;
+      }
+    }
   }
 
   @override

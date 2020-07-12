@@ -22,6 +22,12 @@ class EnemySpriteResolver extends SpriteResolver {
     _definitions['dead'] = AnimationDefinition(
         'enemy01_state_damage.png', 80, 100, 20, 1, 1, 0.08,
         anchorPoint: AnchorPoint.BOTTOM_CENTER, loop: false, afterWait: 2);
+    _definitions['attack'] = AnimationDefinition(
+        'enemy01_state_attack.png', 90, 100, 20, 5, 1, 0.13,
+        anchorPoint: AnchorPoint.BOTTOM_CENTER,
+        loop: false,
+        afterWait: 1.0,
+        events: {4: AnimationFrameEvent('attack')});
   }
 
   @override

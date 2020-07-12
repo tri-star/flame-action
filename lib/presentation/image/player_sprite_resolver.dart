@@ -13,6 +13,9 @@ class PlayerSpriteResolver extends SpriteResolver {
     _definitions['neutral'] = AnimationDefinition(
         'player_normal.png', 60, 100, 20, 1, 1, 0.1,
         anchorPoint: AnchorPoint.BOTTOM_CENTER);
+    _definitions['damage'] = AnimationDefinition(
+        'player_normal.png', 60, 100, 20, 1, 1, 0.1,
+        anchorPoint: AnchorPoint.BOTTOM_CENTER);
     _definitions['walk'] = AnimationDefinition(
         'player_walk.png', 60, 100, 20, 4, 1, 0.2,
         anchorPoint: AnchorPoint.BOTTOM_CENTER);

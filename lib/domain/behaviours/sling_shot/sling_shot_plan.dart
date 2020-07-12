@@ -1,3 +1,5 @@
+import 'package:flame_action/domain/behaviours/sling_shot/sling_shot_command.dart';
+
 import '../../../engine/entity/entity.dart';
 import '../../../engine/world.dart';
 import '../../../util/timer.dart';
@@ -186,6 +188,54 @@ class SlingShotBehaviourPlanTargetting extends BehaviourPlan {
 
   bool isPlayerStatesAbove(Entity self, Entity player) =>
       self.getZ() > player.getZ();
+
+  @override
+  bool isDone() {
+    return _state == STATE_DONE;
+  }
+}
+
+/// 「攻撃する」の行動プラン
+class SlingShotBehaviourPlanAttack extends BehaviourPlan {
+  static const int STATE_INITIAL = 0;
+  static const int STATE_WAIT = 2;
+  static const int STATE_DONE = 3;
+
+  int _state = STATE_INITIAL;
+  TimeoutTimer _timer;
+
+  SlingShotBehaviourPlanAttack();
+
+  @override
+  String get name => '攻撃する';
+
+  @override
+  void init() {
+    _state = STATE_INITIAL;
+    _timer = null;
+  }
+
+  @override
+  void execute(WorldContext context, Entity entity) {
+    switch (_state) {
+      case STATE_INITIAL:
+        MakeNeutralCommand(entity).execute(); //移動中などの場合はキャンセルする
+        if (SlingShotCommandAttack(entity).execute()) {
+          _state = STATE_WAIT;
+        }
+        break;
+
+      case STATE_WAIT:
+        if (entity.getState() != 'attack') {
+          _state = STATE_DONE;
+        }
+        break;
+      case STATE_DONE:
+        break;
+      default:
+        throw new UnsupportedError('無効な状態です: $_state');
+    }
+  }
 
   @override
   bool isDone() {

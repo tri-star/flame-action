@@ -197,6 +197,10 @@ class Entity {
     vx += x;
     vy += y;
     vz += z;
+
+    if (vy < 0) {
+      this.y += vy;
+    }
   }
 
   void setForce({double x, double y, double z}) {
@@ -208,6 +212,9 @@ class Entity {
     }
     if (z != null) {
       vz = z;
+    }
+    if (vy < 0) {
+      this.y += vy;
     }
   }
 

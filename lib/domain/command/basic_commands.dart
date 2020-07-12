@@ -1,3 +1,6 @@
+import 'package:flame_action/engine/coordinates.dart';
+import 'package:flame_action/engine/entity/figting_unit.dart';
+
 import '../../engine/entity/entity.dart';
 import '../../engine/entity/entity_command.dart';
 
@@ -32,6 +35,22 @@ class WalkCommand extends EntityCommand {
       target.setDimension(x > 0 ? Dimension.RIGHT : Dimension.LEFT);
     }
 
+    return true;
+  }
+}
+
+/// ダメージ用のコマンド
+class DamageCommand extends EntityCommand {
+  Vector3d force;
+  int damage;
+
+  DamageCommand(Entity target, this.damage, {this.force}) : super(target);
+
+  @override
+  bool execute() {
+    target.setState('damage');
+    (target as FightingUnit).damage(damage.toDouble());
+    target.addForce(force.x, force.y, force.z);
     return true;
   }
 }

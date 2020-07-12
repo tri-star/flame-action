@@ -1,6 +1,7 @@
 import 'package:flame_action/domain/behaviours/sling_shot/sling_shot_behaviour.dart';
 import 'package:flame_action/engine/image/sprite_string/pop_with_gravity_string.dart';
 import 'package:flame_action/engine/image/sprite_string/sprite_letter.dart';
+import 'package:flame_action/entity/generic_bullet.dart';
 import 'package:flame_action/presentation/image/action_button_sprite_resolver.dart';
 import 'package:flame_action/presentation/image/enemy_sprite_resolver.dart';
 import 'package:flame_action/presentation/image/joystick_sprite_resolver.dart';
@@ -44,6 +45,9 @@ class EntityFactory extends BaseEntityFactory {
             x: x, y: y, z: z);
       case 'fire_distinguisher_01':
         return BasicObstacle(newId, key, BasicObstacleSpriteResolver(key),
+            x: x, y: y, z: z);
+      case 'sling_ball':
+        return GenericBullet(newId, key, BasicObstacleSpriteResolver(key),
             x: x, y: y, z: z);
       case 'ground':
         return Ground(newId,

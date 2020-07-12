@@ -20,6 +20,9 @@ class BasicObstacleSpriteResolver extends SpriteResolver {
       _animations['fire_distinguisher_01'] = FlameAnimation(AnimationDefinition(
           'object_03.png', 32, 50, 20, 1, 1, 0.1,
           anchorPoint: AnchorPoint.BOTTOM_CENTER));
+      _animations['sling_ball'] = FlameAnimation(AnimationDefinition(
+          'sling_ball.png', 10, 10, 10, 1, 1, 0.1,
+          anchorPoint: AnchorPoint.MIDDLE_CENTER));
     }
   }
 
