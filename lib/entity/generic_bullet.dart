@@ -35,6 +35,8 @@ class GenericBullet extends Entity {
     if (event.source is Player) {
       Vector3d force = Vector3d(dimension == Dimension.LEFT ? 2 : -2, -10, 0);
       DamageCommand(event.source, 1234, force: force).execute();
+      context.addEntity(
+          context.entityFactory.create('particle_damage01', x, y, z));
       dispose();
     }
   }

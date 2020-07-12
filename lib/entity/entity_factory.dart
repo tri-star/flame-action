@@ -5,6 +5,7 @@ import 'package:flame_action/entity/generic_bullet.dart';
 import 'package:flame_action/presentation/image/action_button_sprite_resolver.dart';
 import 'package:flame_action/presentation/image/enemy_sprite_resolver.dart';
 import 'package:flame_action/presentation/image/joystick_sprite_resolver.dart';
+import 'package:flame_action/presentation/image/particle_sprite_resolver.dart';
 import 'package:flame_action/presentation/renderer/status_card_renderer.dart';
 
 import '../engine/entity/entity.dart';
@@ -16,6 +17,7 @@ import 'basic_obstacle.dart';
 import 'action_button.dart';
 import 'enemy.dart';
 import 'ground.dart';
+import 'particle/general_particle.dart';
 import 'player.dart';
 import 'ui/status_card.dart';
 import 'ui/status_card_organizer.dart';
@@ -71,6 +73,9 @@ class EntityFactory extends BaseEntityFactory {
             gravityFlag: options['gravity_flag'],
             collidableFlag: options['collidable_flag'],
             bounceFactor: options['bounce_factor']);
+      case 'particle_damage01':
+        return GeneralParticle(newId, key, ParticleSpriteResolver(key),
+            x: x, y: y, z: z);
     }
     throw new ArgumentError.value(key);
   }
