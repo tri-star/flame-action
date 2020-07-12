@@ -13,6 +13,20 @@ class BehaviourConditionPlayerXIsLessThan extends BehaviourCondition {
   @override
   bool isSatisfied(WorldContext context, Entity entity) {
     Entity player = context.findTaggedFirst('player', useCache: true);
-    return (player.getX() - entity.getX()).abs() < distance;
+    return (player.getX() - entity.getX()).abs() <= distance;
+  }
+}
+
+class BehaviourConditionPlayerXIsGreaterThan extends BehaviourCondition {
+  double distance;
+
+  BehaviourConditionPlayerXIsGreaterThan({this.distance}) {
+    assert(distance != null);
+  }
+
+  @override
+  bool isSatisfied(WorldContext context, Entity entity) {
+    Entity player = context.findTaggedFirst('player', useCache: true);
+    return (player.getX() - entity.getX()).abs() >= distance;
   }
 }

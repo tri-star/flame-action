@@ -41,37 +41,68 @@ void main() {
       context = createContext(player, enemy);
     });
 
-    test('プレイヤーが近くにいなければ常にニタニタと笑っている', () {
-      randomGenerator.setNumbers([1]);
-      enemy.setLocation(x: 200);
+    test('プレイヤーが近くにいない場合、確率でニタニタと笑う', () {
+      randomGenerator.setNumbers([
+        1, // 「ニタニタ笑う」を選択させるためのランダム値
+      ]);
+      enemy.setLocation(x: 500);
       BehaviourPlan plan = executor.decidePlan(context, enemy);
       expect(plan != null, true, reason: 'プランがnullです。');
       expect(plan is SlingShotBehaviourPlanGlimming, true,
           reason: 'プランが"SlingShotBehaviourPlanGlimming"ではありません。');
     });
 
-    test('プレイヤーが近くにいる場合、確率で「距離を取る」プランを選択する', () {
-      randomGenerator.setNumbers([
-        2, //「プレイヤーが接近」を選択
-        1, // 「距離を取る」を選択
-      ]);
-      enemy.setLocation(x: 199);
-      BehaviourPlan plan = executor.decidePlan(context, enemy);
-      expect(plan != null, true, reason: 'プランがnullです。');
-      expect(plan is SlingShotBehaviourPlanKeepDistance, true,
-          reason: 'プランが"SlingShotBehaviourPlanKeepDistance"ではありません。');
+    group('プレイヤーが遠すぎる場合', () {
+      test('確率でプレイヤーを狙う', () {
+        randomGenerator.setNumbers([
+          3, // 「プレイヤーが遠すぎる」を選択させるためのランダム値
+          0, // 「プレイヤーを狙う」を選択させるためのランダム値
+        ]);
+        enemy.setLocation(x: 400);
+        BehaviourPlan plan = executor.decidePlan(context, enemy);
+        expect(plan != null, true, reason: 'プランがnullです。');
+        expect(plan is SlingShotBehaviourPlanTargetting, true,
+            reason: 'プランが"SlingShotBehaviourPlanTargetting"ではありません。');
+      });
+
+      test('確率でプレイヤーを追いかける', () {
+        randomGenerator.setNumbers([
+          3, // 「プレイヤーが遠すぎる」を選択させるためのランダム値
+          1, // 「プレイヤーを追いかける」を選択させるためのランダム値
+        ]);
+        enemy.setLocation(x: 400);
+        BehaviourPlan plan = executor.decidePlan(context, enemy);
+        expect(plan != null, true, reason: 'プランがnullです。');
+        expect(plan is SlingShotBehaviourPlanKeepDistance, true,
+            reason: 'プランが"SlingShotBehaviourPlanKeepDistance"ではありません。');
+      });
     });
 
-    test('プレイヤーが近くにいる場合、確率で「プレイヤーを狙う」プランを選択する', () {
-      randomGenerator.setNumbers([
-        2, //「プレイヤーが接近」を選択
-        2, // 「プレイヤーを狙う」を選択
-      ]);
-      enemy.setLocation(x: 199);
-      BehaviourPlan plan = executor.decidePlan(context, enemy);
-      expect(plan != null, true, reason: 'プランがnullです。');
-      expect(plan is SlingShotBehaviourPlanTargetting, true,
-          reason: 'プランが"SlingShotBehaviourPlanTargetting"ではありません。');
+    group('プレイヤーが射程内', () {
+      test('確率でプレイヤーを狙う', () {
+        randomGenerator.setNumbers([
+          2, // 「プレイヤーが射程内」を選択させるためのランダム値
+          2, // 「プレイヤーを狙う」を選択させるためのランダム値
+        ]);
+        enemy.setLocation(x: 399);
+        BehaviourPlan plan = executor.decidePlan(context, enemy);
+        expect(plan != null, true, reason: 'プランがnullです。');
+        expect(plan is SlingShotBehaviourPlanTargetting, true,
+            reason: 'プランが"SlingShotBehaviourPlanTargetting"ではありません。');
+      });
+    });
+
+    group('プレイヤーが近すぎる', () {
+      test('確率でプレイヤーを狙う', () {
+        randomGenerator.setNumbers([
+          2, // 「プレイヤーが近すぎる」を選択させるためのランダム値
+        ]);
+        enemy.setLocation(x: 199);
+        BehaviourPlan plan = executor.decidePlan(context, enemy);
+        expect(plan != null, true, reason: 'プランがnullです。');
+        expect(plan is SlingShotBehaviourPlanKeepDistance, true,
+            reason: 'プランが"SlingShotBehaviourPlanKeepDistance"ではありません。');
+      });
     });
   });
 }

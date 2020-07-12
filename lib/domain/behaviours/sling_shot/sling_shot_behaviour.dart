@@ -1,3 +1,5 @@
+import 'package:flame_action/domain/behaviour_tree/behaviour_condition.dart';
+
 import '../../behaviours/conditions/player_conditions.dart';
 import '../../behaviour_tree/behaviour_node.dart';
 import '../../behaviour_tree/behaviour_tree_builder.dart';
@@ -11,27 +13,44 @@ class SlingShotBehaviourBuilder extends BehaviourTreeBuilder {
       BehaviourNode(
           name: 'ニタニタ笑う', weight: 2, plan: SlingShotBehaviourPlanGlimming()),
       BehaviourNode(
-        name: 'プレイヤーを狙う',
-        weight: 1,
-        condition: BehaviourConditionPlayerXIsLessThan(distance: 500),
-        plan: SlingShotBehaviourPlanTargetting(),
+        name: 'プレイヤーが遠すぎる',
+        weight: 2,
+        condition: BehaviourConditionPlayerXIsGreaterThan(distance: 400),
+        nodes: [
+          BehaviourNode(
+            name: 'プレイヤーを狙う',
+            weight: 1,
+            plan: SlingShotBehaviourPlanTargetting(),
+          ),
+          BehaviourNode(
+            name: 'プレイヤーを追いかける',
+            weight: 2,
+            plan: SlingShotBehaviourPlanKeepDistance(400),
+          ),
+        ],
       ),
       BehaviourNode(
-          name: 'プレイヤーが接近',
-          condition: BehaviourConditionPlayerXIsLessThan(distance: 300),
-          weight: 3,
-          nodes: [
-            BehaviourNode(
-              name: '距離を取る',
-              weight: 1,
-              plan: SlingShotBehaviourPlanKeepDistance(300),
-            ),
-            BehaviourNode(
-              name: 'プレイヤーを狙う',
-              weight: 3,
-              plan: SlingShotBehaviourPlanTargetting(),
-            ),
-          ])
+        name: 'プレイヤーが射程内',
+        weight: 3,
+        condition: BehaviourCondition.and([
+          BehaviourConditionPlayerXIsLessThan(distance: 400),
+          BehaviourConditionPlayerXIsGreaterThan(distance: 200),
+        ]),
+        nodes: [
+          BehaviourNode(
+            name: 'プレイヤーを狙う',
+            weight: 3,
+            plan: SlingShotBehaviourPlanTargetting(),
+          ),
+          // 攻撃する
+        ],
+      ),
+      BehaviourNode(
+        name: 'プレイヤーが近すぎる',
+        condition: BehaviourConditionPlayerXIsLessThan(distance: 200),
+        weight: 1,
+        plan: SlingShotBehaviourPlanKeepDistance(200),
+      )
     ]);
   }
 }

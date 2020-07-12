@@ -1,5 +1,3 @@
-import 'package:flame_action/util/coordinates.dart';
-
 import '../../../engine/entity/entity.dart';
 import '../../../engine/world.dart';
 import '../../../util/timer.dart';
@@ -54,7 +52,7 @@ class SlingShotBehaviourPlanGlimming extends BehaviourPlan {
   }
 }
 
-/// 「距離を取る」の行動プラン
+/// 「距離を取る」、「追いかける」の行動プラン
 class SlingShotBehaviourPlanKeepDistance extends BehaviourPlan {
   static const int STATE_INITIAL = 0;
   static const int STATE_MOVING = 1;
@@ -63,6 +61,7 @@ class SlingShotBehaviourPlanKeepDistance extends BehaviourPlan {
   int _state = STATE_INITIAL;
   TimeoutTimer _timer;
   double _distance;
+  bool _isChaseMode;
 
   SlingShotBehaviourPlanKeepDistance(double distance) : _distance = distance;
 
@@ -73,37 +72,47 @@ class SlingShotBehaviourPlanKeepDistance extends BehaviourPlan {
   void init() {
     _state = STATE_INITIAL;
     _timer = null;
+    _isChaseMode = null;
   }
 
   @override
   void execute(WorldContext context, Entity entity) {
+    Entity player = context.findTaggedFirst('player', useCache: true);
+    double playerDistance = (player.getX() - entity.getX()).abs();
+    bool isFarEnough = playerDistance > _distance;
     switch (_state) {
       case STATE_INITIAL:
         if (_timer == null) {
-          _timer = TimeoutTimer(2.0);
+          _timer = TimeoutTimer(1.0);
         }
         _state = STATE_MOVING;
+        _isChaseMode = isFarEnough;
         break;
       case STATE_MOVING:
         _timer.update();
-        Entity player = context.findTaggedFirst('player', useCache: true);
 
-        bool isFarEnough = (player.getX() - entity.getX()).abs() > _distance;
-        if (_timer.isDone() || isFarEnough) {
+        if (_timer.isDone()) {
           _state = STATE_DONE;
           if (isPlayerStatesLeft(entity, player)) {
             WalkCommand(entity, x: -2).execute();
           } else {
             WalkCommand(entity, x: 2).execute();
           }
-
           return;
         }
 
-        if (isPlayerStatesLeft(entity, player)) {
-          WalkCommand(entity, x: 2).execute();
+        if (_isChaseMode) {
+          if (isPlayerStatesLeft(entity, player)) {
+            WalkCommand(entity, x: -2).execute();
+          } else {
+            WalkCommand(entity, x: 2).execute();
+          }
         } else {
-          WalkCommand(entity, x: -2).execute();
+          if (isPlayerStatesLeft(entity, player)) {
+            WalkCommand(entity, x: 2).execute();
+          } else {
+            WalkCommand(entity, x: -2).execute();
+          }
         }
 
         break;
@@ -148,7 +157,7 @@ class SlingShotBehaviourPlanTargetting extends BehaviourPlan {
     switch (_state) {
       case STATE_INITIAL:
         if (_timer == null) {
-          _timer = TimeoutTimer(2.0);
+          _timer = TimeoutTimer(1.0);
         }
         _state = STATE_MOVING;
         break;

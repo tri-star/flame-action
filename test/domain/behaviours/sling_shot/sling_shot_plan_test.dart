@@ -73,42 +73,67 @@ void main() {
       context = createContext(player, enemy);
     });
 
-    test('プレイヤーが左にいる場合、右に逃げること', () {
-      player.setLocation(x: 0);
-      enemy.setLocation(x: 100);
-      BehaviourPlan plan = SlingShotBehaviourPlanKeepDistance(200);
-      Ticker ticker = Ticker();
-      plan.execute(context, enemy);
-      plan.execute(context, enemy);
-      enemy.update(context);
-
-      // TODO: 状態もテストしたいが、今はStubSpriteResolverでループするアニメーションを指定できないためテスト出来ない
-      // expect(enemy.getState(), 'walk', reason: '状態がwalkになっていません。');
-      expect(enemy.getX(), 102, reason: '想定する方向に移動していません');
-      expect(plan.isDone(), false, reason: 'タイマーの完了前にプランが終了しています');
-      ticker.tick(2.0, () {
+    group('初期状態でプレイヤーとの距離が近い(距離を取るモード)', () {
+      test('プレイヤーが左にいる場合、右に逃げること', () {
+        player.setLocation(x: 0);
+        enemy.setLocation(x: 100);
+        BehaviourPlan plan = SlingShotBehaviourPlanKeepDistance(200);
+        Ticker ticker = Ticker();
         plan.execute(context, enemy);
+        plan.execute(context, enemy);
+        enemy.update(context);
+
+        // TODO: 状態もテストしたいが、今はStubSpriteResolverでループするアニメーションを指定できないためテスト出来ない
+        // expect(enemy.getState(), 'walk', reason: '状態がwalkになっていません。');
+        expect(enemy.getX(), 102, reason: '想定する方向に移動していません');
+        expect(plan.isDone(), false, reason: 'タイマーの完了前にプランが終了しています');
+        ticker.tick(2.0, () {
+          plan.execute(context, enemy);
+        });
+        expect(plan.isDone(), true, reason: '時間が経過してもプランが完了していません');
       });
-      expect(plan.isDone(), true, reason: '時間が経過してもプランが完了していません');
+
+      test('プレイヤーが右にいる場合、左に逃げること', () {
+        player.setLocation(x: 200);
+        enemy.setLocation(x: 100);
+        BehaviourPlan plan = SlingShotBehaviourPlanKeepDistance(200);
+        Ticker ticker = Ticker();
+        plan.execute(context, enemy);
+        plan.execute(context, enemy);
+        enemy.update(context);
+
+        expect(enemy.getX(), 98, reason: '想定する方向に移動していません');
+        expect(plan.isDone(), false, reason: 'タイマーの完了前にプランが終了しています');
+        ticker.tick(2.0, () {
+          plan.execute(context, enemy);
+        });
+        expect(plan.isDone(), true, reason: '時間が経過してもプランが完了していません');
+      });
     });
 
-    test('プレイヤーが右にいる場合、右に逃げること', () {
-      player.setLocation(x: 200);
-      enemy.setLocation(x: 100);
-      BehaviourPlan plan = SlingShotBehaviourPlanKeepDistance(200);
-      Ticker ticker = Ticker();
-      plan.execute(context, enemy);
-      plan.execute(context, enemy);
-      enemy.update(context);
-
-      // TODO: 状態もテストしたいが、今はStubSpriteResolverでループするアニメーションを指定できないためテスト出来ない
-      // expect(enemy.getState(), 'walk', reason: '状態がwalkになっていません。');
-      expect(enemy.getX(), 98, reason: '想定する方向に移動していません');
-      expect(plan.isDone(), false, reason: 'タイマーの完了前にプランが終了しています');
-      ticker.tick(2.0, () {
+    group('初期状態でプレイヤーとの距離が遠い(追いかけるモード)', () {
+      test('プレイヤーが左にいる場合、左に動くこと', () {
+        player.setLocation(x: 0);
+        enemy.setLocation(x: 300);
+        BehaviourPlan plan = SlingShotBehaviourPlanKeepDistance(200);
         plan.execute(context, enemy);
+        plan.execute(context, enemy);
+        enemy.update(context);
+
+        expect(enemy.getX(), 298, reason: '想定する方向に移動していません');
+        expect(plan.isDone(), false, reason: 'タイマーの完了前にプランが終了しています');
       });
-      expect(plan.isDone(), true, reason: '時間が経過してもプランが完了していません');
+
+      test('プレイヤーが右にいる場合、右に動くこと', () {
+        player.setLocation(x: 400);
+        enemy.setLocation(x: 100);
+        BehaviourPlan plan = SlingShotBehaviourPlanKeepDistance(200);
+        plan.execute(context, enemy);
+        plan.execute(context, enemy);
+        enemy.update(context);
+
+        expect(enemy.getX(), 102, reason: '想定する方向に移動していません');
+      });
     });
   });
 }
