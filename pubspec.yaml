@@ -47,6 +47,7 @@ flutter:
     - assets/images/player_normal.png
     - assets/images/player_walk.png
     - assets/images/player_attack01.png
+    - assets/images/player_damage.png
     - assets/images/enemy01_state_normal.png
     - assets/images/enemy01_state_damage.png
     - assets/images/enemy01_state_walk.png
