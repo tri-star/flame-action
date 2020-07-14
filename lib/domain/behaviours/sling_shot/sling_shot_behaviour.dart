@@ -11,7 +11,7 @@ class SlingShotBehaviourBuilder extends BehaviourTreeBuilder {
   BehaviourNode build() {
     return RootBehaviourNode([
       BehaviourNode(
-          name: 'ニタニタ笑う', weight: 2, plan: SlingShotBehaviourPlanGlimming()),
+          name: 'ニタニタ笑う', weight: 1, plan: SlingShotBehaviourPlanGlimming()),
       BehaviourNode(
         name: 'プレイヤーが遠すぎる',
         weight: 2,
@@ -32,10 +32,7 @@ class SlingShotBehaviourBuilder extends BehaviourTreeBuilder {
       BehaviourNode(
         name: 'プレイヤーが射程内',
         weight: 3,
-        condition: BehaviourCondition.and([
-          BehaviourConditionPlayerXIsLessThan(distance: 400),
-          BehaviourConditionPlayerXIsGreaterThan(distance: 200),
-        ]),
+        condition: BehaviourConditionPlayerXIsLessThan(distance: 400),
         nodes: [
           BehaviourNode(
             name: 'プレイヤーを狙う',
@@ -47,14 +44,14 @@ class SlingShotBehaviourBuilder extends BehaviourTreeBuilder {
             weight: 2,
             plan: SlingShotBehaviourPlanAttack(),
           ),
+          BehaviourNode(
+            name: 'プレイヤーから離れる',
+            condition: BehaviourConditionPlayerXIsLessThan(distance: 200),
+            weight: 3,
+            plan: SlingShotBehaviourPlanKeepDistance(200),
+          )
         ],
       ),
-      BehaviourNode(
-        name: 'プレイヤーが近すぎる',
-        condition: BehaviourConditionPlayerXIsLessThan(distance: 200),
-        weight: 1,
-        plan: SlingShotBehaviourPlanKeepDistance(200),
-      )
     ]);
   }
 }

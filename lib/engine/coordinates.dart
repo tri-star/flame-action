@@ -220,4 +220,6 @@ class Rect3d {
   double get right => _x + _w;
   double get bottom => _y + _h;
   double get rear => _z + _d;
+
+  void setDepth(double newD) => _d = newD;
 }

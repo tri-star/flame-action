@@ -43,7 +43,7 @@ void main() {
 
     test('プレイヤーが近くにいない場合、確率でニタニタと笑う', () {
       randomGenerator.setNumbers([
-        1, // 「ニタニタ笑う」を選択させるためのランダム値
+        0, // 「ニタニタ笑う」を選択させるためのランダム値
       ]);
       enemy.setLocation(x: 500);
       BehaviourPlan plan = executor.decidePlan(context, enemy);
@@ -55,7 +55,7 @@ void main() {
     group('プレイヤーが遠すぎる場合', () {
       test('確率でプレイヤーを狙う', () {
         randomGenerator.setNumbers([
-          3, // 「プレイヤーが遠すぎる」を選択させるためのランダム値
+          2, // 「プレイヤーが遠すぎる」を選択させるためのランダム値
           0, // 「プレイヤーを狙う」を選択させるためのランダム値
         ]);
         enemy.setLocation(x: 400);
@@ -67,7 +67,7 @@ void main() {
 
       test('確率でプレイヤーを追いかける', () {
         randomGenerator.setNumbers([
-          3, // 「プレイヤーが遠すぎる」を選択させるためのランダム値
+          2, // 「プレイヤーが遠すぎる」を選択させるためのランダム値
           1, // 「プレイヤーを追いかける」を選択させるためのランダム値
         ]);
         enemy.setLocation(x: 400);
@@ -81,7 +81,7 @@ void main() {
     group('プレイヤーが射程内', () {
       test('確率でプレイヤーを狙う', () {
         randomGenerator.setNumbers([
-          2, // 「プレイヤーが射程内」を選択させるためのランダム値
+          1, // 「プレイヤーが射程内」を選択させるためのランダム値
           2, // 「プレイヤーを狙う」を選択させるためのランダム値
         ]);
         enemy.setLocation(x: 399);
@@ -90,12 +90,22 @@ void main() {
         expect(plan is SlingShotBehaviourPlanTargetting, true,
             reason: 'プランが"SlingShotBehaviourPlanTargetting"ではありません。');
       });
-    });
-
-    group('プレイヤーが近すぎる', () {
-      test('確率でプレイヤーを狙う', () {
+      test('確率で攻撃する', () {
         randomGenerator.setNumbers([
-          2, // 「プレイヤーが近すぎる」を選択させるためのランダム値
+          1, // 「プレイヤーが射程内」を選択させるためのランダム値
+          3, // 「攻撃する」を選択させるためのランダム値
+        ]);
+        enemy.setLocation(x: 399);
+        BehaviourPlan plan = executor.decidePlan(context, enemy);
+        expect(plan != null, true, reason: 'プランがnullです。');
+        expect(plan is SlingShotBehaviourPlanAttack, true,
+            reason: 'プランが"SlingShotBehaviourPlanAttack"ではありません。');
+      });
+
+      test('確率でプレイヤーから離れる', () {
+        randomGenerator.setNumbers([
+          1, // 「プレイヤーが射程内」を選択させるためのランダム値
+          5, // 「プレイヤーから離れる」を選択させるためのランダム値
         ]);
         enemy.setLocation(x: 199);
         BehaviourPlan plan = executor.decidePlan(context, enemy);

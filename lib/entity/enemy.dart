@@ -112,7 +112,7 @@ class Enemy extends Entity with FightingUnit {
   @override
   void onAnimationEvent(WorldContext context, AnimationFrameEvent event) {
     if (event.type == 'attack') {
-      double forceX = (dimension == Dimension.RIGHT) ? 5 : -5;
+      double forceX = (dimension == Dimension.RIGHT) ? 7 : -7;
       Entity bullet = context.entityFactory.create('sling_ball', x, y - 60, z);
       bullet.addForce(forceX, 0, 0);
       context.addEntity(bullet);

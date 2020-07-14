@@ -1,4 +1,5 @@
 import 'package:flame_action/domain/behaviours/sling_shot/sling_shot_command.dart';
+import 'package:flame_action/engine/coordinates.dart';
 
 import '../../../engine/entity/entity.dart';
 import '../../../engine/world.dart';
@@ -159,20 +160,23 @@ class SlingShotBehaviourPlanTargetting extends BehaviourPlan {
     switch (_state) {
       case STATE_INITIAL:
         if (_timer == null) {
-          _timer = TimeoutTimer(1.0);
+          _timer = TimeoutTimer(1.5);
         }
         _state = STATE_MOVING;
         break;
       case STATE_MOVING:
         _timer.update();
         Entity player = context.findTaggedFirst('player', useCache: true);
+        Rect3d selfRect = entity.getRect();
+        Rect3d playerRect = player.getRect();
+        playerRect.setDepth(1);
 
-        if (_timer.isDone() || entity.isOverwrappedZ(player.getRect())) {
+        if (_timer.isDone() || entity.isOverwrappedZ(playerRect)) {
           _state = STATE_DONE;
           return;
         }
 
-        if (isPlayerStatesAbove(entity, player)) {
+        if (isPlayerStatesAbove(selfRect, playerRect)) {
           WalkCommand(entity, z: -1).execute();
         } else {
           WalkCommand(entity, z: 1).execute();
@@ -186,8 +190,8 @@ class SlingShotBehaviourPlanTargetting extends BehaviourPlan {
     }
   }
 
-  bool isPlayerStatesAbove(Entity self, Entity player) =>
-      self.getZ() > player.getZ();
+  bool isPlayerStatesAbove(Rect3d selfRect, Rect3d playerRect) =>
+      selfRect.z > playerRect.z;
 
   @override
   bool isDone() {
