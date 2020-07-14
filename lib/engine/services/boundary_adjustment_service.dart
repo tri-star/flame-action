@@ -1,10 +1,15 @@
 import 'package:flame_action/engine/coordinates.dart';
+import 'package:flame_action/engine/entity/figting_unit.dart';
 
 import '../entity/entity.dart';
 
 /// EntityとWorldの境界との位置調整を行うサービス
 class BoundaryAdjustmentService {
   void adjust(Rect3d baseRect, Entity entity) {
+    if (!(entity is FightingUnit)) {
+      return;
+    }
+
     Rect3d targetRect = entity.getRect();
     if (baseRect.isContain(targetRect)) {
       return;

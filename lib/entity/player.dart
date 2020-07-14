@@ -4,9 +4,9 @@ import 'package:flame_action/engine/image/sprite_resolver.dart';
 import 'package:flame_action/engine/input_event.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
 
-import '../../engine/world.dart';
-import '../../engine/entity/entity.dart';
-import '../../engine/entity/figting_unit.dart';
+import '../engine/world.dart';
+import '../engine/entity/entity.dart';
+import '../engine/entity/figting_unit.dart';
 
 class Player extends Entity with FightingUnit implements GameInputListener {
   Player(int id, SpriteResolver spriteResolver,
@@ -21,6 +21,7 @@ class Player extends Entity with FightingUnit implements GameInputListener {
     this.collidableFlag = true;
     this.hp = 100000;
     this.maxHp = 100000;
+    this.tags = ['player'];
   }
 
   @override
@@ -69,10 +70,14 @@ class Player extends Entity with FightingUnit implements GameInputListener {
 
   /// 状態を変更出来るか確認したうえで状態の変更を行う。
   /// 変更できたかどうかを戻り値で返す。
+  @override
   bool changeState(String newState) {
     switch (newState) {
       case 'walk':
         if (state == 'attack') {
+          return false;
+        }
+        if (state == 'damage') {
           return false;
         }
         break;
@@ -86,6 +91,17 @@ class Player extends Entity with FightingUnit implements GameInputListener {
     }
     setState(newState);
     return true;
+  }
+
+  @override
+  void onCollide(WorldContext context, CollisionEvent event) {
+    super.onCollide(context, event);
+    if (event.type == 'collide' &&
+        event.source.getTags().contains('obstacle')) {
+      if (state == 'damage') {
+        vx = 0;
+      }
+    }
   }
 
   @override

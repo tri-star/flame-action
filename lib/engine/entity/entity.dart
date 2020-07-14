@@ -5,6 +5,7 @@ import 'package:flame_action/engine/image/animation.dart';
 import 'package:flame_action/engine/image/sprite.dart';
 import 'package:flame_action/engine/image/sprite_resolver.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
+import 'package:flame_action/util/coordinates.dart';
 import 'package:flutter/foundation.dart';
 
 import '../world.dart';
@@ -82,6 +83,15 @@ class Entity {
     context?.collisionDetectService?.detect(context, this, collisionEvent);
   }
 
+  /// 状態が変更可能か確認してから変更を行う。
+  /// 変更できなかった場合はfalseを返す。
+  bool changeState(String newState) {
+    setState(newState);
+    return true;
+  }
+
+  String getState() => state;
+
   void setState(String newState) {
     state = newState;
     if (state == 'disposed') {
@@ -118,6 +128,11 @@ class Entity {
   Dimension getDimension() => dimension;
   bool haveGravity() => gravityFlag;
   bool isCollidable() => collidableFlag;
+  bool isOverwrappedZ(Rect3d targetRect) {
+    Rect3d rect = getRect();
+    return CoordinateUtil.isLineOverwrapped(
+        rect.z, rect.d, targetRect.z, targetRect.d);
+  }
 
   List<Sprite> getSprites() {
     Animation currentAnimation = getAnimation();
@@ -182,7 +197,40 @@ class Entity {
     vx += x;
     vy += y;
     vz += z;
+
+    if (vy < 0) {
+      this.y += vy;
+    }
   }
+
+  void setForce({double x, double y, double z}) {
+    if (x != null) {
+      vx = x;
+    }
+    if (y != null) {
+      vy = y;
+    }
+    if (z != null) {
+      vz = z;
+    }
+    if (vy < 0) {
+      this.y += vy;
+    }
+  }
+
+  void setLocation({double x, double y, double z}) {
+    if (x != null) {
+      this.x = x;
+    }
+    if (y != null) {
+      this.y = y;
+    }
+    if (z != null) {
+      this.z = z;
+    }
+  }
+
+  void setDimension(Dimension newDimension) => dimension = newDimension;
 
   /// Entityを削除可能な状態にする
   void dispose() {

@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import '../../domain/entity/ui/status_card.dart';
+import '../../entity/ui/status_card.dart';
 import '../../engine/camera.dart';
 import '../../engine/entity/figting_unit.dart';
 import '../../engine/image/sprite.dart';

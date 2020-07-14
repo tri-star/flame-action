@@ -1,5 +1,5 @@
-import '../../../engine/entity/entity.dart';
-import '../../../engine/world.dart';
+import '../../engine/entity/entity.dart';
+import '../../engine/world.dart';
 import '../player.dart';
 import 'status_card.dart';
 

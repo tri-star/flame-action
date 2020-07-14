@@ -1,6 +1,6 @@
-import '../../engine/world.dart';
-import '../../engine/services/collision_detect_service.dart';
-import '../../engine/entity/entity.dart';
+import '../engine/world.dart';
+import '../engine/services/collision_detect_service.dart';
+import '../engine/entity/entity.dart';
 
 class Ground extends Entity {
   double _w;
