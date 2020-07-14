@@ -35,7 +35,7 @@ void main() {
         ]);
 
         StubRandomGenerator randomGenerator = StubRandomGenerator();
-        randomGenerator.setNumbers([11, 10]);
+        randomGenerator.setNumbers([10, 9]);
         WorldContext context =
             WorldContextUtil.create(randomGenerator: randomGenerator);
 
