@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/sprite.dart';
@@ -28,8 +30,8 @@ class GameWidget extends Game {
     await Flame.util.fullScreen();
     await Flame.util.initialDimensions();
     Size deviceSize = await Flame.util.initialDimensions();
-    _deviceW = deviceSize.width;
-    _deviceH = deviceSize.height;
+    _deviceW = max(deviceSize.width, deviceSize.height);
+    _deviceH = min(deviceSize.height, deviceSize.width);
 
     _world = World(worldW, worldH, worldD, deviceSize.width, deviceSize.height,
         entityFactory);
