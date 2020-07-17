@@ -1,4 +1,5 @@
 import 'entity/entity.dart';
+import 'screen.dart';
 
 class Camera {
   double _x;
@@ -10,16 +11,19 @@ class Camera {
   double _worldW;
   double _worldH;
   Entity _target;
+  ScreenAdjustment _screenAdjustment;
 
-  Camera(double cameraW, double cameraH, double worldW, double worldH)
+  Camera(ScreenAdjustment adjustment, double worldW, double worldH)
       : _x = 0,
         _y = 0,
         _targetX = 0,
         _targetY = 0,
-        _cameraW = cameraW,
-        _cameraH = cameraH,
+        _screenAdjustment = adjustment,
         _worldW = worldW,
-        _worldH = worldH;
+        _worldH = worldH {
+    _cameraW = _screenAdjustment.getScreenW();
+    _cameraH = _screenAdjustment.getScreenH();
+  }
 
   double get x => _x;
   double get y => _y;
@@ -64,5 +68,35 @@ class Camera {
       return _worldH - _cameraH;
     }
     return y;
+  }
+
+  double getRenderX(double baseX, {bool affectScroll = true}) {
+    double renderX = baseX;
+    if (affectScroll) {
+      renderX -= x;
+    }
+    return (renderX * _screenAdjustment.getZoom()) -
+        _screenAdjustment.getAdjustment().dx;
+  }
+
+  double getRenderY(double baseY, {bool affectScroll = true}) {
+    double renderY = baseY;
+    if (affectScroll) {
+      renderY -= y;
+    }
+    return (renderY * _screenAdjustment.getZoom()) -
+        _screenAdjustment.getAdjustment().dy;
+  }
+
+  double getZoom() {
+    return _screenAdjustment.getZoom();
+  }
+
+  double getRenderAdjustmentX() {
+    return _screenAdjustment.adjustment.dx;
+  }
+
+  double getRenderAdjustmentY() {
+    return _screenAdjustment.adjustment.dy;
   }
 }

@@ -30,32 +30,33 @@ class FlameSprite extends Sprite {
     this.dimension = dimension;
   }
 
-  void render(Canvas canvas, Camera camera) {
+  void render(Canvas canvas, Camera camera, {bool affectScroll = true}) {
     Paint paint = this.paint ?? Paint();
     Vector3d anchorOffset = getOffsets();
     double localX = x + anchorOffset.x;
     double localY = y + anchorOffset.y + z;
+    double zoom = camera.getZoom();
     if (dimension == Dimension.LEFT) {
       Matrix4 cc = Matrix4.identity()
-        ..translate(x + anchorOffset.x - (camera?.x ?? 0),
-            y + anchorOffset.y + z - (camera?.y ?? 0))
-        ..translate(w, 0)
-        ..rotateY(180.0 * 3.14 / 180);
+        ..translate(
+            camera.getRenderX(x + anchorOffset.x, affectScroll: affectScroll),
+            camera.getRenderY(y + anchorOffset.y + z,
+                affectScroll: affectScroll))
+        ..translate(w * zoom, 0)
+        ..rotateY((180.0 * 3.14 / 180));
 
       paint.imageFilter = ImageFilter.matrix(cc.storage);
-      localX = (camera?.x ?? 0);
-      localY = (camera?.y ?? 0);
-    }
-
-    if (camera != null) {
-      localX -= camera.x;
-      localY -= camera.y;
+      localX = 0;
+      localY = 0;
+    } else {
+      localX = camera.getRenderX(localX, affectScroll: affectScroll);
+      localY = camera.getRenderY(localY, affectScroll: affectScroll);
     }
 
     //TODO: 画面外の場合描画する必要がない
 
-    _flameSprite.renderPosition(canvas, Position(localX, localY),
-        overridePaint: paint);
+    _flameSprite.renderScaled(canvas, Position(localX, localY),
+        scale: camera.getZoom(), overridePaint: paint);
 /*
     canvas.drawRect(
         Rect.fromLTWH(localX, localY - anchorOffset.z, w, h),

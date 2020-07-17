@@ -10,6 +10,7 @@ import 'image/sprite.dart';
 import 'input_event.dart';
 import 'random/native_random_generator.dart';
 import 'random/random_generator.dart';
+import 'screen.dart';
 import 'services/boundary_adjustment_service.dart';
 import '../util/list.dart';
 import '../util/ticker.dart';
@@ -90,22 +91,24 @@ class World {
   InputEventService _inputEventService;
   WorldContext _context;
   Rect3d _worldRect;
+  ScreenAdjustment _screenAdjustment;
   Camera _camera;
   Ticker _ticker;
   RandomGenerator _randomGenerator;
 
   int _randomSeed;
 
-  World(double worldW, double worldH, double worldD, double cameraW,
-      double cameraH, BaseEntityFactory entityFactory,
+  World(double worldW, double worldH, double worldD,
+      ScreenAdjustment screenAdjustment, BaseEntityFactory entityFactory,
       {randomSeed})
       : _entities = ZOrderedCollection(),
         _huds = ZOrderedCollection(),
-        _camera = Camera(cameraW, cameraH, worldW, worldH + worldD),
         _ticker = Ticker(),
         _worldRect = Rect3d.fromSizeAndPosition(
             Size3d(worldW, worldH, worldD), Position3d(0, 0, 0)),
         _boundaryAdjustmentService = BoundaryAdjustmentService() {
+    _screenAdjustment = screenAdjustment;
+    _camera = Camera(_screenAdjustment, worldW, worldH + worldD);
     _randomSeed = randomSeed ?? DateTime.now().microsecondsSinceEpoch;
     _randomGenerator = NativeRandomGenerator(_randomSeed);
     _collisionDetectService = CollisionDetectService(_entities);
@@ -165,6 +168,12 @@ class World {
   /// 画面からのポインタに関するイベントを受け取る
   void onPointerEvent(UiPointerEvent uiPointerEvent) {
     //_pointerEventHandler.handle(uiPointerEvent);
+
+    uiPointerEvent.x =
+        (uiPointerEvent.x / _camera.getZoom() + _camera.getRenderAdjustmentX());
+    uiPointerEvent.y =
+        (uiPointerEvent.y / _camera.getZoom() + _camera.getRenderAdjustmentY());
+
     Offset point = Offset(uiPointerEvent.x, uiPointerEvent.y);
     bool capturedEvent;
 

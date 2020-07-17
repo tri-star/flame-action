@@ -34,7 +34,7 @@ abstract class Sprite {
   AnchorPoint anchor = AnchorPoint.TOP_LEFT;
   ZAnchorPoint zAnchor = ZAnchorPoint.CENTER;
 
-  void render(Canvas canvas, Camera camera);
+  void render(Canvas canvas, Camera camera, {bool affectScroll = true});
   Paint paint;
 
   Vector3d getOffsets() {

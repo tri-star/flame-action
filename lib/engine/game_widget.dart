@@ -4,7 +4,9 @@ import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/sprite.dart';
 import 'package:flame_action/engine/entity/entity.dart';
+import 'package:flame_action/engine/screen.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'entity/base_entity_factory.dart';
 import 'entity/direct_rendering.dart';
@@ -17,30 +19,35 @@ import 'world.dart';
 class GameWidget extends Game {
   bool _initialized = false;
   World _world;
+  double _gameW;
+  double _gameH;
   double _deviceW;
   double _deviceH;
+  ScreenAdjustment _screenAdjustment;
 
   GameWidget()
       : _deviceW = 0,
         _deviceH = 0;
 
-  Future<void> initialize(double worldW, double worldH, double worldD,
-      BaseEntityFactory entityFactory) async {
-    await Flame.util.setLandscape();
+  Future<void> initialize(double gameW, double gameH, double worldW,
+      double worldH, double worldD, BaseEntityFactory entityFactory) async {
     await Flame.util.fullScreen();
+    await Flame.util.setLandscape();
     await Flame.util.initialDimensions();
     Size deviceSize = await Flame.util.initialDimensions();
     _deviceW = max(deviceSize.width, deviceSize.height);
     _deviceH = min(deviceSize.height, deviceSize.width);
+    _gameW = gameW;
+    _gameH = gameH;
+    _screenAdjustment = ScreenAdjustment(_gameW, _gameH, _deviceW, _deviceH);
 
-    _world = World(worldW, worldH, worldD, deviceSize.width, deviceSize.height,
-        entityFactory);
+    _world = World(worldW, worldH, worldD, _screenAdjustment, entityFactory);
     _initialized = true;
   }
 
-  void setBackground(String fileName) {
+  void setBackground(String fileName, double w, double h) {
     _world.setBackground(FlameSprite(Sprite(fileName),
-        x: 0, y: 0, z: 0, d: 1)); // Flameを直接使わないようにする
+        x: 0, y: 0, z: 0, w: w, h: h, d: 1)); // Flameを直接使わないようにする
   }
 
   void addEntity(Entity entity) {
@@ -102,9 +109,21 @@ class GameWidget extends Game {
       }
 
       entity.getSprites().forEach((sprite) {
-        sprite.render(canvas, null);
+        sprite.render(canvas, _world.camera, affectScroll: false);
       });
     });
+
+    canvas.drawRect(
+        Rect.fromLTWH(0, 0, _world.camera.getRenderX(0, affectScroll: false),
+            _world.camera.h),
+        Paint()..color = Colors.black);
+    canvas.drawRect(
+        Rect.fromLTWH(
+            _world.camera.getRenderX(_world.camera.w, affectScroll: false),
+            0,
+            _world.camera.getRenderX(0, affectScroll: false),
+            _world.camera.h),
+        Paint()..color = Colors.black);
   }
 
   void onPointerMove(PointerMoveEvent event) {
