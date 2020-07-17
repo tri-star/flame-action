@@ -24,16 +24,25 @@ class StatusCardRenderer extends Renderer<StatusCard> {
   void render(Canvas canvas, Camera camera, StatusCard subject) {
     double cardOpacity = ((subject.getOpacity() / 100) * CARD_OPACITYT);
 
+    double zoom = camera.getZoom();
     double drawX = subject.getX();
     double drawY = subject.getY();
     canvas.drawRect(
         Rect.fromLTWH(
-            subject.getX(), subject.getY(), subject.getW(), subject.getH()),
+            camera.getRenderX(subject.getX(), affectScroll: false),
+            camera.getRenderY(subject.getY(), affectScroll: false),
+            subject.getW() * zoom,
+            subject.getH() * zoom),
         Paint()..color = Color.fromRGBO(80, 80, 80, cardOpacity));
 
     drawX += 5;
     drawY += 5;
-    canvas.drawRect(Rect.fromLTWH(drawX, drawY, 25, 25),
+    canvas.drawRect(
+        Rect.fromLTWH(
+            camera.getRenderX(drawX, affectScroll: false),
+            camera.getRenderY(drawY, affectScroll: false),
+            25 * zoom,
+            25 * zoom),
         Paint()..color = Color.fromRGBO(200, 200, 200, cardOpacity));
 
     int faceIndex = _faceIndexMapping[subject.getTarget().getEntityName()];
@@ -46,17 +55,26 @@ class StatusCardRenderer extends Renderer<StatusCard> {
       sprite.paint = Paint()
         ..colorFilter = ColorFilter.mode(
             Color.fromRGBO(255, 255, 255, cardOpacity), BlendMode.modulate);
-      sprite.render(canvas, null);
+      sprite.render(canvas, camera, affectScroll: false);
     }
 
     drawX += 30;
 
-    canvas.drawRect(Rect.fromLTWH(drawX, drawY, subject.getW() - 40, 10),
+    canvas.drawRect(
+        Rect.fromLTWH(
+            camera.getRenderX(drawX, affectScroll: false),
+            camera.getRenderY(drawY, affectScroll: false),
+            (subject.getW() - 40) * zoom,
+            10 * zoom),
         Paint()..color = Color.fromRGBO(255, 0, 0, cardOpacity));
 
     double rate = (subject.getTarget() as FightingUnit).getRestHpRate();
     canvas.drawRect(
-        Rect.fromLTWH(drawX, drawY, (subject.getW() - 40) * rate, 10),
+        Rect.fromLTWH(
+            camera.getRenderX(drawX, affectScroll: false),
+            camera.getRenderY(drawY, affectScroll: false),
+            ((subject.getW() - 40) * rate) * zoom,
+            10 * zoom),
         Paint()..color = Color.fromRGBO(0, 255, 0, cardOpacity));
   }
 }
