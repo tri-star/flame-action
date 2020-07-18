@@ -37,6 +37,10 @@ class WorldContext {
     _pendingEntities.add(entity);
   }
 
+  void addHud(Entity entity) {
+    _pendingHuds.add(entity);
+  }
+
   void addUnit(Entity entity) {
     _pendingEntities.add(entity);
     _pendingHuds.add(entityFactory
@@ -118,22 +122,17 @@ class World {
   }
 
   void update(double dt) {
-    //TODO: firstで判定しなくても動作するようにする
-    if (_entities.first == null) {
-      _context.getPendingEntities().forEach((entity) {
-        _entities.add(entity);
-      });
-      _context.clearPendingEntities();
-      return;
-    }
-
     _ticker.tick(dt, () {
       _entities.forEach((entity) {
+        //TODO: 0件の場合にnullが返ってくることを直す
+        if (entity == null) {
+          return;
+        }
         entity.update(_context);
         _boundaryAdjustmentService.adjust(_worldRect, entity);
       });
       _huds.forEach((entity) {
-        entity.update(_context);
+        entity?.update(_context);
       });
       _camera.update();
       _context.getPendingEntities().forEach((entity) {
@@ -178,6 +177,10 @@ class World {
     bool capturedEvent;
 
     _huds.forEach((entity) {
+      if (entity == null) {
+        //TODO: 0件の場合NULLが渡される問題を直す
+        return;
+      }
       capturedEvent = entity is CapturePointerEvent &&
               (entity as CapturePointerEvent)
                   ?.isCapturedPointer(uiPointerEvent) ??
@@ -190,6 +193,10 @@ class World {
       }
     });
     _entities.forEach((entity) {
+      if (entity == null) {
+        //TODO: 0件の場合NULLが渡される問題を直す
+        return;
+      }
       capturedEvent = entity is CapturePointerEvent &&
               (entity as CapturePointerEvent)
                   ?.isCapturedPointer(uiPointerEvent) ??
@@ -202,6 +209,8 @@ class World {
       }
     });
   }
+
+  WorldContext get context => _context;
 
   ZOrderedCollection get entities {
     return _entities;
