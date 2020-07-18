@@ -35,6 +35,9 @@ class CollisionDetectService {
     Rect3d sourceRect = source.getRect();
     Rect3d targetRect;
     _entities.forEach((Entity entity) {
+      if (entity == null) {
+        return;
+      }
       targetRect = entity.getRect();
       if (!(entity.isCollidable())) {
         return;
