@@ -95,10 +95,11 @@ class Enemy extends Entity with FightingUnit {
       vx += event.force?.x ?? 0;
       vy += event.force?.y ?? 0;
       y += vy;
+      int damageValue = context.randomGenerator.getIntBetween(1000, 1500);
       Entity newEntity = context.entityFactory.create(
           'pop_with_gravity_string', x, y, z + 5,
-          options: {'message': '1234'});
-      damage(1234);
+          options: {'message': damageValue.toString()});
+      damage(damageValue.toDouble());
       context.addEntity(newEntity);
     }
     if (event.type == 'collide' &&

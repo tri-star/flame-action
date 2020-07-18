@@ -21,7 +21,7 @@ void main() async {
 
   SpriteFontRegistry().register(
       'default',
-      FlameSpriteFont('damage_number.png', 10, 20, 5, 1,
+      FlameSpriteFont('damage_number.png', 10, 20, 10, 1,
           type: SpriteFontType.NUMBER));
 
   Entity player = entityFactory.create('player', 10, worldH, 40);
