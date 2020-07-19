@@ -8,6 +8,7 @@ import 'package:flame_action/presentation/image/enemy_sprite_resolver.dart';
 import 'package:flame_action/presentation/image/joystick_sprite_resolver.dart';
 import 'package:flame_action/presentation/image/particle_sprite_resolver.dart';
 import 'package:flame_action/presentation/image/start_button_sprite_resolver.dart';
+import 'package:flame_action/presentation/image/title_sprite_resolver.dart';
 import 'package:flame_action/presentation/renderer/status_card_renderer.dart';
 
 import '../engine/entity/entity.dart';
@@ -69,6 +70,9 @@ class EntityFactory extends BaseEntityFactory {
             x: x, y: y);
       case 'start_button':
         return StartButton(newId, key, StartButtonSpriteResolver(), x: x, y: y);
+      case 'title':
+        return BasicObstacle(newId, key, TitleSpriteResolver(),
+            x: x, y: y, z: z);
       case 'pop_with_gravity_string':
         return PopWithGravityString(newId, key, options['message'], x, y, z);
       case 'sprite_letter':

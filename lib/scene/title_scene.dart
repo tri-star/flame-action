@@ -14,7 +14,8 @@ class TitleScene extends Scene {
     double gameW = camera.w;
     double gameH = camera.h;
 
-    context.addHud(entityFactory.create(
-        'start_button', (gameW - 100) / 2, gameH - 100, 0));
+    context.addHud(entityFactory.create('title', (gameW) / 2, gameH - 200, 0));
+    context.addHud(
+        entityFactory.create('start_button', (gameW) / 2, gameH - 100, 0));
   }
 }

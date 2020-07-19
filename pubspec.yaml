@@ -63,6 +63,7 @@ flutter:
     - assets/images/sling_ball.png
     - assets/images/particle_damage01.png
     - assets/images/start_button.png
+    - assets/images/title.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
