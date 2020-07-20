@@ -2,28 +2,33 @@ import 'dart:math';
 
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
-import 'package:flame/sprite.dart';
 import 'package:flame_action/engine/entity/entity.dart';
+import 'package:flame_action/engine/global_event.dart';
 import 'package:flame_action/engine/screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'entity/base_entity_factory.dart';
 import 'entity/direct_rendering.dart';
-import 'presentation/flame/flame_sprite.dart';
 import 'input_event.dart';
+import 'scene.dart';
 import 'world.dart';
 
 /// ユーザーからの入力を受け付け、GameModelに伝える
 /// GameModelの内容をレンダリングする
-class GameWidget extends Game {
+class GameWidget extends Game with GlobalEventListener {
   bool _initialized = false;
+  Scene _scene;
   World _world;
+  double _worldW;
+  double _worldH;
+  double _worldD;
   double _gameW;
   double _gameH;
   double _deviceW;
   double _deviceH;
   ScreenAdjustment _screenAdjustment;
+  BaseEntityFactory _entityFactory;
 
   GameWidget()
       : _deviceW = 0,
@@ -35,19 +40,25 @@ class GameWidget extends Game {
     await Flame.util.setLandscape();
     await Flame.util.initialDimensions();
     Size deviceSize = await Flame.util.initialDimensions();
+    _entityFactory = entityFactory;
     _deviceW = max(deviceSize.width, deviceSize.height);
     _deviceH = min(deviceSize.height, deviceSize.width);
     _gameW = gameW;
     _gameH = gameH;
+    _worldW = worldW;
+    _worldH = worldH;
+    _worldD = worldD;
     _screenAdjustment = ScreenAdjustment(_gameW, _gameH, _deviceW, _deviceH);
 
     _world = World(worldW, worldH, worldD, _screenAdjustment, entityFactory);
+    GlobalEventBus.instance().addListener(this as GlobalEventListener);
     _initialized = true;
   }
 
-  void setBackground(String fileName, double w, double h) {
-    _world.setBackground(FlameSprite(Sprite(fileName),
-        x: 0, y: 0, z: 0, w: w, h: h, d: 1)); // Flameを直接使わないようにする
+  void setScene(Scene newScene) {
+    _scene = newScene;
+    _world =
+        World(_worldW, _worldH, _worldD, _screenAdjustment, _entityFactory);
   }
 
   void addEntity(Entity entity) {
@@ -82,6 +93,12 @@ class GameWidget extends Game {
     if (!_initialized) {
       return;
     }
+
+    if (_scene == null) {
+      _world.update(dt);
+    }
+
+    _scene.update(_world.context, _world.camera);
     _world.update(dt);
   }
 
@@ -91,12 +108,19 @@ class GameWidget extends Game {
       return;
     }
 
-    if (_world.background != null) {
-      _world.background.render(canvas, _world.camera);
+    if (_scene != null) {
+      if (!_scene.isNeedRendering()) {
+        return;
+      }
+    }
+
+    if (_world.context.getBackground() != null) {
+      _world.context.getBackground().render(canvas, _world.camera);
     }
 
     _world.entities.forEach((entity) {
-      entity.getSprites().forEach((sprite) {
+      //TODO: 0件の場合1件目がnullになる問題を解消する
+      entity?.getSprites()?.forEach((sprite) {
         sprite.render(canvas, _world.camera);
       });
     });
@@ -108,7 +132,7 @@ class GameWidget extends Game {
         return;
       }
 
-      entity.getSprites().forEach((sprite) {
+      entity?.getSprites()?.forEach((sprite) {
         sprite.render(canvas, _world.camera, affectScroll: false);
       });
     });
@@ -124,6 +148,8 @@ class GameWidget extends Game {
             _world.camera.getRenderX(0, affectScroll: false),
             _world.camera.h),
         Paint()..color = Colors.black);
+
+    _scene?.render(canvas, _world.camera);
   }
 
   void onPointerMove(PointerMoveEvent event) {
@@ -142,5 +168,16 @@ class GameWidget extends Game {
     final pointerEvent = UiPointerEvent(PointerEventType.END, event.pointer,
         event.position.dx, event.position.dy);
     _world.onPointerEvent(pointerEvent);
+  }
+
+  @override
+  void onGlobalEvent(GlobalEvent event) {
+    switch (event.type) {
+      case 'change_scene':
+        _scene.leave(() {
+          setScene(event.payload['new_scene']);
+        });
+        break;
+    }
   }
 }

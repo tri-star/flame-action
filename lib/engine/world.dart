@@ -3,11 +3,13 @@ import 'dart:ui';
 import 'package:flame_action/engine/entity/entity.dart';
 import 'package:flame_action/engine/entity/base_entity_factory.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
+import 'package:flame/sprite.dart' as Flame;
 
 import 'camera.dart';
 import 'coordinates.dart';
 import 'image/sprite.dart';
 import 'input_event.dart';
+import 'presentation/flame/flame_sprite.dart';
 import 'random/native_random_generator.dart';
 import 'random/random_generator.dart';
 import 'screen.dart';
@@ -17,6 +19,7 @@ import '../util/ticker.dart';
 import 'services/input_event_service.dart';
 
 class WorldContext {
+  Sprite _background;
   ZOrderedCollection entities;
   ZOrderedCollection huds;
   CollisionDetectService collisionDetectService;
@@ -37,11 +40,22 @@ class WorldContext {
     _pendingEntities.add(entity);
   }
 
+  void addHud(Entity entity) {
+    _pendingHuds.add(entity);
+  }
+
   void addUnit(Entity entity) {
     _pendingEntities.add(entity);
     _pendingHuds.add(entityFactory
         .create('status_card', 0, 0, 0, options: {'target': entity}));
   }
+
+  void setBackground(String fileName, double w, double h) {
+    _background = FlameSprite(Flame.Sprite(fileName),
+        x: 0, y: 0, z: 0, w: w, h: h, d: 1); // Flameを直接使わないようにする
+  }
+
+  Sprite getBackground() => _background;
 
   Entity findTaggedFirst(String tag, {bool useCache = false}) {
     if (useCache && _taggedEntities.containsKey(tag)) {
@@ -83,7 +97,6 @@ class WorldContext {
 /// World単位でスローモーションにしたり高速化するなど
 /// 時間軸を変更することが可能で、Worldはゲーム内に複数存在する可能性がある
 class World {
-  Sprite background;
   ZOrderedCollection _entities;
   ZOrderedCollection _huds;
   BoundaryAdjustmentService _boundaryAdjustmentService;
@@ -118,22 +131,17 @@ class World {
   }
 
   void update(double dt) {
-    //TODO: firstで判定しなくても動作するようにする
-    if (_entities.first == null) {
-      _context.getPendingEntities().forEach((entity) {
-        _entities.add(entity);
-      });
-      _context.clearPendingEntities();
-      return;
-    }
-
     _ticker.tick(dt, () {
       _entities.forEach((entity) {
+        //TODO: 0件の場合にnullが返ってくることを直す
+        if (entity == null) {
+          return;
+        }
         entity.update(_context);
         _boundaryAdjustmentService.adjust(_worldRect, entity);
       });
       _huds.forEach((entity) {
-        entity.update(_context);
+        entity?.update(_context);
       });
       _camera.update();
       _context.getPendingEntities().forEach((entity) {
@@ -161,10 +169,6 @@ class World {
     _context.addUnit(entity);
   }
 
-  void setBackground(Sprite _sprite) {
-    background = _sprite;
-  }
-
   /// 画面からのポインタに関するイベントを受け取る
   void onPointerEvent(UiPointerEvent uiPointerEvent) {
     //_pointerEventHandler.handle(uiPointerEvent);
@@ -178,6 +182,10 @@ class World {
     bool capturedEvent;
 
     _huds.forEach((entity) {
+      if (entity == null) {
+        //TODO: 0件の場合NULLが渡される問題を直す
+        return;
+      }
       capturedEvent = entity is CapturePointerEvent &&
               (entity as CapturePointerEvent)
                   ?.isCapturedPointer(uiPointerEvent) ??
@@ -190,6 +198,10 @@ class World {
       }
     });
     _entities.forEach((entity) {
+      if (entity == null) {
+        //TODO: 0件の場合NULLが渡される問題を直す
+        return;
+      }
       capturedEvent = entity is CapturePointerEvent &&
               (entity as CapturePointerEvent)
                   ?.isCapturedPointer(uiPointerEvent) ??
@@ -202,6 +214,8 @@ class World {
       }
     });
   }
+
+  WorldContext get context => _context;
 
   ZOrderedCollection get entities {
     return _entities;
