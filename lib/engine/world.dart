@@ -3,11 +3,13 @@ import 'dart:ui';
 import 'package:flame_action/engine/entity/entity.dart';
 import 'package:flame_action/engine/entity/base_entity_factory.dart';
 import 'package:flame_action/engine/services/collision_detect_service.dart';
+import 'package:flame/sprite.dart' as Flame;
 
 import 'camera.dart';
 import 'coordinates.dart';
 import 'image/sprite.dart';
 import 'input_event.dart';
+import 'presentation/flame/flame_sprite.dart';
 import 'random/native_random_generator.dart';
 import 'random/random_generator.dart';
 import 'screen.dart';
@@ -17,6 +19,7 @@ import '../util/ticker.dart';
 import 'services/input_event_service.dart';
 
 class WorldContext {
+  Sprite _background;
   ZOrderedCollection entities;
   ZOrderedCollection huds;
   CollisionDetectService collisionDetectService;
@@ -46,6 +49,13 @@ class WorldContext {
     _pendingHuds.add(entityFactory
         .create('status_card', 0, 0, 0, options: {'target': entity}));
   }
+
+  void setBackground(String fileName, double w, double h) {
+    _background = FlameSprite(Flame.Sprite(fileName),
+        x: 0, y: 0, z: 0, w: w, h: h, d: 1); // Flameを直接使わないようにする
+  }
+
+  Sprite getBackground() => _background;
 
   Entity findTaggedFirst(String tag, {bool useCache = false}) {
     if (useCache && _taggedEntities.containsKey(tag)) {
@@ -87,7 +97,6 @@ class WorldContext {
 /// World単位でスローモーションにしたり高速化するなど
 /// 時間軸を変更することが可能で、Worldはゲーム内に複数存在する可能性がある
 class World {
-  Sprite background;
   ZOrderedCollection _entities;
   ZOrderedCollection _huds;
   BoundaryAdjustmentService _boundaryAdjustmentService;
@@ -158,10 +167,6 @@ class World {
 
   void addUnit(Entity entity) {
     _context.addUnit(entity);
-  }
-
-  void setBackground(Sprite _sprite) {
-    background = _sprite;
   }
 
   /// 画面からのポインタに関するイベントを受け取る

@@ -79,9 +79,6 @@ abstract class Scene {
         break;
       case SceneState.LEAVING:
         if (leavingWipe != null) {
-          if (leavingWipe.isDone()) {
-            state = SceneState.LEAVE;
-          }
           leavingWipe.render(canvas, camera);
         }
         break;

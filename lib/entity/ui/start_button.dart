@@ -1,4 +1,7 @@
+import 'package:flame_action/scene/fight_scene.dart';
+
 import '../../engine/entity/entity.dart';
+import '../../engine/global_event.dart';
 import '../../engine/image/sprite_resolver.dart';
 import '../../engine/input_event.dart';
 import '../../engine/world.dart';
@@ -41,6 +44,8 @@ class StartButton extends Entity
       case PointerEventType.START:
         capturePointer(event);
         setState('pressed');
+        GlobalEventBus.instance().notify(
+            GlobalEvent('change_scene', payload: {'new_scene': FightScene()}));
         break;
       case PointerEventType.END:
         setState('neutral');

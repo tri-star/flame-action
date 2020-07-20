@@ -2,22 +2,21 @@ import 'dart:math';
 
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
-import 'package:flame/sprite.dart';
 import 'package:flame_action/engine/entity/entity.dart';
+import 'package:flame_action/engine/global_event.dart';
 import 'package:flame_action/engine/screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'entity/base_entity_factory.dart';
 import 'entity/direct_rendering.dart';
-import 'presentation/flame/flame_sprite.dart';
 import 'input_event.dart';
 import 'scene.dart';
 import 'world.dart';
 
 /// ユーザーからの入力を受け付け、GameModelに伝える
 /// GameModelの内容をレンダリングする
-class GameWidget extends Game {
+class GameWidget extends Game with GlobalEventListener {
   bool _initialized = false;
   Scene _scene;
   World _world;
@@ -52,6 +51,7 @@ class GameWidget extends Game {
     _screenAdjustment = ScreenAdjustment(_gameW, _gameH, _deviceW, _deviceH);
 
     _world = World(worldW, worldH, worldD, _screenAdjustment, entityFactory);
+    GlobalEventBus.instance().addListener(this as GlobalEventListener);
     _initialized = true;
   }
 
@@ -59,11 +59,6 @@ class GameWidget extends Game {
     _scene = newScene;
     _world =
         World(_worldW, _worldH, _worldD, _screenAdjustment, _entityFactory);
-  }
-
-  void setBackground(String fileName, double w, double h) {
-    _world.setBackground(FlameSprite(Sprite(fileName),
-        x: 0, y: 0, z: 0, w: w, h: h, d: 1)); // Flameを直接使わないようにする
   }
 
   void addEntity(Entity entity) {
@@ -119,8 +114,8 @@ class GameWidget extends Game {
       }
     }
 
-    if (_world.background != null) {
-      _world.background.render(canvas, _world.camera);
+    if (_world.context.getBackground() != null) {
+      _world.context.getBackground().render(canvas, _world.camera);
     }
 
     _world.entities.forEach((entity) {
@@ -173,5 +168,16 @@ class GameWidget extends Game {
     final pointerEvent = UiPointerEvent(PointerEventType.END, event.pointer,
         event.position.dx, event.position.dy);
     _world.onPointerEvent(pointerEvent);
+  }
+
+  @override
+  void onGlobalEvent(GlobalEvent event) {
+    switch (event.type) {
+      case 'change_scene':
+        _scene.leave(() {
+          setScene(event.payload['new_scene']);
+        });
+        break;
+    }
   }
 }
