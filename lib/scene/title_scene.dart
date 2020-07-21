@@ -2,7 +2,7 @@ import '../engine/entity/base_entity_factory.dart';
 import '../engine/world.dart';
 import '../engine/presentation/wipe/wipe.dart';
 import '../engine/camera.dart';
-import '../engine/scene.dart';
+import '../engine/scene/scene.dart';
 
 class TitleScene extends Scene {
   TitleScene(Wipe enteringWipe, Wipe leavingWipe)

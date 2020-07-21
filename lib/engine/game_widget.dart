@@ -11,7 +11,7 @@ import 'package:flutter/widgets.dart';
 import 'entity/base_entity_factory.dart';
 import 'entity/direct_rendering.dart';
 import 'input_event.dart';
-import 'scene.dart';
+import 'scene/scene.dart';
 import 'world.dart';
 
 /// ユーザーからの入力を受け付け、GameModelに伝える

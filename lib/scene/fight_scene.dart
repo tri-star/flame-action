@@ -6,7 +6,7 @@ import 'package:flame_action/entity/entity_factory.dart';
 import '../engine/image/sprite_font.dart';
 
 import '../engine/camera.dart';
-import '../engine/scene.dart';
+import '../engine/scene/scene.dart';
 import '../engine/world.dart';
 
 class FightScene extends Scene {

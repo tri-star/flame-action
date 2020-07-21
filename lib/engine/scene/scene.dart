@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 
-import 'camera.dart';
-import 'presentation/wipe/wipe.dart';
-import 'world.dart';
+import '../camera.dart';
+import '../presentation/wipe/wipe.dart';
+import '../world.dart';
 
 enum SceneState {
   /// 初期状態(データのロードなど)
