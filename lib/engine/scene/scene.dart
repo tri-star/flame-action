@@ -53,6 +53,7 @@ abstract class Scene {
         if (!(enteringWipe?.isDone() ?? true)) {
           enteringWipe?.update();
         }
+        onActiveUpdate(context, camera);
         break;
       case SceneState.LEAVING:
         if (leavingWipe != null) {
@@ -86,6 +87,10 @@ abstract class Scene {
         break;
     }
   }
+
+  /// アクティブな間に呼び出される処理
+  /// サブクラス側で拡張する想定
+  void onActiveUpdate(WorldContext context, Camera camera) {}
 
   bool isActive() {
     return state == SceneState.ACTIVE;
