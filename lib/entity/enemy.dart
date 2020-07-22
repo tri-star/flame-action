@@ -2,7 +2,6 @@ import 'package:flame_action/domain/behaviour_tree/behaviour_executor.dart';
 import 'package:flame_action/domain/behaviour_tree/behaviour_node.dart';
 import 'package:flame_action/domain/behaviour_tree/behaviour_plan.dart';
 import 'package:flame_action/domain/behaviour_tree/behaviour_tree_builder.dart';
-import 'package:flame_action/engine/coordinates.dart';
 import 'package:flame_action/engine/entity/figting_unit.dart';
 import 'package:flame_action/engine/image/animation.dart';
 import 'package:flame_action/engine/image/sprite_resolver.dart';
@@ -36,17 +35,20 @@ class Enemy extends Entity with FightingUnit {
     this.collidableFlag = true;
     this.maxHp = maxHp;
     this.hp = maxHp;
+    this.tags = ['enemy'];
   }
 
   void update(WorldContext context) {
     super.update(context);
 
-    if (_behaviourPlan == null || _behaviourPlan.isDone()) {
-      _behaviourPlan = _behaviourExecutor?.decidePlan(context, this);
+    if (!isDead() && !isDisposed()) {
+      if (_behaviourPlan == null || _behaviourPlan.isDone()) {
+        _behaviourPlan = _behaviourExecutor?.decidePlan(context, this);
+      }
+      _behaviourPlan?.execute(context, this);
     }
-    _behaviourPlan?.execute(context, this);
 
-    if (state != 'dead' && isDead()) {
+    if (state != 'dead' && !isDisposed() && isDead()) {
       disableGravity();
       collidableFlag = false;
       setState('dead');
@@ -63,6 +65,9 @@ class Enemy extends Entity with FightingUnit {
           return false;
         }
         if (state == 'damage') {
+          return false;
+        }
+        if (state == 'dead') {
           return false;
         }
         break;

@@ -1,17 +1,22 @@
 import 'package:flame_action/engine/entity/entity.dart';
 import 'package:flame_action/engine/presentation/flame/flame_sprite_font.dart';
 import 'package:flame_action/engine/presentation/wipe/fading_wipe.dart';
+import 'package:flame_action/engine/scene/stage_scene.dart';
+import 'package:flame_action/engine/stage/stage.dart';
 import 'package:flame_action/entity/entity_factory.dart';
 
 import '../engine/image/sprite_font.dart';
 
 import '../engine/camera.dart';
-import '../engine/scene.dart';
 import '../engine/world.dart';
 
-class FightScene extends Scene {
-  FightScene()
-      : super(enteringWipe: FadeInWipe(1.5), leavingWipe: FadeOutWipe(2.0));
+class FightScene extends StageScene {
+  Stage _stage;
+
+  FightScene(Stage stage)
+      : _stage = stage,
+        super(stage,
+            enteringWipe: FadeInWipe(1.5), leavingWipe: FadeOutWipe(2.0));
 
   @override
   Future<void> onInitialize(WorldContext context, Camera camera) async {
@@ -28,12 +33,8 @@ class FightScene extends Scene {
     double gameH = camera.h;
 
     Entity player = entityFactory.create('player', 10, worldH, 40);
-    Entity enemy = entityFactory.create('enemy01', 600, worldH, 50);
-    Entity enemy2 = entityFactory.create('enemy01', 700, worldH, 10);
     context.setBackground('background01.png', 2000, 300);
     context.addUnit(player);
-    context.addUnit(enemy);
-    context.addUnit(enemy2);
     context.addEntity(entityFactory.create('ash_tray', 400, worldH, 50));
     context.addEntity(entityFactory.create('dust_box01', 850, worldH, 20));
     context.addEntity(
