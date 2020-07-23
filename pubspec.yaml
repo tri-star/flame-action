@@ -52,6 +52,9 @@ flutter:
     - assets/images/enemy01_state_damage.png
     - assets/images/enemy01_state_walk.png
     - assets/images/enemy01_state_attack.png
+    - assets/images/enemy02_walk.png
+    - assets/images/enemy02_damage.png
+    - assets/images/enemy02_attack.png
     - assets/images/joystick_base.png
     - assets/images/joystick_knob.png
     - assets/images/action-button.png

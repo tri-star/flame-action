@@ -1,9 +1,11 @@
+import 'package:flame_action/domain/behaviours/jimmy/jimmy_behaviour.dart';
 import 'package:flame_action/domain/behaviours/sling_shot/sling_shot_behaviour.dart';
 import 'package:flame_action/engine/image/sprite_string/pop_with_gravity_string.dart';
 import 'package:flame_action/engine/image/sprite_string/sprite_letter.dart';
 import 'package:flame_action/entity/generic_bullet.dart';
 import 'package:flame_action/entity/ui/start_button.dart';
 import 'package:flame_action/presentation/image/action_button_sprite_resolver.dart';
+import 'package:flame_action/presentation/image/enemy02_sprite_resolver.dart';
 import 'package:flame_action/presentation/image/enemy_sprite_resolver.dart';
 import 'package:flame_action/presentation/image/joystick_sprite_resolver.dart';
 import 'package:flame_action/presentation/image/particle_sprite_resolver.dart';
@@ -19,6 +21,7 @@ import '../presentation/image/player_sprite_resolver.dart';
 import 'basic_obstacle.dart';
 import 'action_button.dart';
 import 'enemy.dart';
+import 'enemy2.dart';
 import 'ground.dart';
 import 'particle/general_particle.dart';
 import 'player.dart';
@@ -36,6 +39,10 @@ class EntityFactory extends BaseEntityFactory {
       case 'enemy01':
         return Enemy(newId, key, EnemySpriteResolver(),
             SlingShotBehaviourBuilder(), 4000,
+            x: x, y: y, z: z);
+      case 'enemy02':
+        return Enemy2(
+            newId, key, Enemy02SpriteResolver(), JimmyBehaviourBuilder(), 4000,
             x: x, y: y, z: z);
       case 'status_card':
         return StatusCard(newId, options['target'], StatusCardRenderer(),

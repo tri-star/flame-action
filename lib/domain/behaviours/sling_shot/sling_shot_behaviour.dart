@@ -1,5 +1,3 @@
-import 'package:flame_action/domain/behaviour_tree/behaviour_condition.dart';
-
 import '../../behaviours/conditions/player_conditions.dart';
 import '../../behaviour_tree/behaviour_node.dart';
 import '../../behaviour_tree/behaviour_tree_builder.dart';

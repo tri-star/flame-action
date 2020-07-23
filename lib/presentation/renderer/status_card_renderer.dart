@@ -10,7 +10,11 @@ import '../../engine/presentation/renderer.dart';
 class StatusCardRenderer extends Renderer<StatusCard> {
   final double CARD_OPACITYT = 0.8;
 
-  final Map<String, int> _faceIndexMapping = {'player': 0, 'enemy01': 1};
+  final Map<String, int> _faceIndexMapping = {
+    'player': 0,
+    'enemy01': 1,
+    'enemy02': 2
+  };
 
   static FlameSpriteSheet _faceSpriteSheet;
 

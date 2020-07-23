@@ -9,11 +9,13 @@ class ConstantAmountStrategy extends SpawnStrategy {
   TimeoutTimer _statTimer;
   int _enemyCount;
   int _threshold;
+  List<String> _enemies;
 
   ConstantAmountStrategy(int threshold)
       : _statTimer = TimeoutTimer(1.0),
         _enemyCount = 0,
-        _threshold = threshold;
+        _threshold = threshold,
+        _enemies = ['enemy01', 'enemy02'];
 
   @override
   void update(WorldContext context, Camera camera) {
@@ -43,8 +45,9 @@ class ConstantAmountStrategy extends SpawnStrategy {
     spawnZ = context.randomGenerator.getIntBetween(0, 100).toDouble();
 
     // TODO: 敵の一覧を初期化時に渡して複数種類生成出来るようにする
-    context
-        .addUnit(context.entityFactory.create('enemy01', spawnX, 200, spawnZ));
+    int enemyIndex = context.randomGenerator.getIntBetween(0, _enemies.length);
+    context.addUnit(context.entityFactory
+        .create(_enemies[enemyIndex], spawnX, 200, spawnZ));
 
     _statTimer.reset();
   }

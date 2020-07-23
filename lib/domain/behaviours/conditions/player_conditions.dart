@@ -30,3 +30,21 @@ class BehaviourConditionPlayerXIsGreaterThan extends BehaviourCondition {
     return (player.getX() - entity.getX()).abs() >= distance;
   }
 }
+
+class BehaviourConditionContactWithPlayer extends BehaviourCondition {
+  double distance;
+
+  BehaviourConditionContactWithPlayer({this.distance}) {
+    assert(distance != null);
+  }
+
+  @override
+  bool isSatisfied(WorldContext context, Entity entity) {
+    Entity player = context.findTaggedFirst('player', useCache: true);
+
+    bool isSatisfiedX = (player.getX() - entity.getX()).abs() <= distance;
+    bool isSatisfiedZ = (player.getZ() - entity.getZ()).abs() <= distance;
+
+    return isSatisfiedX && isSatisfiedZ;
+  }
+}
