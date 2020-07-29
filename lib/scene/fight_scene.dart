@@ -1,4 +1,5 @@
 import 'package:flame_action/engine/entity/entity.dart';
+import 'package:flame_action/engine/global_event.dart';
 import 'package:flame_action/engine/presentation/flame/flame_sprite_font.dart';
 import 'package:flame_action/engine/presentation/wipe/fading_wipe.dart';
 import 'package:flame_action/engine/scene/stage_scene.dart';
@@ -6,12 +7,12 @@ import 'package:flame_action/engine/stage/stage.dart';
 import 'package:flame_action/entity/entity_factory.dart';
 
 import '../engine/image/sprite_font.dart';
-
 import '../engine/camera.dart';
 import '../engine/world.dart';
+import '../stage/action_stage.dart';
 
-class FightScene extends StageScene {
-  Stage _stage;
+class FightScene extends StageScene with GlobalEventListener {
+  ActionStage _stage;
 
   FightScene(Stage stage)
       : _stage = stage,
@@ -47,5 +48,16 @@ class FightScene extends StageScene {
     context.addHud(entityFactory.create('status_card_organizer', 0, 0, 0));
 
     camera.followEntity(player);
+
+    GlobalEventBus.instance().addListener(this);
+  }
+
+  @override
+  void onGlobalEvent(GlobalEvent event) {
+    switch (event.type) {
+      case 'kill':
+        _stage.addKillCount(1);
+        break;
+    }
   }
 }

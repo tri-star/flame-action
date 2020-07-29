@@ -1,5 +1,6 @@
 import 'package:flame_action/engine/coordinates.dart';
 import 'package:flame_action/engine/entity/figting_unit.dart';
+import 'package:flame_action/engine/global_event.dart';
 
 import '../../engine/entity/entity.dart';
 import '../../engine/entity/entity_command.dart';
@@ -51,6 +52,11 @@ class DamageCommand extends EntityCommand {
     target.setState('damage');
     (target as FightingUnit).damage(damage.toDouble());
     target.addForce(force.x, force.y, force.z);
+
+    if ((target as FightingUnit).isDead()) {
+      GlobalEventBus.instance().notify(GlobalEvent('kill'));
+    }
+
     return true;
   }
 }

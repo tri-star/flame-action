@@ -2,6 +2,7 @@ import 'package:flame_action/domain/behaviour_tree/behaviour_executor.dart';
 import 'package:flame_action/domain/behaviour_tree/behaviour_node.dart';
 import 'package:flame_action/domain/behaviour_tree/behaviour_plan.dart';
 import 'package:flame_action/domain/behaviour_tree/behaviour_tree_builder.dart';
+import 'package:flame_action/domain/command/basic_commands.dart';
 import 'package:flame_action/engine/coordinates.dart';
 import 'package:flame_action/engine/entity/figting_unit.dart';
 import 'package:flame_action/engine/image/animation.dart';
@@ -97,15 +98,11 @@ class Enemy2 extends Entity with FightingUnit {
   void onCollide(WorldContext context, CollisionEvent event) {
     super.onCollide(context, event);
     if (event.type == 'attack') {
-      setState('damage');
-      vx += event.force?.x ?? 0;
-      vy += event.force?.y ?? 0;
-      y += vy;
       int damageValue = context.randomGenerator.getIntBetween(1000, 1500);
+      DamageCommand(this, damageValue, force: event.force).execute();
       Entity newEntity = context.entityFactory.create(
           'pop_with_gravity_string', x, y, z + 5,
           options: {'message': damageValue.toString()});
-      damage(damageValue.toDouble());
       context.addEntity(newEntity);
     }
     if (event.type == 'collide' &&
