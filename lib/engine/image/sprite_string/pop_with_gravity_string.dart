@@ -24,10 +24,12 @@ class PopWithGravityString extends SpriteString {
 
   PopWithGravityString(
       int id, String entityName, String message, double x, double y, double z,
-      {String fontName})
-      : super(id, entityName, message, x, y, z, fontName: fontName) {
+      {String fontName, String layer})
+      : super(id, entityName, message, x, y, z,
+            fontName: fontName, layer: layer) {
     assert(message != null && message != '');
 
+    this.layer = layer ?? 'default';
     _letters = message.split('');
     _letterTimers = List<TimeoutTimer>();
     _timer = TimeoutTimer(LETTER_SPEED);

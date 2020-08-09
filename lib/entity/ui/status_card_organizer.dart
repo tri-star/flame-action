@@ -16,12 +16,13 @@ class StatusCardOrganizer extends Entity {
   StatusCardOrganizer(int id) {
     this.id = id;
     this.entityName = 'status_card_organizer';
+    this.layer = 'hud';
     this._cards = Map<int, CardPosition>();
   }
 
   @override
   void update(WorldContext context) {
-    context.huds.forEach((entity) {
+    context.entities.forEach((entity) {
       if ((entity is StatusCard) && !_cards.containsKey(entity.getId())) {
         _cards[entity.getId()] = CardPosition(entity, 0);
       }
