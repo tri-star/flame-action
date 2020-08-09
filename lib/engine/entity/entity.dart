@@ -44,6 +44,10 @@ class Entity {
   @protected
   String state = 'neutral';
 
+  /// レンダリング先のレイヤー名。
+  @protected
+  String layer = 'default';
+
   @protected
   SpriteResolver spriteResolver;
 
@@ -118,6 +122,7 @@ class Entity {
 
   int getId() => id;
   String getEntityName() => entityName;
+  String getLayer() => layer;
   double getX() => x;
   double getY() => y;
   double getZ() => z;
@@ -231,6 +236,10 @@ class Entity {
   }
 
   void setDimension(Dimension newDimension) => dimension = newDimension;
+
+  void setLayer(String layer) {
+    this.layer = layer;
+  }
 
   /// Entityを削除可能な状態にする
   void dispose() {

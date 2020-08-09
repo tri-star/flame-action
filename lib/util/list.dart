@@ -10,6 +10,9 @@ class ZOrderedCollection extends Iterable<Entity> {
   @override
   Iterator<Entity> get iterator => ZOrderedListIterator(_list);
 
+  Iterable<Entity> whereLayer(String layer) =>
+      where((entity) => (entity?.getLayer() ?? '') == layer);
+
   void add(Entity entity) {
     _list.add(entity);
   }

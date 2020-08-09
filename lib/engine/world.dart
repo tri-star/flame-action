@@ -21,19 +21,16 @@ import 'services/input_event_service.dart';
 class WorldContext {
   Sprite _background;
   ZOrderedCollection entities;
-  ZOrderedCollection huds;
   CollisionDetectService collisionDetectService;
   InputEventService inputEventService;
   List<Entity> _pendingEntities;
-  List<Entity> _pendingHuds;
   Map<String, Entity> _taggedEntities;
   BaseEntityFactory entityFactory;
   RandomGenerator randomGenerator;
 
-  WorldContext(this.collisionDetectService, this.entities, this.huds,
-      this.entityFactory, this.inputEventService, this.randomGenerator)
+  WorldContext(this.collisionDetectService, this.entities, this.entityFactory,
+      this.inputEventService, this.randomGenerator)
       : _pendingEntities = List<Entity>(),
-        _pendingHuds = List<Entity>(),
         _taggedEntities = Map<String, Entity>();
 
   void addEntity(Entity entity) {
@@ -41,12 +38,13 @@ class WorldContext {
   }
 
   void addHud(Entity entity) {
-    _pendingHuds.add(entity);
+    entity.setLayer('hud');
+    _pendingEntities.add(entity);
   }
 
   void addUnit(Entity entity) {
     _pendingEntities.add(entity);
-    _pendingHuds.add(entityFactory
+    _pendingEntities.add(entityFactory
         .create('status_card', 0, 0, 0, options: {'target': entity}));
   }
 
@@ -79,16 +77,8 @@ class WorldContext {
     return _pendingEntities;
   }
 
-  List<Entity> getPendingHuds() {
-    return _pendingHuds;
-  }
-
   void clearPendingEntities() {
     _pendingEntities.clear();
-  }
-
-  void clearPendingHuds() {
-    _pendingHuds.clear();
   }
 }
 
@@ -98,7 +88,6 @@ class WorldContext {
 /// 時間軸を変更することが可能で、Worldはゲーム内に複数存在する可能性がある
 class World {
   ZOrderedCollection _entities;
-  ZOrderedCollection _huds;
   BoundaryAdjustmentService _boundaryAdjustmentService;
   CollisionDetectService _collisionDetectService;
   InputEventService _inputEventService;
@@ -115,7 +104,6 @@ class World {
       ScreenAdjustment screenAdjustment, BaseEntityFactory entityFactory,
       {randomSeed})
       : _entities = ZOrderedCollection(),
-        _huds = ZOrderedCollection(),
         _ticker = Ticker(),
         _worldRect = Rect3d.fromSizeAndPosition(
             Size3d(worldW, worldH, worldD), Position3d(0, 0, 0)),
@@ -125,14 +113,14 @@ class World {
     _randomSeed = randomSeed ?? DateTime.now().microsecondsSinceEpoch;
     _randomGenerator = NativeRandomGenerator(_randomSeed);
     _collisionDetectService = CollisionDetectService(_entities);
-    _inputEventService = InputEventService(_entities, _huds);
-    _context = WorldContext(_collisionDetectService, _entities, _huds,
-        entityFactory, _inputEventService, _randomGenerator);
+    _inputEventService = InputEventService(_entities);
+    _context = WorldContext(_collisionDetectService, _entities, entityFactory,
+        _inputEventService, _randomGenerator);
   }
 
   void update(double dt) {
     _ticker.tick(dt, () {
-      _entities.forEach((entity) {
+      _entities.whereLayer('default').forEach((entity) {
         //TODO: 0件の場合にnullが返ってくることを直す
         if (entity == null) {
           return;
@@ -140,20 +128,15 @@ class World {
         entity.update(_context);
         _boundaryAdjustmentService.adjust(_worldRect, entity);
       });
-      _huds.forEach((entity) {
+      _entities.whereLayer('hud').forEach((entity) {
         entity?.update(_context);
       });
       _camera.update();
       _context.getPendingEntities().forEach((entity) {
         _entities.add(entity);
       });
-      _context.getPendingHuds().forEach((entity) {
-        _huds.add(entity);
-      });
       _context.clearPendingEntities();
-      _context.clearPendingHuds();
       _entities.sync();
-      _huds.sync();
     });
   }
 
@@ -162,7 +145,7 @@ class World {
   }
 
   void addHud(Entity entity) {
-    _huds.add(entity);
+    _context.addHud(entity);
   }
 
   void addUnit(Entity entity) {
@@ -181,7 +164,7 @@ class World {
     Offset point = Offset(uiPointerEvent.x, uiPointerEvent.y);
     bool capturedEvent;
 
-    _huds.forEach((entity) {
+    _entities.whereLayer('hud').forEach((entity) {
       if (entity == null) {
         //TODO: 0件の場合NULLが渡される問題を直す
         return;
@@ -197,7 +180,7 @@ class World {
         }
       }
     });
-    _entities.forEach((entity) {
+    _entities.whereLayer('default').forEach((entity) {
       if (entity == null) {
         //TODO: 0件の場合NULLが渡される問題を直す
         return;
@@ -221,6 +204,5 @@ class World {
     return _entities;
   }
 
-  ZOrderedCollection get huds => _huds;
   Camera get camera => _camera;
 }

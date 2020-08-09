@@ -10,7 +10,7 @@ class FlameSpriteFont extends SpriteFont {
   SpriteSheet _spriteSheet;
 
   FlameSpriteFont(String fileName, double w, double h, int cols, int rows,
-      {SpriteFontType type = SpriteFontType.CHARACTER}) {
+      {SpriteFontType type = SpriteFontType.CHARACTER, String layer}) {
     _spriteSheet = SpriteSheet(
       imageName: fileName,
       textureWidth: w.toInt(),

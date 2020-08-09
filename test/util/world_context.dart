@@ -11,21 +11,17 @@ class WorldContextUtil {
   static WorldContext create(
       {CollisionDetectService collisionDetectService,
       ZOrderedCollection entities,
-      ZOrderedCollection huds,
       BaseEntityFactory entityFactory,
       InputEventService inputEventService,
       RandomGenerator randomGenerator}) {
     if (entities == null) {
       entities = ZOrderedCollection();
     }
-    if (huds == null) {
-      huds = ZOrderedCollection();
-    }
     if (collisionDetectService == null) {
       collisionDetectService = new CollisionDetectService(entities);
     }
     if (inputEventService == null) {
-      inputEventService = new InputEventService(entities, ZOrderedCollection());
+      inputEventService = new InputEventService(entities);
     }
     if (entityFactory == null) {
       entityFactory = EntityFactory();
@@ -33,7 +29,7 @@ class WorldContextUtil {
     if (randomGenerator == null) {
       randomGenerator = NativeRandomGenerator(null);
     }
-    return WorldContext(collisionDetectService, entities, huds, entityFactory,
+    return WorldContext(collisionDetectService, entities, entityFactory,
         inputEventService, randomGenerator);
   }
 }

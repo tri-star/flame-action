@@ -12,6 +12,7 @@ class ActionButton extends Entity
       {double x, double y}) {
     this.id = id;
     this.entityName = entityName;
+    this.layer = 'hud';
     this.x = x;
     this.y = y;
     this.z = 0;

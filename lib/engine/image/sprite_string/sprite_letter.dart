@@ -17,6 +17,7 @@ class SpriteLetter extends Entity {
   SpriteLetter(
       int id, String entityName, String char, double x, double y, double z,
       {String fontName,
+      String layer,
       bool gravityFlag = false,
       bool collidableFlag = false,
       double bounceFactor = 0})
@@ -28,6 +29,7 @@ class SpriteLetter extends Entity {
     this.x = x;
     this.y = y;
     this.z = z;
+    this.layer = layer ?? 'default';
     this.bounceFactor = bounceFactor ?? 0;
     this.gravityFlag = gravityFlag ?? false;
     this.collidableFlag = collidableFlag ?? false;

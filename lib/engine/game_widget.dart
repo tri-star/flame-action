@@ -118,13 +118,13 @@ class GameWidget extends Game with GlobalEventListener {
       _world.context.getBackground().render(canvas, _world.camera);
     }
 
-    _world.entities.forEach((entity) {
+    _world.entities.whereLayer('default').forEach((entity) {
       //TODO: 0件の場合1件目がnullになる問題を解消する
       entity?.getSprites()?.forEach((sprite) {
         sprite.render(canvas, _world.camera);
       });
     });
-    _world.huds.forEach((entity) {
+    _world.entities.whereLayer('hud').forEach((entity) {
       if (entity is DirectRendering) {
         (entity as DirectRendering)
             .getRenderer()

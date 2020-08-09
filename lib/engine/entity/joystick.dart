@@ -19,6 +19,7 @@ class JoyStick extends Entity
       {String entityName, double x, double y}) {
     this.id = id;
     this.entityName = entityName ?? 'joystick';
+    this.layer = 'hud';
     this.x = x;
     this.y = y;
     this.z = 0;
