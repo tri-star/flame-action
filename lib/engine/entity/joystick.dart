@@ -66,25 +66,25 @@ class JoyStick extends Entity
         break;
       case PointerEventType.END:
         InputMoveEvent inputEvent = InputMoveEvent(distanceX: 0, distanceY: 0);
-        context.inputEventService.notifyMoveEvent(inputEvent);
+        context.inputEventService.notifyMoveEvent(context, inputEvent);
         break;
 
       case PointerEventType.UPDATE:
         InputMoveEvent inputEvent = _getMoveEvent(event.x, event.y);
-        context.inputEventService.notifyMoveEvent(inputEvent);
+        context.inputEventService.notifyMoveEvent(context, inputEvent);
         break;
     }
   }
 
   /// ゲーム用のInputMoveEventを受け取った時の処理
   @override
-  onInputMove(InputMoveEvent event) {
+  onInputMove(WorldContext context, InputMoveEvent event) {
     _knobSprite.x = _baseSprite.x + event.distanceX;
     _knobSprite.y = _baseSprite.y + event.distanceY;
   }
 
   @override
-  onInputAction(InputActionEvent event) {}
+  onInputAction(WorldContext context, InputActionEvent event) {}
 
   ///UI上のポインタの位置をゲーム用の移動距離に変換し、InputMoveEventを生成する
   InputMoveEvent _getMoveEvent(double x, double y) {

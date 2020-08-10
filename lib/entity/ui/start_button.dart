@@ -56,8 +56,8 @@ class StartButton extends Entity
   }
 
   @override
-  onInputMove(InputMoveEvent event) {}
+  onInputMove(WorldContext context, InputMoveEvent event) {}
 
   @override
-  onInputAction(InputActionEvent event) {}
+  onInputAction(WorldContext context, InputActionEvent event) {}
 }

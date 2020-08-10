@@ -42,7 +42,7 @@ class Enemy2 extends Entity with FightingUnit {
   void update(WorldContext context) {
     super.update(context);
 
-    if (!isDead() && !isDisposed()) {
+    if (context.canControl() && !isDead() && !isDisposed()) {
       if (_behaviourPlan == null || _behaviourPlan.isDone()) {
         _behaviourPlan = _behaviourExecutor?.decidePlan(context, this);
       }

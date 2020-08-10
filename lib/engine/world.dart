@@ -27,11 +27,13 @@ class WorldContext {
   Map<String, Entity> _taggedEntities;
   BaseEntityFactory entityFactory;
   RandomGenerator randomGenerator;
+  bool _canControl;
 
   WorldContext(this.collisionDetectService, this.entities, this.entityFactory,
       this.inputEventService, this.randomGenerator)
       : _pendingEntities = List<Entity>(),
-        _taggedEntities = Map<String, Entity>();
+        _taggedEntities = Map<String, Entity>(),
+        _canControl = true;
 
   void addEntity(Entity entity) {
     _pendingEntities.add(entity);
@@ -79,6 +81,16 @@ class WorldContext {
 
   void clearPendingEntities() {
     _pendingEntities.clear();
+  }
+
+  bool canControl() => _canControl;
+
+  void disableControl() {
+    _canControl = false;
+  }
+
+  void enableControl() {
+    _canControl = true;
   }
 }
 

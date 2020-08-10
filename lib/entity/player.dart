@@ -24,7 +24,10 @@ class Player extends Entity with FightingUnit implements GameInputListener {
   }
 
   @override
-  onInputMove(InputMoveEvent event) {
+  onInputMove(WorldContext context, InputMoveEvent event) {
+    if (!context.canControl()) {
+      return;
+    }
     if (event.distanceX < -1) {
       if (changeState('walk')) {
         vx = -2;
@@ -58,7 +61,11 @@ class Player extends Entity with FightingUnit implements GameInputListener {
   }
 
   @override
-  onInputAction(InputActionEvent event) {
+  onInputAction(WorldContext context, InputActionEvent event) {
+    if (!context.canControl()) {
+      return;
+    }
+
     if (event.action == InputAction.ATTACK) {
       if (changeState('attack')) {
         vx = 0;
