@@ -1,8 +1,8 @@
-import 'package:flame_action/engine/camera.dart';
-import 'package:flame_action/engine/stage/spawn_strategy.dart';
-import 'package:flame_action/engine/world.dart';
-import 'package:flame_action/util/list.dart';
-import 'package:flame_action/util/timer.dart';
+import '../../util/list.dart';
+import '../../util/timer.dart';
+import '../camera.dart';
+import '../stage/spawn_strategy.dart';
+import '../world.dart';
 
 /// 画面内の敵の数が一定数になるように敵を生成する
 class ConstantAmountStrategy extends SpawnStrategy {

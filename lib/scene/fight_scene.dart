@@ -1,14 +1,13 @@
-import 'package:flame_action/engine/entity/entity.dart';
-import 'package:flame_action/engine/global_event.dart';
-import 'package:flame_action/engine/presentation/flame/flame_sprite_font.dart';
-import 'package:flame_action/engine/presentation/wipe/fading_wipe.dart';
-import 'package:flame_action/engine/scene/stage_scene.dart';
-import 'package:flame_action/engine/stage/stage.dart';
-import 'package:flame_action/entity/entity_factory.dart';
-
-import '../engine/image/sprite_font.dart';
 import '../engine/camera.dart';
+import '../engine/entity/entity.dart';
+import '../engine/global_event.dart';
+import '../engine/image/sprite_font.dart';
+import '../engine/presentation/flame/flame_sprite_font.dart';
+import '../engine/presentation/wipe/fading_wipe.dart';
+import '../engine/scene/stage_scene.dart';
+import '../engine/stage/stage.dart';
 import '../engine/world.dart';
+import '../entity/entity_factory.dart';
 import '../stage/action_stage.dart';
 
 class FightScene extends StageScene with GlobalEventListener {

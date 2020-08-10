@@ -1,4 +1,4 @@
-import 'package:flame_action/engine/entity/entity.dart';
+import '../entity/entity.dart';
 
 import 'animation.dart';
 import 'sprite.dart';

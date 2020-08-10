@@ -1,13 +1,13 @@
 import 'dart:ui';
 
-import 'package:flame_action/engine/coordinates.dart';
-import 'package:flame_action/engine/image/animation.dart';
-import 'package:flame_action/engine/image/sprite.dart';
-import 'package:flame_action/engine/image/sprite_resolver.dart';
-import 'package:flame_action/engine/services/collision_detect_service.dart';
-import 'package:flame_action/util/coordinates.dart';
 import 'package:flutter/foundation.dart';
 
+import '../../util/coordinates.dart';
+import '../coordinates.dart';
+import '../image/animation.dart';
+import '../image/sprite.dart';
+import '../image/sprite_resolver.dart';
+import '../services/collision_detect_service.dart';
 import '../world.dart';
 
 enum Dimension { LEFT, RIGHT }

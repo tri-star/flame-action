@@ -1,9 +1,8 @@
-import 'package:flame_action/engine/image/sprite.dart';
-import 'package:flame_action/engine/image/sprite_resolver.dart';
-import 'package:flame_action/engine/input_event.dart';
-import 'package:flame_action/engine/world.dart';
-
 import '../engine/entity/entity.dart';
+import '../engine/image/sprite.dart';
+import '../engine/image/sprite_resolver.dart';
+import '../engine/input_event.dart';
+import '../engine/world.dart';
 
 class ActionButton extends Entity
     with CapturePointerEvent

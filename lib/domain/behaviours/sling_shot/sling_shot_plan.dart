@@ -1,12 +1,12 @@
-import 'package:flame_action/domain/behaviours/sling_shot/sling_shot_command.dart';
-import 'package:flame_action/engine/coordinates.dart';
-
+import '../../../engine/coordinates.dart';
 import '../../../engine/entity/entity.dart';
 import '../../../engine/world.dart';
 import '../../../util/timer.dart';
 
 import '../../behaviour_tree/behaviour_plan.dart';
 import '../../command/basic_commands.dart';
+
+import 'sling_shot_command.dart';
 
 /// 「ニタニタ笑う」の行動プラン
 class SlingShotBehaviourPlanGlimming extends BehaviourPlan {

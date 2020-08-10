@@ -1,11 +1,10 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:flame_action/engine/image/animation.dart';
-import 'package:flame_action/engine/image/sprite.dart';
-import 'package:flame_action/engine/image/sprite_resolver.dart';
-import 'package:flame_action/engine/input_event.dart';
-
+import '../image/animation.dart';
+import '../image/sprite.dart';
+import '../image/sprite_resolver.dart';
+import '../input_event.dart';
 import '../world.dart';
 import 'entity.dart';
 

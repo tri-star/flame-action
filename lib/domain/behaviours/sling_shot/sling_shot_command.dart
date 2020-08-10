@@ -1,5 +1,5 @@
-import 'package:flame_action/engine/entity/entity.dart';
-import 'package:flame_action/engine/entity/entity_command.dart';
+import '../../../engine/entity/entity.dart';
+import '../../../engine/entity/entity_command.dart';
 
 class SlingShotCommandAttack extends EntityCommand {
   SlingShotCommandAttack(Entity target) : super(target);

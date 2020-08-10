@@ -1,15 +1,14 @@
-import 'package:flame_action/domain/behaviour_tree/behaviour_executor.dart';
-import 'package:flame_action/domain/behaviour_tree/behaviour_node.dart';
-import 'package:flame_action/domain/behaviour_tree/behaviour_plan.dart';
-import 'package:flame_action/domain/behaviour_tree/behaviour_tree_builder.dart';
-import 'package:flame_action/domain/command/basic_commands.dart';
-import 'package:flame_action/engine/entity/figting_unit.dart';
-import 'package:flame_action/engine/image/animation.dart';
-import 'package:flame_action/engine/image/sprite_resolver.dart';
-import 'package:flame_action/engine/services/collision_detect_service.dart';
-import 'package:flame_action/engine/world.dart';
-
+import '../domain/behaviour_tree/behaviour_executor.dart';
+import '../domain/behaviour_tree/behaviour_node.dart';
+import '../domain/behaviour_tree/behaviour_plan.dart';
+import '../domain/behaviour_tree/behaviour_tree_builder.dart';
+import '../domain/command/basic_commands.dart';
 import '../engine/entity/entity.dart';
+import '../engine/entity/figting_unit.dart';
+import '../engine/image/animation.dart';
+import '../engine/image/sprite_resolver.dart';
+import '../engine/services/collision_detect_service.dart';
+import '../engine/world.dart';
 
 class Enemy extends Entity with FightingUnit {
   BehaviourTreeBuilder _behaviourTreeBuilder;

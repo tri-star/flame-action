@@ -1,7 +1,7 @@
-import 'package:flame_action/engine/image/animation.dart';
-import '../../engine/presentation/flame/flame_animation.dart';
+import '../../engine/image/animation.dart';
 import '../../engine/image/sprite.dart';
 import '../../engine/image/sprite_resolver.dart';
+import '../../engine/presentation/flame/flame_animation.dart';
 
 class ActionButtonSpriteResolver extends SpriteResolver {
   AnimationDefinition _neutralDefinition;

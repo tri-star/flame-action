@@ -1,9 +1,8 @@
-import 'package:flame_action/engine/entity/figting_unit.dart';
-import 'package:flame_action/engine/world.dart';
-
+import '../../engine/entity/figting_unit.dart';
 import '../../engine/entity/direct_rendering.dart';
 import '../../engine/entity/entity.dart';
 import '../../engine/presentation/renderer.dart';
+import '../../engine/world.dart';
 
 class StatusCard extends Entity with DirectRendering {
   Entity _target;

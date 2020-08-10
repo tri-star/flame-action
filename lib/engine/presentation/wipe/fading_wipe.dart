@@ -1,9 +1,8 @@
 import 'dart:ui';
 
-import 'package:flame_action/util/ticker.dart';
 import 'package:flutter/animation.dart';
 
-import '../../world.dart';
+import '../../../util/ticker.dart';
 import '../../camera.dart';
 import 'wipe.dart';
 

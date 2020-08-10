@@ -1,7 +1,5 @@
-import 'package:flame_action/domain/command/basic_commands.dart';
-import 'package:flame_action/engine/coordinates.dart';
-import 'package:flame_action/engine/entity/figting_unit.dart';
-
+import '../domain/command/basic_commands.dart';
+import '../engine/coordinates.dart';
 import '../engine/entity/entity.dart';
 import '../engine/image/sprite_resolver.dart';
 import '../engine/services/collision_detect_service.dart';

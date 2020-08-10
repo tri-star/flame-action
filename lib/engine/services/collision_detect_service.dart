@@ -1,7 +1,6 @@
-import 'package:flame_action/engine/entity/entity.dart';
-import 'package:flame_action/util/list.dart';
-
+import '../../util/list.dart';
 import '../coordinates.dart';
+import '../entity/entity.dart';
 import '../world.dart';
 
 class CollisionEvent {

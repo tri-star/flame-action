@@ -1,9 +1,8 @@
-import 'package:flame_action/domain/behaviour_tree/behaviour_plan.dart';
-
 import '../../engine/entity/entity.dart';
 import '../../engine/world.dart';
 
 import 'behaviour_node.dart';
+import 'behaviour_plan.dart';
 
 class BehaviourExecutor {
   BehaviourNode _tree;

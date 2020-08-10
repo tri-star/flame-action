@@ -1,9 +1,9 @@
-import 'package:flame_action/engine/presentation/wipe/fading_wipe.dart';
-import 'package:flame_action/scene/title_scene.dart';
 import 'package:flutter/widgets.dart';
 
 import 'entity/entity_factory.dart';
 import 'engine/game_widget.dart';
+import 'engine/presentation/wipe/fading_wipe.dart';
+import 'scene/title_scene.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

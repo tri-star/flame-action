@@ -1,10 +1,9 @@
 import 'package:flame/animation.dart' as Flame;
 import 'package:flame/spritesheet.dart';
-import 'package:flame_action/engine/image/sprite.dart';
-import 'package:flame_action/util/ticker.dart';
-import 'package:flame_action/util/timer.dart';
-
+import '../../../util/ticker.dart';
+import '../../../util/timer.dart';
 import '../../image/animation.dart';
+import '../../image/sprite.dart';
 import 'flame_sprite.dart';
 
 class FlameAnimation extends Animation {

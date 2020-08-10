@@ -2,16 +2,16 @@ import 'dart:math';
 
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
-import 'package:flame_action/engine/entity/entity.dart';
-import 'package:flame_action/engine/global_event.dart';
-import 'package:flame_action/engine/screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'entity/base_entity_factory.dart';
 import 'entity/direct_rendering.dart';
+import 'entity/entity.dart';
+import 'global_event.dart';
 import 'input_event.dart';
 import 'scene/scene.dart';
+import 'screen.dart';
 import 'world.dart';
 
 /// ユーザーからの入力を受け付け、GameModelに伝える

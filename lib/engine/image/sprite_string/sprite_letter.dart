@@ -1,10 +1,9 @@
-import 'package:flame_action/engine/image/sprite_font.dart';
-
 import '../../entity/entity.dart';
 import '../../coordinates.dart';
 import '../../services/collision_detect_service.dart';
 import '../../world.dart';
 import '../sprite.dart';
+import '../sprite_font.dart';
 
 /// スプライト文字列の1文字分を表示するEntity
 class SpriteLetter extends Entity {

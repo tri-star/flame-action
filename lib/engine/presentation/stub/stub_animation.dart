@@ -1,6 +1,5 @@
-import 'package:flame_action/engine/image/animation.dart';
-import 'package:flame_action/engine/image/sprite.dart';
-
+import '../../image/animation.dart';
+import '../../image/sprite.dart';
 import 'stub_sprite.dart';
 
 class StubAnimation extends Animation {

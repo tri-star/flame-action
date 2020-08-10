@@ -1,5 +1,5 @@
-import 'package:flame_action/util/ticker.dart';
 import 'package:flutter/cupertino.dart';
+import 'ticker.dart';
 
 class TimeoutTimer {
   double timeout;

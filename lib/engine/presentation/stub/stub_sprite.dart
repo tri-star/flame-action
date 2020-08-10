@@ -1,7 +1,7 @@
-import 'package:flame_action/engine/camera.dart';
 import 'dart:ui';
 
-import 'package:flame_action/engine/image/sprite.dart';
+import '../../image/sprite.dart';
+import '../../camera.dart';
 
 class StubSprite extends Sprite {
   StubSprite(double x, double y, double z, double w, double h, double d) {

@@ -1,6 +1,6 @@
-import 'package:flame_action/engine/image/sprite.dart';
-import 'package:flame_action/engine/image/animation.dart';
-import 'package:flame_action/engine/image/sprite_resolver.dart';
+import '../../engine/image/sprite.dart';
+import '../../engine/image/animation.dart';
+import '../../engine/image/sprite_resolver.dart';
 import '../../engine/presentation/flame/flame_animation.dart';
 
 typedef AnimationFactoryFunction = Animation Function();

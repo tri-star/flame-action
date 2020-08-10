@@ -1,7 +1,6 @@
-import 'package:flame_action/engine/coordinates.dart';
-import 'package:flame_action/engine/entity/figting_unit.dart';
-
+import '../coordinates.dart';
 import '../entity/entity.dart';
+import '../entity/figting_unit.dart';
 
 /// EntityとWorldの境界との位置調整を行うサービス
 class BoundaryAdjustmentService {

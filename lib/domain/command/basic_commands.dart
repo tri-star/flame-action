@@ -1,9 +1,8 @@
-import 'package:flame_action/engine/coordinates.dart';
-import 'package:flame_action/engine/entity/figting_unit.dart';
-import 'package:flame_action/engine/global_event.dart';
-
+import '../../engine/coordinates.dart';
 import '../../engine/entity/entity.dart';
 import '../../engine/entity/entity_command.dart';
+import '../../engine/entity/figting_unit.dart';
+import '../../engine/global_event.dart';
 
 /// ニュートラル状態に戻すコマンド
 class MakeNeutralCommand extends EntityCommand {

@@ -1,12 +1,11 @@
-import 'package:flame_action/engine/coordinates.dart';
-import 'package:flame_action/engine/image/animation.dart';
-import 'package:flame_action/engine/image/sprite_resolver.dart';
-import 'package:flame_action/engine/input_event.dart';
-import 'package:flame_action/engine/services/collision_detect_service.dart';
-
-import '../engine/world.dart';
+import '../engine/coordinates.dart';
 import '../engine/entity/entity.dart';
 import '../engine/entity/figting_unit.dart';
+import '../engine/image/animation.dart';
+import '../engine/image/sprite_resolver.dart';
+import '../engine/input_event.dart';
+import '../engine/services/collision_detect_service.dart';
+import '../engine/world.dart';
 
 class Player extends Entity with FightingUnit implements GameInputListener {
   Player(int id, SpriteResolver spriteResolver,
