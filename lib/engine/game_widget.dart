@@ -137,6 +137,19 @@ class GameWidget extends Game with GlobalEventListener {
       });
     });
 
+    _world.entities.whereLayer('ui').forEach((entity) {
+      if (entity is DirectRendering) {
+        (entity as DirectRendering)
+            .getRenderer()
+            .render(canvas, _world.camera, entity);
+        return;
+      }
+
+      entity?.getSprites()?.forEach((sprite) {
+        sprite.render(canvas, _world.camera, affectScroll: false);
+      });
+    });
+
     canvas.drawRect(
         Rect.fromLTWH(0, 0, _world.camera.getRenderX(0, affectScroll: false),
             _world.camera.h),

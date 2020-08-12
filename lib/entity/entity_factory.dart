@@ -14,9 +14,11 @@ import '../presentation/image/particle_sprite_resolver.dart';
 import '../presentation/image/player_sprite_resolver.dart';
 import '../presentation/image/start_button_sprite_resolver.dart';
 import '../presentation/image/title_sprite_resolver.dart';
+import '../presentation/renderer/mask_renderer.dart';
 import '../presentation/renderer/status_card_renderer.dart';
 
 import 'particle/general_particle.dart';
+import 'ui/mask.dart';
 import 'ui/start_button.dart';
 import 'ui/status_card.dart';
 import 'ui/status_card_organizer.dart';
@@ -49,6 +51,8 @@ class EntityFactory extends BaseEntityFactory {
             x: x, y: y);
       case 'status_card_organizer':
         return StatusCardOrganizer(newId);
+      case 'mask':
+        return Mask(newId, MaskRenderer());
       case 'ash_tray':
         return BasicObstacle(newId, key, BasicObstacleSpriteResolver(key),
             x: x, y: y, z: z);
@@ -69,7 +73,6 @@ class EntityFactory extends BaseEntityFactory {
             w: options['w'],
             h: options['h'],
             d: options['d']);
-
       case 'joystick':
         return JoyStick(newId, JoyStickSpriteResolver(), x: x, y: y);
       case 'action_button':

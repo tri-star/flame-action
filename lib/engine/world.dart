@@ -132,16 +132,16 @@ class World {
 
   void update(double dt) {
     _ticker.tick(dt, () {
-      _entities.whereLayer('default').forEach((entity) {
+      _entities.forEach((entity) {
         //TODO: 0件の場合にnullが返ってくることを直す
         if (entity == null) {
           return;
         }
         entity.update(_context);
-        _boundaryAdjustmentService.adjust(_worldRect, entity);
-      });
-      _entities.whereLayer('hud').forEach((entity) {
-        entity?.update(_context);
+
+        if (entity.getLayer() == 'default') {
+          _boundaryAdjustmentService.adjust(_worldRect, entity);
+        }
       });
       _camera.update();
       _context.getPendingEntities().forEach((entity) {
