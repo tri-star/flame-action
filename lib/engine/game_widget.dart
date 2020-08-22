@@ -121,7 +121,7 @@ class GameWidget extends Game with GlobalEventListener {
     _world.entities.whereLayer('default').forEach((entity) {
       //TODO: 0件の場合1件目がnullになる問題を解消する
       entity?.getSprites()?.forEach((sprite) {
-        sprite.render(canvas, _world.camera);
+        sprite.render(canvas, _world.camera, convertZtoY: true);
       });
     });
     _world.entities.whereLayer('hud').forEach((entity) {

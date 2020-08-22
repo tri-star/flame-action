@@ -30,17 +30,21 @@ class FlameSprite extends Sprite {
     this.dimension = dimension;
   }
 
-  void render(Canvas canvas, Camera camera, {bool affectScroll = true}) {
+  void render(Canvas canvas, Camera camera,
+      {bool affectScroll = true, bool convertZtoY = false}) {
     Paint paint = this.paint ?? Paint();
     Vector3d anchorOffset = getOffsets();
     double localX = x + anchorOffset.x;
-    double localY = y + anchorOffset.y + z;
+    double localY = y + anchorOffset.y;
+    if (convertZtoY) {
+      localY += z;
+    }
     double zoom = camera.getZoom();
     if (dimension == Dimension.LEFT) {
       Matrix4 cc = Matrix4.identity()
         ..translate(
             camera.getRenderX(x + anchorOffset.x, affectScroll: affectScroll),
-            camera.getRenderY(y + anchorOffset.y + z,
+            camera.getRenderY(y + anchorOffset.y + (convertZtoY ? z : 0),
                 affectScroll: affectScroll))
         ..translate(w * zoom, 0)
         ..rotateY((180.0 * 3.14 / 180));
