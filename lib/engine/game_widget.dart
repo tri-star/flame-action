@@ -184,7 +184,7 @@ class GameWidget extends Game with GlobalEventListener {
   }
 
   @override
-  void onGlobalEvent(GlobalEvent event) {
+  void onGlobalEvent(WorldContext context, GlobalEvent event) {
     switch (event.type) {
       case 'change_scene':
         _scene.leave(() {

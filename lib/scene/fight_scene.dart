@@ -52,10 +52,14 @@ class FightScene extends StageScene with GlobalEventListener {
   }
 
   @override
-  void onGlobalEvent(GlobalEvent event) {
+  void onGlobalEvent(WorldContext context, GlobalEvent event) {
     switch (event.type) {
       case 'kill':
         _stage.addKillCount(1);
+        break;
+      case 'stage_clear':
+        context.disableControl();
+        context.addEntity(context.entityFactory.create('mask', 0, 0, 0));
         break;
     }
   }

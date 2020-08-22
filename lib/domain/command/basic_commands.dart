@@ -3,13 +3,14 @@ import '../../engine/entity/entity.dart';
 import '../../engine/entity/entity_command.dart';
 import '../../engine/entity/figting_unit.dart';
 import '../../engine/global_event.dart';
+import '../../engine/world.dart';
 
 /// ニュートラル状態に戻すコマンド
 class MakeNeutralCommand extends EntityCommand {
   MakeNeutralCommand(Entity target) : super(target);
 
   @override
-  bool execute() {
+  bool execute(WorldContext context) {
     if (!target.changeState('neutral')) {
       return false;
     }
@@ -25,7 +26,7 @@ class WalkCommand extends EntityCommand {
   WalkCommand(Entity target, {this.x, this.z}) : super(target);
 
   @override
-  bool execute() {
+  bool execute(WorldContext context) {
     if (!target.changeState('walk')) {
       return false;
     }
@@ -47,13 +48,13 @@ class DamageCommand extends EntityCommand {
   DamageCommand(Entity target, this.damage, {this.force}) : super(target);
 
   @override
-  bool execute() {
+  bool execute(WorldContext context) {
     target.setState('damage');
     (target as FightingUnit).damage(damage.toDouble());
     target.addForce(force.x, force.y, force.z);
 
     if ((target as FightingUnit).isDead()) {
-      GlobalEventBus.instance().notify(GlobalEvent('kill'));
+      GlobalEventBus.instance().notify(context, GlobalEvent('kill'));
     }
 
     return true;

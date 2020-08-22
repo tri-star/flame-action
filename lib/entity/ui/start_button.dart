@@ -45,11 +45,13 @@ class StartButton extends Entity
       case PointerEventType.START:
         capturePointer(event);
         setState('pressed');
-        GlobalEventBus.instance().notify(GlobalEvent('change_scene',
-            payload: {'new_scene': FightScene(Stage1())}));
         break;
       case PointerEventType.END:
         setState('neutral');
+        GlobalEventBus.instance().notify(
+            context,
+            GlobalEvent('change_scene',
+                payload: {'new_scene': FightScene(Stage1())}));
         break;
       default:
     }

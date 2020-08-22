@@ -34,7 +34,7 @@ class SlingShotBehaviourPlanGlimming extends BehaviourPlan {
       case STATE_INITIAL:
         _timer = TimeoutTimer(0.6);
         _state = STATE_GRIMMING;
-        MakeNeutralCommand(entity).execute();
+        MakeNeutralCommand(entity).execute(context);
         break;
       case STATE_GRIMMING:
         _timer.update();
@@ -97,24 +97,24 @@ class SlingShotBehaviourPlanKeepDistance extends BehaviourPlan {
         if (_timer.isDone()) {
           _state = STATE_DONE;
           if (isPlayerStatesLeft(entity, player)) {
-            WalkCommand(entity, x: -2).execute();
+            WalkCommand(entity, x: -2).execute(context);
           } else {
-            WalkCommand(entity, x: 2).execute();
+            WalkCommand(entity, x: 2).execute(context);
           }
           return;
         }
 
         if (_isChaseMode) {
           if (isPlayerStatesLeft(entity, player)) {
-            WalkCommand(entity, x: -2).execute();
+            WalkCommand(entity, x: -2).execute(context);
           } else {
-            WalkCommand(entity, x: 2).execute();
+            WalkCommand(entity, x: 2).execute(context);
           }
         } else {
           if (isPlayerStatesLeft(entity, player)) {
-            WalkCommand(entity, x: 2).execute();
+            WalkCommand(entity, x: 2).execute(context);
           } else {
-            WalkCommand(entity, x: -2).execute();
+            WalkCommand(entity, x: -2).execute(context);
           }
         }
 
@@ -177,9 +177,9 @@ class SlingShotBehaviourPlanTargetting extends BehaviourPlan {
         }
 
         if (isPlayerStatesAbove(selfRect, playerRect)) {
-          WalkCommand(entity, z: -1).execute();
+          WalkCommand(entity, z: -1).execute(context);
         } else {
-          WalkCommand(entity, z: 1).execute();
+          WalkCommand(entity, z: 1).execute(context);
         }
 
         break;
@@ -223,8 +223,8 @@ class SlingShotBehaviourPlanAttack extends BehaviourPlan {
   void execute(WorldContext context, Entity entity) {
     switch (_state) {
       case STATE_INITIAL:
-        MakeNeutralCommand(entity).execute(); //移動中などの場合はキャンセルする
-        if (SlingShotCommandAttack(entity).execute()) {
+        MakeNeutralCommand(entity).execute(context); //移動中などの場合はキャンセルする
+        if (SlingShotCommandAttack(entity).execute(context)) {
           _state = STATE_WAIT;
         }
         break;
