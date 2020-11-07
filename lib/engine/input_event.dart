@@ -47,8 +47,8 @@ class InputActionEvent {
 
 /// Joystickのイベントを受け取るオブジェクト用のインターフェース
 abstract class GameInputListener {
-  onInputMove(InputMoveEvent event);
-  onInputAction(InputActionEvent event);
+  onInputMove(WorldContext context, InputMoveEvent event);
+  onInputAction(WorldContext context, InputActionEvent event);
 }
 
 /// ポインタのキャプチャに対応するためのmixin

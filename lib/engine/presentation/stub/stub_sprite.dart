@@ -15,5 +15,6 @@ class StubSprite extends Sprite {
   }
 
   @override
-  void render(Canvas canvas, Camera camera, {bool affectScroll = true}) {}
+  void render(Canvas canvas, Camera camera,
+      {bool affectScroll = true, bool convertZtoY = false}) {}
 }

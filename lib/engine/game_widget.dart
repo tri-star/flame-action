@@ -121,10 +121,23 @@ class GameWidget extends Game with GlobalEventListener {
     _world.entities.whereLayer('default').forEach((entity) {
       //TODO: 0件の場合1件目がnullになる問題を解消する
       entity?.getSprites()?.forEach((sprite) {
-        sprite.render(canvas, _world.camera);
+        sprite.render(canvas, _world.camera, convertZtoY: true);
       });
     });
     _world.entities.whereLayer('hud').forEach((entity) {
+      if (entity is DirectRendering) {
+        (entity as DirectRendering)
+            .getRenderer()
+            .render(canvas, _world.camera, entity);
+        return;
+      }
+
+      entity?.getSprites()?.forEach((sprite) {
+        sprite.render(canvas, _world.camera, affectScroll: false);
+      });
+    });
+
+    _world.entities.whereLayer('ui').forEach((entity) {
       if (entity is DirectRendering) {
         (entity as DirectRendering)
             .getRenderer()
@@ -171,7 +184,7 @@ class GameWidget extends Game with GlobalEventListener {
   }
 
   @override
-  void onGlobalEvent(GlobalEvent event) {
+  void onGlobalEvent(WorldContext context, GlobalEvent event) {
     switch (event.type) {
       case 'change_scene':
         _scene.leave(() {

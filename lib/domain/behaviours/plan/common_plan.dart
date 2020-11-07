@@ -49,7 +49,7 @@ class CommonBehaviourPlanTargetting extends BehaviourPlan {
 
         double forceZ = isPlayerStatesAbove(selfRect, playerRect) ? -1 : 1;
         double forceX = isPlayerStatesLeft(selfRect, playerRect) ? -1 : 1;
-        WalkCommand(entity, x: forceX, z: forceZ).execute();
+        WalkCommand(entity, x: forceX, z: forceZ).execute(context);
         break;
       case STATE_DONE:
         break;
@@ -94,8 +94,8 @@ class CommonBehaviourPlanAttack extends BehaviourPlan {
   void execute(WorldContext context, Entity entity) {
     switch (_state) {
       case STATE_INITIAL:
-        MakeNeutralCommand(entity).execute(); //移動中などの場合はキャンセルする
-        if (CommonCommandAttack(entity).execute()) {
+        MakeNeutralCommand(entity).execute(context); //移動中などの場合はキャンセルする
+        if (CommonCommandAttack(entity).execute(context)) {
           _state = STATE_WAIT;
         }
         break;

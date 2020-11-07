@@ -41,6 +41,10 @@ class Enemy extends Entity with FightingUnit {
   void update(WorldContext context) {
     super.update(context);
 
+    if (!context.canControl()) {
+      return;
+    }
+
     if (!isDead() && !isDisposed()) {
       if (_behaviourPlan == null || _behaviourPlan.isDone()) {
         _behaviourPlan = _behaviourExecutor?.decidePlan(context, this);
@@ -97,7 +101,7 @@ class Enemy extends Entity with FightingUnit {
     super.onCollide(context, event);
     if (event.type == 'attack') {
       int damageValue = context.randomGenerator.getIntBetween(1000, 1500);
-      DamageCommand(this, damageValue, force: event.force).execute();
+      DamageCommand(this, damageValue, force: event.force).execute(context);
       Entity newEntity = context.entityFactory.create(
           'pop_with_gravity_string', x, y, z + 5,
           options: {'message': damageValue.toString()});

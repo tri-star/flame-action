@@ -43,7 +43,7 @@ class ActionButton extends Entity
       case PointerEventType.START:
         capturePointer(event);
         InputActionEvent gameEvent = InputActionEvent(InputAction.ATTACK);
-        context.inputEventService.notifyActionEvent(gameEvent);
+        context.inputEventService.notifyActionEvent(context, gameEvent);
         setState('pressed');
         break;
       case PointerEventType.END:
@@ -54,8 +54,8 @@ class ActionButton extends Entity
   }
 
   @override
-  onInputMove(InputMoveEvent event) {}
+  onInputMove(WorldContext context, InputMoveEvent event) {}
 
   @override
-  onInputAction(InputActionEvent event) {}
+  onInputAction(WorldContext context, InputActionEvent event) {}
 }

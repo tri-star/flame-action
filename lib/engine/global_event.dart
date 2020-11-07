@@ -1,3 +1,5 @@
+import 'world.dart';
+
 class GlobalEvent {
   String type;
   Map<String, dynamic> payload;
@@ -6,7 +8,7 @@ class GlobalEvent {
 }
 
 mixin GlobalEventListener {
-  void onGlobalEvent(GlobalEvent event);
+  void onGlobalEvent(WorldContext context, GlobalEvent event);
 }
 
 class GlobalEventBus {
@@ -23,9 +25,9 @@ class GlobalEventBus {
 
   GlobalEventBus._inner() : _listeners = [];
 
-  void notify(GlobalEvent event) {
+  void notify(WorldContext context, GlobalEvent event) {
     _listeners.forEach((listener) {
-      listener.onGlobalEvent(event);
+      listener.onGlobalEvent(context, event);
     });
   }
 
